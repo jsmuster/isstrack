@@ -1,0 +1,8 @@
+app:
+  jwt:
+    secret: "DEV_CHANGE_ME"
+
+websocket:
+  allowed-origins: "http://localhost:4200"
+  auth:
+    allow-query-token: true
