@@ -53,6 +53,16 @@ public class WebSocketAuthChannelInterceptor implements ChannelInterceptor {
     return null;
   }
 
-  private record StompPrincipal(String name) implements Principal {
+  private static final class StompPrincipal implements Principal {
+    private final String name;
+
+    private StompPrincipal(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String getName() {
+      return name;
+    }
   }
 }

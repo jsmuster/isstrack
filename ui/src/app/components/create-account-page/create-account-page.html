@@ -1,0 +1,181 @@
+<div class="create-account-page">
+  <main class="body">
+    <div class="page-container">
+      <div class="card-wrapper">
+        <!-- Header Section -->
+        <div class="card-header">
+          <div class="logo-container">
+            <img class="logo-icon" loading="lazy" alt="Company logo" src="assets/div@2x.png" />
+          </div>
+          <h1 class="page-title">Create Account</h1>
+          <p class="page-subtitle">Join us today and get started</p>
+        </div>
+
+        <!-- Form Section -->
+        <section class="form-section">
+          <form class="signup-form" (ngSubmit)="onSubmit()">
+            <!-- Email Field -->
+            <div class="form-group">
+              <label class="form-label">
+                <span class="label-text">Email Address</span>
+              </label>
+              <div class="input-wrapper">
+                <img class="input-icon" alt="" src="assets/div1@2x.png" />
+                <input
+                  class="form-input"
+                  type="email"
+                  placeholder="Enter your email"
+                  [(ngModel)]="email()"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Username Field -->
+            <div class="form-group">
+              <label class="form-label">
+                <span class="label-text">Username</span>
+              </label>
+              <div class="input-wrapper">
+                <img class="input-icon" alt="" src="assets/div2@2x.png" />
+                <input
+                  class="form-input"
+                  type="text"
+                  placeholder="Choose a username"
+                  [(ngModel)]="username()"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Name Fields -->
+            <div class="name-fields">
+              <div class="form-group">
+                <label class="form-label">
+                  <span class="label-text">First Name</span>
+                </label>
+                <div class="input-wrapper">
+                  <img class="input-icon" alt="" src="assets/div3@2x.png" />
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="First name"
+                    [(ngModel)]="firstName()"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  <span class="label-text">Last Name</span>
+                </label>
+                <div class="input-wrapper">
+                  <img class="input-icon" alt="" src="assets/div3@2x.png" />
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="Last name"
+                    [(ngModel)]="lastName()"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="password-field">
+              <label class="form-label">
+                <span class="label-text">Password</span>
+              </label>
+              <div class="input-wrapper">
+                <img class="input-icon" alt="" src="assets/div4@2x.png" />
+                <input
+                  class="form-input"
+                  type="password"
+                  placeholder="Create a password"
+                  (input)="onPasswordChange($event.target.value)"
+                  required
+                />
+                <img class="visibility-icon" alt="Show password" src="assets/button@2x.png" />
+              </div>
+
+              <!-- Password Requirements -->
+              <div class="password-requirements">
+                <p class="requirements-title">Password must contain:</p>
+                <ul class="requirements-list">
+                  <li class="requirement-item" [class.met]="passwordRequirements().minLength">
+                    <img class="requirement-icon" alt="Requirement met" src="assets/i.svg" />
+                    <span class="requirement-text">At least 8 characters</span>
+                  </li>
+                  <li class="requirement-item" [class.met]="passwordRequirements().hasUppercase">
+                    <img class="requirement-icon" alt="Requirement met" src="assets/i.svg" />
+                    <span class="requirement-text">One uppercase letter</span>
+                  </li>
+                  <li class="requirement-item" [class.met]="passwordRequirements().hasLowercase">
+                    <img class="requirement-icon" alt="Requirement met" src="assets/i.svg" />
+                    <span class="requirement-text">One lowercase letter</span>
+                  </li>
+                  <li class="requirement-item" [class.met]="passwordRequirements().hasNumber">
+                    <img class="requirement-icon" alt="Requirement met" src="assets/i.svg" />
+                    <span class="requirement-text">One number</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Terms Checkbox -->
+            <div class="terms-section">
+              <input
+                type="checkbox"
+                class="terms-checkbox"
+                [(ngModel)]="termsAgreed()"
+                required
+              />
+              <div class="terms-text">
+                <span class="agreement-text">I agree to the </span>
+                <a href="#" class="terms-link">Terms of Service</a>
+                <span class="agreement-text"> and </span>
+                <a href="#" class="terms-link">Privacy Policy</a>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="submit-button"
+              [disabled]="!isPasswordValid() || !termsAgreed() || !email() || !username() || !firstName() || !lastName()"
+            >
+              Create Account
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="divider-section">
+            <div class="divider-line"></div>
+            <span class="divider-text">or</span>
+            <div class="divider-line"></div>
+          </div>
+
+          <!-- Social Sign Up -->
+          <div class="social-buttons">
+            <button class="social-button google" type="button" (click)="onGoogleSignUp()">
+              <img class="social-icon" alt="Google" src="assets/i1.svg" />
+              <span class="social-text">Continue with Google</span>
+            </button>
+            <button class="social-button github" type="button" (click)="onGithubSignUp()">
+              <img class="social-icon" alt="GitHub" src="assets/i2.svg" />
+              <span class="social-text">Continue with GitHub</span>
+            </button>
+          </div>
+
+          <!-- Sign In Link -->
+          <div class="signin-section">
+            <span class="signin-text">Already have an account?</span>
+            <button type="button" class="signin-button" (click)="onSignIn()">Sign in</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>

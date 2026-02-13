@@ -1,0 +1,89 @@
+<div class="issue-row" [style.border-bottom]="borderBottom()">
+  <!-- Issue ID and Title -->
+  <div class="issue-cell">
+    <div class="issue-content">
+      <div class="issue-id-cell">
+        <div class="issue-id-wrapper" [style.padding]="padding()">
+          <span class="issue-id">{{ issueId() }}</span>
+        </div>
+      </div>
+      <div class="issue-title-cell">
+        <div class="title-content">
+          <span class="issue-title" [style.flex]="titleFlex()">
+            {{ issueTitle() }}
+          </span>
+        </div>
+        <div class="badges-wrapper" [style.padding]="categoryPadding()">
+          <span
+            class="badge category"
+            [style.color]="categoryColor()"
+            [style.flex]="categoryFlex()"
+            [style.display]="categoryDisplay()"
+          >
+            {{ category() }}
+          </span>
+          <span
+            class="badge type"
+            [style.width]="typeWidth()"
+            [style.color]="typeColor()"
+            [style.display]="typeDisplay()"
+            [style.flex]="typeFlex()"
+          >
+            {{ type() }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="status-cell">
+    <div class="status-badge">
+      <span
+        class="badge status"
+        [style.background-color]="statusBgColor()"
+        [style.padding]="statusPadding()"
+      >
+        <span [style.color]="statusColor()">
+          {{ statusLabel() }}
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Priority -->
+  <div class="priority-cell">
+    <div class="priority-badge">
+      <span
+        class="badge priority"
+        [style.background-color]="priorityBgColor()"
+        [style.padding]="priorityPadding()"
+      >
+        <span [style.color]="priorityColor()">
+          {{ priorityLabel() }}
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Assignee -->
+  <div class="assignee-cell">
+    <div class="assignee-content">
+      <div class="assignee-info" [style.overflow]="assigneeOverflow()">
+        <img class="assignee-avatar" [src]="assigneeAvatar()" [alt]="assigneeName()" />
+        <span class="assignee-name" [style.color]="assigneeColor()">
+          {{ assigneeName() }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Updated -->
+  <div class="updated-cell">
+    <div class="updated-time">
+      <span class="time-label" [style.flex]="timelineFlex()">
+        {{ updatedTime() }}
+      </span>
+    </div>
+  </div>
+</div>

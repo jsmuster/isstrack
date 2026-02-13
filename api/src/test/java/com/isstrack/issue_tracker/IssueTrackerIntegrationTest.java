@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.web.client.RestTemplate;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -124,7 +126,7 @@ class IssueTrackerIntegrationTest {
 
   private void updateIssueStatus(String token, Long issueId, String status) {
     PatchIssueRequest request = new PatchIssueRequest(null, null, status, null, null, null, null);
-    restTemplate.exchange(
+    patchRestTemplate().exchange(
         url("/api/issues/" + issueId),
         HttpMethod.PATCH,
         new HttpEntity<>(request, authHeaders(token)),
@@ -151,5 +153,13 @@ class IssueTrackerIntegrationTest {
 
   private String url(String path) {
     return "http://localhost:" + port + path;
+  }
+
+  private RestTemplate patchRestTemplate() {
+    return new RestTemplateBuilder()
+        .requestFactory(
+            () -> new org.springframework.http.client.HttpComponentsClientHttpRequestFactory()
+        )
+        .build();
   }
 }

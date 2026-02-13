@@ -1,0 +1,154 @@
+<div class="projects-page-project-list">
+  <main class="body">
+    <section class="page-wrapper">
+      <!-- Sidebar Component -->
+      <app-sidebar></app-sidebar>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+          <div class="header-title-section">
+            <h1 class="page-title">Project Workspace</h1>
+            <div class="user-role">
+              <span class="role-label">{{ role }}</span>
+            </div>
+          </div>
+
+          <div class="header-controls">
+            <!-- Search Bar -->
+            <div class="search-container">
+              <img class="search-icon" alt="Search" src="assets/i6.svg" />
+              <input
+                class="search-input"
+                type="text"
+                placeholder="Search issues..."
+                [(ngModel)]="searchIssuesQuery()"
+                (input)="onSearchIssues($event.target.value)"
+              />
+            </div>
+
+            <!-- Header Icons -->
+            <img class="header-icon notification-icon" alt="Notifications" src="assets/div1.svg" (click)="onNotificationClick()" />
+            <img class="header-icon settings-icon" alt="Settings" src="assets/button.svg" (click)="onSettingsClick()" />
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+          <form class="content-form">
+            <!-- Title Section with New Project Button -->
+            <div class="section-header">
+              <div class="title-container">
+                <h2 class="section-title">Projects</h2>
+                <p class="section-description">Your workspaces and issue tracking environments.</p>
+              </div>
+              <button class="new-project-button" type="submit" (click)="onNewProject()">
+                <img class="button-icon" alt="Add" src="assets/i7.svg" />
+                <span class="button-text">New Project</span>
+              </button>
+            </div>
+
+            <!-- View Controls -->
+            <div class="view-controls">
+              <div class="view-mode-toggle">
+                <button
+                  type="button"
+                  class="view-button"
+                  [class.active]="viewMode() === 'grid'"
+                  (click)="toggleViewMode('grid')"
+                >
+                  <img class="button-icon" alt="Grid view" src="assets/i8.svg" />
+                  <span class="view-label">Grid</span>
+                </button>
+                <button
+                  type="button"
+                  class="view-button"
+                  [class.active]="viewMode() === 'table'"
+                  (click)="toggleViewMode('table')"
+                >
+                  <img class="button-icon" alt="Table view" src="assets/i9.svg" />
+                  <span class="view-label">Table</span>
+                </button>
+              </div>
+
+              <div class="filters-section">
+                <!-- Search Projects -->
+                <div class="search-projects">
+                  <img class="search-icon" alt="Search" src="assets/i6.svg" />
+                  <input
+                    class="search-input"
+                    type="text"
+                    placeholder="Search projects..."
+                    [(ngModel)]="searchProjectsQuery()"
+                    (input)="onSearchProjects($event.target.value)"
+                  />
+                </div>
+
+                <!-- Filter Dropdown -->
+                <div class="filter-dropdown">
+                  <div class="filter-label">{{ filterBy() }}</div>
+                  <div class="filter-icon">
+                    <img alt="Dropdown" src="assets/Frame.svg" />
+                  </div>
+                </div>
+
+                <!-- Sort Dropdown -->
+                <div class="sort-dropdown">
+                  <div class="sort-label">{{ sortBy() }}</div>
+                  <div class="sort-icon">
+                    <img alt="Dropdown" src="assets/Frame.svg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-grid">
+              <app-project-card
+                *ngFor="let project of divItems(); trackBy: (_, i) => i"
+                [projectIcon]="project.div"
+                [projectName]="project.eCommercePlatform"
+                [projectRole]="project.oWNER"
+                [ownerEmail]="project.johndoecompanycom"
+                [createdDate]="project.createdOnMar152024"
+                [projectDescription]="project.mainECommerceApplicationWith"
+                [openIssuesIcon]="project.i"
+                [openIssuesCount]="project.openIssues"
+                [statusIcon]="project.i1"
+                [statusLabel]="project.active"
+                [roleBgColor]="project.spanBackgroundColor"
+                [rolePadding]="project.spanPadding"
+                [roleColor]="project.oWNERColor"
+                [issuesGap]="project.divGap"
+                [issuesMinWidth]="project.divMinWidth"
+                [issuesBgColor]="project.spanBackgroundColor1"
+                [issuesPadding]="project.spanPadding1"
+                [issuesTextColor]="project.openIssuesColor"
+                [statusColor]="project.activeColor"
+              ></app-project-card>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-section">
+              <div class="pagination-info">
+                <div class="pagination-text">Showing 1 to 6 of 6 projects</div>
+              </div>
+              <div class="pagination-controls">
+                <button class="pagination-button prev" type="button" disabled>
+                  <img alt="Previous" src="assets/button1.svg" />
+                </button>
+                <button class="pagination-button active" type="button">
+                  <span class="page-number">1</span>
+                </button>
+                <button class="pagination-button next" type="button">
+                  <img alt="Next" src="assets/button2.svg" />
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </main>
+    </section>
+  </main>
+</div>

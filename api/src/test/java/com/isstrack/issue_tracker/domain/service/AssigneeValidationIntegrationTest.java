@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.web.client.RestTemplate;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -60,12 +62,17 @@ class AssigneeValidationIntegrationTest {
     Long issueId = createIssue(ownerToken, projectId);
 
     PatchIssueRequest request = new PatchIssueRequest(null, null, null, null, otherUserId, null, null);
-    ResponseEntity<String> response = restTemplate.exchange(
-        url("/api/issues/" + issueId),
-        HttpMethod.PATCH,
-        new HttpEntity<>(request, authHeaders(ownerToken)),
-        String.class
-    );
+    ResponseEntity<String> response;
+    try {
+      response = patchRestTemplate().exchange(
+          url("/api/issues/" + issueId),
+          HttpMethod.PATCH,
+          new HttpEntity<>(request, authHeaders(ownerToken)),
+          String.class
+      );
+    } catch (org.springframework.web.client.HttpClientErrorException ex) {
+      response = ResponseEntity.status(ex.getStatusCode()).body(ex.getResponseBodyAsString());
+    }
 
     assertThat(response.getStatusCode().value()).isEqualTo(400);
     assertThat(response.getBody()).contains("Assignee must be an active member of the project");
@@ -108,5 +115,13 @@ class AssigneeValidationIntegrationTest {
 
   private String url(String path) {
     return "http://localhost:" + port + path;
+  }
+
+  private RestTemplate patchRestTemplate() {
+    return new RestTemplateBuilder()
+        .requestFactory(
+            () -> new org.springframework.http.client.HttpComponentsClientHttpRequestFactory()
+        )
+        .build();
   }
 }

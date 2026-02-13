@@ -1,0 +1,85 @@
+<div class="projects-page-no-projects">
+  <main class="body">
+    <section class="page-wrapper">
+      <!-- Sidebar Component -->
+      <app-sidebar></app-sidebar>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+          <div class="header-title-section">
+            <h1 class="page-title">Project Workspace</h1>
+            <div class="user-role">
+              <span class="role-label">{{ role }}</span>
+            </div>
+          </div>
+
+          <div class="header-controls">
+            <!-- Search Bar -->
+            <div class="search-container">
+              <img class="search-icon" alt="Search" src="assets/i6.svg" />
+              <input
+                class="search-input"
+                type="text"
+                placeholder="Search issues..."
+                [(ngModel)]="searchQuery"
+                (input)="onSearch(searchQuery)"
+              />
+            </div>
+
+            <!-- Header Icons -->
+            <img class="header-icon notification-icon" alt="Notifications" src="assets/div1.svg" (click)="onNotificationClick()" />
+            <img class="header-icon settings-icon" alt="Settings" src="assets/button.svg" (click)="onSettingsClick()" />
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+          <div class="content-area">
+            <!-- Title Section -->
+            <div class="section-header">
+              <div class="title-container">
+                <h2 class="section-title">Projects</h2>
+                <p class="section-description">Your workspaces and issue tracking environments.</p>
+              </div>
+              <button class="new-project-button" (click)="onNewProject()">
+                <img class="button-icon" alt="Add" src="assets/i7.svg" />
+                <span class="button-text">New Project</span>
+              </button>
+            </div>
+
+            <!-- Empty State -->
+            <section class="empty-state">
+              <div class="empty-state-image">
+                <img alt="No projects illustration" src="assets/div2@2x.png" />
+              </div>
+              <h3 class="empty-state-title">No projects yet</h3>
+              <div class="empty-state-description">
+                <p class="description-text">
+                  Get started by creating your first project. Organize your
+                  <br />
+                  work, collaborate with your team, and track progress all in
+                  <br />
+                  one place.
+                </p>
+              </div>
+              <button class="create-button" (click)="onCreateFirstProject()">
+                <div class="create-button-content">
+                  <img class="create-button-icon" alt="Add" src="assets/i8.svg" />
+                  <span class="create-button-text">Create Your First Project</span>
+                </div>
+              </button>
+              <div class="help-section">
+                <p class="help-text">Need help?</p>
+                <button class="help-link" (click)="onViewGettingStarted()">
+                  View our getting started guide
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </section>
+  </main>
+</div>

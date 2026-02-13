@@ -1,0 +1,73 @@
+<div class="project-card">
+  <!-- Project Header -->
+  <div class="card-header">
+    <div class="card-header-content">
+      <div class="project-header">
+        <img class="project-icon" [alt]="projectName()" [src]="projectIcon()" />
+        <div class="project-title-section">
+          <h3 class="project-name">{{ projectName() }}</h3>
+          <div
+            class="project-role"
+            [style.background-color]="roleBgColor()"
+            [style.padding]="rolePadding()"
+          >
+            <div class="role-text" [style.color]="roleColor()">
+              {{ projectRole() }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Details -->
+  <div class="card-details">
+    <!-- Owner Email -->
+    <div class="detail-row">
+      <div class="owner-email">{{ ownerEmail() }}</div>
+    </div>
+
+    <!-- Created Date -->
+    <div class="detail-row date-row">
+      <div class="created-date">{{ createdDate() }}</div>
+    </div>
+
+    <!-- Description -->
+    <div class="detail-row description-row">
+      <div class="project-description">
+        {{ projectDescription() }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Status Footer -->
+  <div class="card-footer" [style.gap]="issuesGap()">
+    <div class="status-group" [style.min-width]="issuesMinWidth()">
+      <!-- Open Issues Badge -->
+      <div class="issues-badge">
+        <div
+          class="issues-badge-inner"
+          [style.padding]="issuesPadding()"
+          [style.background-color]="issuesBgColor()"
+        >
+          <img class="issues-icon" [alt]="openIssuesCount()" [src]="openIssuesIcon()" />
+          <div class="issues-count" [style.color]="issuesTextColor()">
+            {{ openIssuesCount() }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Indicator -->
+      <img class="status-indicator-icon" [alt]="statusLabel()" [src]="statusIcon()" />
+      <div class="status-label" [style.color]="statusColor()">
+        {{ statusLabel() }}
+      </div>
+    </div>
+
+    <!-- Open Project Button -->
+    <button class="open-button" (click)="onOpenProject()">
+      <span class="button-text">Open Project</span>
+      <img class="button-icon" alt="Open" src="assets/i12.svg" />
+    </button>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="login-page">
+  <main class="body">
+    <section class="div">
+      <div class="div2">
+        <section class="login-card">
+          <div class="card-header">
+            <div class="logo-container">
+              <img class="logo-icon" loading="lazy" alt="" src="assets/div@2x.png" />
+            </div>
+            <div class="title-section">
+              <h1 class="welcome-heading">Welcome Back</h1>
+            </div>
+            <div class="subtitle">Sign in to your account to continue</div>
+          </div>
+          <form class="login-form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <div class="form-label">
+                <div class="label-text">Email or Username</div>
+              </div>
+              <div class="input-wrapper">
+                <img class="input-icon" alt="" src="assets/div1@2x.png" />
+                <div class="input-field">
+                  <input class="input-element" placeholder="Enter your email or username" type="text" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-label">
+                <div class="label-text">Password</div>
+              </div>
+              <div class="input-wrapper">
+                <img class="input-icon" alt="" src="assets/div2@2x.png" />
+                <div class="input-field">
+                  <input class="input-element" placeholder="Enter your password" type="password" />
+                </div>
+                <img class="visibility-icon" alt="" src="assets/button@2x.png" />
+              </div>
+            </div>
+            <div class="forgot-section">
+              <div class="forgot-link">
+                <div class="forgot-text">Forgot password?</div>
+              </div>
+            </div>
+            <button class="submit-button" type="submit">
+              <div class="button-content">
+                <div class="button-gradient">
+                  <div class="button-text">Sign In</div>
+                </div>
+              </div>
+            </button>
+            <div class="divider-section">
+              <div class="divider-content">
+                <div class="divider-line">
+                  <div class="divider-text">Or continue with</div>
+                  <div class="divider-wrapper">
+                    <div class="divider" ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="social-buttons">
+              <button class="social-button google-button" type="button" (click)="onGoogleSignIn()">
+                <div class="social-button-content">
+                  <img class="social-icon" alt="" src="assets/i.svg" />
+                  <div class="social-label">Google</div>
+                </div>
+              </button>
+              <button class="social-button github-button" type="button" (click)="onGithubSignIn()">
+                <div class="social-button-content">
+                  <img class="social-icon" alt="" src="assets/i1.svg" />
+                  <div class="social-label">GitHub</div>
+                </div>
+              </button>
+            </div>
+          </form>
+          <div class="signup-section">
+            <div class="signup-text">Don't have an account?</div>
+            <div class="signup-link-wrapper">
+              <div class="signup-link">Create one here</div>
+            </div>
+          </div>
+        </section>
+        <div class="footer">
+          <div class="copyright-text">© 2024 Your Company. All rights reserved.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

@@ -108,6 +108,9 @@ class IssueServiceTest {
     issue.setStatus(status);
     issue.setPriority(priority);
     issue.setTitle("Issue");
+    var owner = new UserEntity();
+    owner.setId(50L);
+    issue.setOwner(owner);
     var actor = new UserEntity();
     actor.setId(99L);
 

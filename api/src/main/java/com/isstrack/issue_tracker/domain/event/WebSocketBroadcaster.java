@@ -15,25 +15,32 @@ public class WebSocketBroadcaster {
 
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
   public void onEvent(DomainEvent event) {
-    switch (event) {
-      case IssueCreatedEvent ev ->
-          messagingTemplate.convertAndSend("/topic/projects." + ev.projectId(), ev.payload());
-      case IssueUpdatedEvent ev ->
-          messagingTemplate.convertAndSend("/topic/projects." + ev.projectId(), ev.payload());
-      case MemberAddedEvent ev ->
-          messagingTemplate.convertAndSend("/topic/projects." + ev.projectId(), ev.payload());
-      case CommentAddedEvent ev ->
-          messagingTemplate.convertAndSend("/topic/issues." + ev.issueId(), ev.payload());
-      case ActivityLoggedEvent ev ->
-          messagingTemplate.convertAndSend("/topic/issues." + ev.issueId(), ev.payload());
-      case IssueAssignedEvent ev ->
-          messagingTemplate.convertAndSendToUser(
-              String.valueOf(ev.assigneeUserId()),
-              "/queue/notifications",
-              ev.payload()
-          );
-      default -> {
-      }
+    if (event instanceof IssueCreatedEvent ev) {
+      messagingTemplate.convertAndSend("/topic/projects." + ev.projectId(), ev.payload());
+      return;
+    }
+    if (event instanceof IssueUpdatedEvent ev) {
+      messagingTemplate.convertAndSend("/topic/projects." + ev.projectId(), ev.payload());
+      return;
+    }
+    if (event instanceof MemberAddedEvent ev) {
+      messagingTemplate.convertAndSend("/topic/projects." + ev.projectId(), ev.payload());
+      return;
+    }
+    if (event instanceof CommentAddedEvent ev) {
+      messagingTemplate.convertAndSend("/topic/issues." + ev.issueId(), ev.payload());
+      return;
+    }
+    if (event instanceof ActivityLoggedEvent ev) {
+      messagingTemplate.convertAndSend("/topic/issues." + ev.issueId(), ev.payload());
+      return;
+    }
+    if (event instanceof IssueAssignedEvent ev) {
+      messagingTemplate.convertAndSendToUser(
+          String.valueOf(ev.assigneeUserId()),
+          "/queue/notifications",
+          ev.payload()
+      );
     }
   }
 }

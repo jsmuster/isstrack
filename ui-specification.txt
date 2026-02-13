@@ -1,0 +1,366 @@
+UI BUILDING AGENT PROMPT
+
+You are a senior enterprise UI generation agent responsible for designing a complete modern SaaS Issue Tracker interface based on a detailed enterprise UX specification.
+
+Your goal is to generate a fully connected set of UI screens and flows representing a modern enterprise-grade web application.
+
+IMPORTANT RULES:
+
+- Focus ONLY on UI/UX design, layout, and interaction architecture.
+- Do NOT generate backend code.
+- Do NOT generate business logic.
+- Generate consistent reusable components across all screens.
+- Every screen must belong to one cohesive design system.
+- UI should feel like Linear, GitHub Issues, Notion, or modern Jira-lite tools.
+- Output must include ALL pages, flows, and state variations described below.
+
+---------------------------------------
+
+DESIGN LANGUAGE
+
+Create a modern enterprise SaaS aesthetic:
+
+- Minimal, clean interface
+- Neutral gray palette
+- Primary accent color: blue
+- Card-based layout where appropriate
+- Subtle shadows and elevation
+- Strong typography hierarchy
+- Generous whitespace
+- Grid-based layouts
+- Smooth micro interactions
+- Dense but readable productivity interface
+
+Layout is desktop-first but responsive.
+
+---------------------------------------
+
+GLOBAL APPLICATION SHELL
+
+All authenticated pages must share a persistent layout.
+
+LEFT SIDEBAR:
+
+- App logo
+- Projects navigation list
+- Current project context indicator
+- Notifications icon with unread count
+- Settings link (future placeholder)
+
+TOP HEADER:
+
+- Page title
+- Global search input
+- User avatar dropdown:
+  - profile
+  - logout
+
+MAIN CONTENT AREA:
+
+- Dynamic content based on route.
+
+---------------------------------------
+
+ROLE-BASED UI BEHAVIOR
+
+The system supports two roles:
+
+OWNER
+MEMBER
+
+OWNER capabilities:
+
+- Invite members
+- See ownership badges
+- Access project management actions
+
+MEMBER capabilities:
+
+- View and edit issues
+- Comment
+
+UI must:
+
+- Hide owner-only actions for MEMBER.
+- Show role badge in workspace header.
+
+---------------------------------------
+
+PRIMARY USER FLOW
+
+1. Login
+2. Register
+3. Invite Acceptance (optional)
+4. Projects Dashboard
+5. Project Workspace
+6. Issue List
+7. Issue Detail Collaboration
+
+Users must never lose project context during navigation.
+
+---------------------------------------
+
+SCREEN DEFINITIONS
+
+---------------------------------------
+SCREEN 1: LOGIN
+
+Layout:
+
+- Centered card
+- Email or username field
+- Password field
+- Login button
+- Register link
+
+States:
+
+- error message
+- loading state
+
+---------------------------------------
+SCREEN 2: REGISTER
+
+Layout similar to login.
+
+Fields:
+
+- email
+- username
+- first name
+- last name
+- password
+
+Include helper text for password rules.
+
+---------------------------------------
+SCREEN 3: INVITE ACCEPTANCE
+
+Purpose:
+
+Accept project invitations via token.
+
+Layout:
+
+- Project name display
+- Inviter information
+- Accept button
+
+States:
+
+- valid invite
+- expired invite
+- already accepted
+
+Flow:
+
+User logs in or registers if needed, then accepts invite.
+
+---------------------------------------
+SCREEN 4: PROJECTS DASHBOARD
+
+Top:
+
+- Page title "Projects"
+- Primary button "New Project"
+
+Main area:
+
+Project cards or table.
+
+Each project shows:
+
+- project name
+- owner email
+- created date
+- open button
+
+Empty state:
+
+- friendly illustration
+- CTA create project.
+
+---------------------------------------
+SCREEN 5: PROJECT WORKSPACE
+
+Header:
+
+- Project name
+- Role badge (OWNER or MEMBER)
+- Owner indicator if applicable
+
+Tabs:
+
+- Issues
+- Members
+
+---------------------------------------
+SCREEN 6: MEMBERS TAB
+
+Table columns:
+
+- Member name/email
+- Role badge
+- Status badge (ACTIVE or INVITED)
+- Added date
+
+OWNER only:
+
+- Invite member input
+- Invite button
+
+Visual cues:
+
+- Pending invitations appear visually distinct.
+
+---------------------------------------
+SCREEN 7: ISSUE LIST VIEW
+
+Top filter bar:
+
+- Title search input
+- Status filter dropdown (dynamic values)
+- Priority filter dropdown
+- Assignee filter dropdown
+- Tag filter
+- Sort dropdown
+- New Issue button
+
+Main content:
+
+Table or list rows:
+
+- Issue title (clickable)
+- Status badge
+- Priority badge
+- Assignee avatar/name
+- Tags chips
+- Updated timestamp
+
+Pagination:
+
+- Server-driven pagination controls.
+- Show page index and total pages.
+- Disable prev/next appropriately.
+
+---------------------------------------
+SCREEN 8: CREATE ISSUE MODAL
+
+Fields:
+
+- Title
+- Description textarea
+- Priority dropdown
+- Assignee selector
+- Tags input (chip style)
+
+Important:
+
+Assignee selector must preload project members.
+
+Modal includes:
+
+- primary submit action
+- cancel action.
+
+---------------------------------------
+SCREEN 9: ISSUE DETAIL PAGE
+
+Top header:
+
+- Editable title
+- Status selector (dynamic)
+- Priority selector
+- Assignee selector
+- Tags editor
+
+Two-column layout.
+
+LEFT COLUMN:
+
+Description panel:
+
+- Rich text display
+- Edit toggle
+
+Comments section:
+
+- Comment input box
+- Chronological thread
+- Avatar + message layout
+
+Comments must support pagination.
+
+RIGHT COLUMN:
+
+Activity timeline:
+
+- Chronological feed
+- Read-only events:
+  - status changed
+  - priority changed
+  - assignment changed
+  - comment added
+  - system events
+
+Activity timeline supports pagination.
+
+---------------------------------------
+REALTIME UX BEHAVIOR
+
+The interface supports live updates.
+
+Visual expectations:
+
+- New comments appear instantly.
+- Issue updates animate subtly.
+- Status badge transitions smoothly.
+- Toast notifications appear for assignments and updates.
+
+---------------------------------------
+NOTIFICATION UX
+
+Global notification system.
+
+Header:
+
+- Bell icon with unread badge.
+
+Dropdown panel:
+
+- List of notifications
+- Click navigates to related issue.
+- Mark-as-read interaction.
+
+---------------------------------------
+NAVIGATION RULES
+
+Navigation flow:
+
+Login
+→ Invite acceptance (optional)
+→ Projects Dashboard
+→ Project Workspace
+→ Issue List
+→ Issue Detail
+
+Project context persists across pages.
+
+Breadcrumbs optional.
+
+---------------------------------------
+OUTPUT REQUIREMENTS
+
+Generate:
+
+- Full connected UI screen set.
+- Consistent reusable design system.
+- Clear navigation transitions.
+- Role-based UI states.
+- Pagination interactions.
+- Notification interactions.
+- Realtime update visual behaviors.
+
+DO NOT include implementation code.
+
+Focus on UI structure, layout architecture, and visual interaction design.

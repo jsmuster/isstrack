@@ -1,0 +1,4 @@
+com\isstrack\issue_tracker\domain\service\AssigneeValidationIntegrationTest.class
+com\isstrack\issue_tracker\domain\event\WebSocketBroadcasterTest.class
+com\isstrack\issue_tracker\domain\service\IssueServiceTest.class
+com\isstrack\issue_tracker\IssueTrackerIntegrationTest.class

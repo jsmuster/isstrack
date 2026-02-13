@@ -1,0 +1,790 @@
+CODING AGENT PROMPT
+Implement Issue Tracker MVP Frontend in Angular 20, fully wired to the provided Java 17 Spring Boot backend API.
+
+You are a coding agent working in an existing repository (or creating the Angular app in a new /web folder if none exists).
+Your job is to implement the COMPLETE Angular 20 UI, all screens, routing, state, and realtime behavior so it works perfectly with the backend API described in api.txt and the MVP PDF.
+
+Hard requirements
+- Angular 20
+- All screens and flows implemented
+- Server-driven pagination and filtering for issue lists
+- Issue detail must load via ONE aggregate endpoint (IssueDetailDto)
+- Realtime updates via STOMP over WebSocket
+- Role-based UI behavior (OWNER vs MEMBER) must match backend membership role
+- Atomic design principles for components and folder structure
+- Turnkey startup: backend and frontend can be started and used together
+
+Do not implement any backend code.
+Do not invent endpoints that do not exist.
+If something is missing from the backend, implement a UI fallback that still works.
+
+============================================================
+0) Source of truth, endpoints and constraints (from provided backend)
+============================================================
+
+Base URL
+- REST: http://localhost:8080/api
+- WebSocket: ws://localhost:8080/ws
+
+Auth
+- POST /api/auth/register
+- POST /api/auth/login
+- GET /api/auth/me (if present, otherwise infer user from login/register response)
+
+Projects and memberships
+- POST /api/projects
+- GET /api/projects (paged)
+- GET /api/projects/{projectId}
+- GET /api/projects/{projectId}/members (paged)
+- POST /api/projects/{projectId}/invites
+- POST /api/projects/invites/accept
+
+Issues
+- POST /api/projects/{projectId}/issues
+- GET /api/projects/{projectId}/issues?status&priority&assigneeId&tag&q&page&size&sort
+  - sort is validated against allowed fields only: updatedAt, createdAt, title (backend enforces)
+- PATCH /api/issues/{issueId}
+- GET /api/issues/{issueId}?commentsPage&commentsSize&activityPage&activitySize
+  - This returns IssueDetailDto including paginated comments and activity in one response
+
+Comments and activity (also exist as separate endpoints but IssueDetailDto must be the initial load)
+- GET /api/issues/{issueId}/activity?page&size
+- GET /api/issues/{issueId}/comments?page&size (if present in the file, use it only for subsequent pagination refreshes if needed)
+
+DTO constraints
+- Issue title max 200
+- Description max 20000
+- Comment body max 5000
+- Password min 8
+
+Realtime
+- WebSocket endpoint: ws://localhost:8080/ws
+- Preferred auth: STOMP CONNECT header Authorization: Bearer <jwt>
+- Fallback auth (if enabled on server): ws://localhost:8080/ws?token=<jwt>
+- Topics:
+  - /topic/projects.{projectId} (IssueDto, MembershipDto)
+  - /topic/issues.{issueId} (CommentDto, ActivityDto)
+  - /user/queue/notifications (NotificationDto)
+
+============================================================
+1) Technology choices and project setup
+============================================================
+
+1.1 Angular app creation
+- If Angular app does not exist, create it in /web using Angular 20:
+  - ng new web --routing --style=scss
+- Use standalone components (no NgModules) for all new components.
+- Use Angular signals for local UI state where appropriate.
+- Use RxJS for HTTP flows and route resolvers.
+
+1.2 UI library and styling
+- Use Angular Material + CDK for speed and consistency.
+- Build a minimal theme that feels like a modern SaaS productivity app.
+- Use SCSS variables and spacing tokens (8px grid).
+- Use a layout system that supports a persistent app shell.
+
+1.3 Local dev proxy
+- Add proxy.conf.json so frontend can call /api without CORS headaches:
+  - /api -> http://localhost:8080
+  - /ws -> http://localhost:8080 (for websocket if needed)
+- Configure angular.json serve options to use this proxy.
+
+1.4 Environment config
+- src/environments/environment.ts:
+  - apiBaseUrl: '/api'
+  - wsUrl: 'ws://localhost:8080/ws'
+- Also support overriding by environment variables if build pipeline exists.
+
+============================================================
+2) Atomic design folder structure (mandatory)
+============================================================
+
+Implement this structure under src/app:
+
+src/app/
+  core/
+    api/
+      http/
+        api-client.ts
+        api-error.model.ts
+      services/
+        auth-api.service.ts
+        projects-api.service.ts
+        issues-api.service.ts
+        members-api.service.ts
+        invites-api.service.ts
+        notifications-api.service.ts (optional, realtime only)
+      models/
+        dto.models.ts
+        page.model.ts
+    auth/
+      auth.store.ts
+      auth.guard.ts
+      auth.interceptor.ts
+      error.interceptor.ts
+      token.storage.ts
+    realtime/
+      realtime.service.ts
+      dto-discriminators.ts
+      realtime.reconciler.ts
+    routing/
+      app.routes.ts
+      route-titles.ts
+    ui/
+      toasts.service.ts
+      dialog.service.ts
+      loading.service.ts
+  shared/
+    atoms/
+      button/
+      badge/
+      input/
+      avatar/
+      icon/
+      spinner/
+    molecules/
+      form-field/
+      filter-chip/
+      pagination/
+      empty-state/
+      table/
+    organisms/
+      app-shell/
+      sidebar/
+      topbar/
+      issues-filter-bar/
+      issues-table/
+      members-table/
+      comments-thread/
+      activity-timeline/
+      notifications-dropdown/
+    templates/
+      auth-layout/
+      page-layout/
+      project-layout/
+  features/
+    auth/
+      pages/
+        login-page/
+        register-page/
+      components/
+        auth-card/
+    invites/
+      pages/
+        invite-accept-page/
+    projects/
+      pages/
+        projects-dashboard-page/
+        project-workspace-page/ (shell page for tabs)
+      components/
+        new-project-dialog/
+        projects-list/
+    members/
+      pages/
+        members-page/
+      components/
+        invite-member-panel/
+    issues/
+      pages/
+        issues-list-page/
+        issue-detail-page/
+      components/
+        create-issue-dialog/
+        issue-detail-header/
+        issue-description-panel/
+  app.component.ts
+
+Every screen must be in features/*/pages.
+Reusable UI must be in shared/atoms, molecules, organisms, templates.
+
+============================================================
+3) Core data models and typed API clients
+============================================================
+
+3.1 DTO interfaces (src/app/core/api/models/dto.models.ts)
+Create TypeScript interfaces matching backend DTOs:
+
+- AuthResponse { accessToken: string; user: UserDto; }
+- UserDto { id: number; email: string; username: string; firstName?: string; lastName?: string; role?: string; }
+
+- ProjectDto { id: number; name: string; ownerUserId: number; ownerEmail: string; createdAt: string; updatedAt: string; }
+
+- MembershipDto {
+    id: number;
+    projectId: number;
+    userId?: number | null;
+    invitedEmail?: string | null;
+    role: 'OWNER' | 'MEMBER';
+    status: 'ACTIVE' | 'INVITED';
+    createdAt: string;
+  }
+
+- IssueDto {
+    id: number;
+    projectId: number;
+    title: string;
+    status: string;
+    priority: string;
+    ownerUserId: number;
+    assigneeUserId?: number | null;
+    tags: string[];
+    updatedAt: string;
+  }
+
+- CommentDto { id: number; issueId: number; authorUserId: number; body: string; createdAt: string; }
+- ActivityDto { id: number; issueId: number; actorUserId: number; message: string; createdAt: string; }
+
+- PageResponse<T> { items: T[]; page: number; size: number; totalElements: number; totalPages: number; }
+
+- IssueDetailDto {
+    issue: IssueDto;
+    description: string;
+    comments: PageResponse<CommentDto>;
+    activity: PageResponse<ActivityDto>;
+  }
+
+- NotificationDto { type: string; message: string; createdAt: string; meta?: Record<string, any>; }
+
+3.2 Request payload interfaces
+- RegisterRequest { email; username; password; firstName?; lastName?; }
+- LoginRequest { usernameOrEmail; password; }
+- CreateProjectRequest { name; }
+- CreateIssueRequest { title; description?; priority; assigneeUserId?; tags?: string[]; }
+- PatchIssueRequest { title?; description?; status?; priority?; assigneeUserId?; clearAssignee?: boolean; tags?: string[]; }
+- CreateInviteRequest { email; }
+- AcceptInviteRequest { token; }
+- CreateCommentRequest { body; }
+
+3.3 API services
+Implement thin services in src/app/core/api/services/* that:
+- build URLs exactly as above
+- pass query params correctly
+- return typed Observables
+
+Example required methods
+AuthApiService:
+- register(req): Observable<AuthResponse>
+- login(req): Observable<AuthResponse>
+- me(): Observable<UserDto> (if endpoint exists, if not, do not call)
+
+ProjectsApiService:
+- listProjects(page, size): Observable<PageResponse<ProjectDto>>
+- createProject(req): Observable<ProjectDto>
+- getProject(projectId): Observable<ProjectDto>
+
+MembersApiService:
+- listMembers(projectId, page, size): Observable<PageResponse<MembershipDto>>
+
+InvitesApiService:
+- createInvite(projectId, req): Observable<any> (type based on backend response, store token if present)
+- acceptInvite(req): Observable<MembershipDto>
+
+IssuesApiService:
+- listIssues(projectId, filters): Observable<PageResponse<IssueDto>>
+- createIssue(projectId, req): Observable<IssueDto>
+- patchIssue(issueId, req): Observable<IssueDto>
+- getIssueDetail(issueId, commentsPage, commentsSize, activityPage, activitySize): Observable<IssueDetailDto>
+- listActivity(issueId, page, size): Observable<PageResponse<ActivityDto>> (optional for paging refresh)
+- listComments(issueId, page, size): Observable<PageResponse<CommentDto>> (if available)
+
+============================================================
+4) Auth, routing, and app shell
+============================================================
+
+4.1 Token storage
+Implement core/auth/token.storage.ts
+- localStorage key: "it.jwt"
+- functions: getToken, setToken, clearToken
+
+4.2 Auth store
+Implement core/auth/auth.store.ts using signals:
+- currentUser: signal<UserDto | null>
+- token: signal<string | null>
+- isAuthenticated: computed
+- login(register) methods call AuthApiService, then store token+user
+- logout clears everything and navigates to /login
+
+4.3 HTTP interceptors
+AuthInterceptor:
+- attach Authorization: Bearer <token> to all /api requests
+
+ErrorInterceptor:
+- on 401: logout and redirect to /login?returnUrl=...
+- on other errors: map backend error message to a user-friendly toast and rethrow
+
+4.4 Guards
+AuthGuard:
+- allow if token exists
+- otherwise redirect to /login with returnUrl
+
+4.5 App shell
+Create shared/organisms/app-shell with sidebar + topbar + outlet.
+- Sidebar:
+  - logo
+  - Projects nav link
+  - if in project route, show current project name and role badge
+  - notifications bell with unread badge
+- Topbar:
+  - page title (from route data)
+  - global search input (wire it to issues search when in project issues route, otherwise disabled)
+  - user avatar dropdown: Profile (simple dialog with user info), Logout
+
+4.6 Routes (core/routing/app.routes.ts)
+Public:
+- /login -> LoginPage
+- /register -> RegisterPage
+- /invite/:token -> InviteAcceptPage
+
+Protected (under AppShell):
+- /projects -> ProjectsDashboardPage
+- /projects/:projectId -> ProjectWorkspacePage (redirect to issues)
+- /projects/:projectId/issues -> IssuesListPage
+- /projects/:projectId/members -> MembersPage
+- /issues/:issueId -> IssueDetailPage
+
+ProjectWorkspacePage should be a layout page that loads project and membership and renders tabs.
+
+============================================================
+5) Realtime (STOMP) integration and reconciliation
+============================================================
+
+5.1 Dependencies
+Install:
+- @stomp/stompjs
+
+5.2 Realtime service
+Implement core/realtime/realtime.service.ts:
+- connect(token): uses STOMP client
+  - preferred: set connectHeaders Authorization: Bearer <token>
+  - fallback support: if connection fails and you have a config flag, reconnect using wsUrl + '?token=' + token
+- disconnect on logout
+- subscribeProject(projectId): Observable<unknown>
+- subscribeIssue(issueId): Observable<unknown>
+- subscribeNotifications(): Observable<NotificationDto>
+
+5.3 DTO discrimination
+Implement core/realtime/dto-discriminators.ts with runtime type guards:
+- isIssueDto(obj)
+- isMembershipDto(obj)
+- isCommentDto(obj)
+- isActivityDto(obj)
+- isNotificationDto(obj)
+
+5.4 Reconciler
+Implement core/realtime/realtime.reconciler.ts:
+- Central logic that receives events and updates UI caches without full reloads:
+  - When IssueDto arrives on /topic/projects.{projectId}:
+    - If current issues list cache contains that issue id, patch row data.
+    - If not in current page, show toast "Issue updated" with action "Refresh" that triggers refetch.
+  - When MembershipDto arrives:
+    - patch members list cache
+  - When CommentDto or ActivityDto arrives on /topic/issues.{issueId}:
+    - If IssueDetailPage is active and on first page for that feed, prepend item.
+    - Otherwise toast and do not mutate current page.
+
+5.5 Notification behavior
+- Maintain in-memory list of notifications since app start.
+- No historical fetch.
+- Unread count increments until user opens dropdown, then mark all as read.
+
+============================================================
+6) Screens and components, implement each with full detail
+============================================================
+
+Implement screens using templates and organisms.
+Each page should have:
+- title
+- loading skeleton
+- empty state
+- error state
+- forms with validation
+- correct API wiring
+
+------------------------------------------------------------
+6.1 LoginPage (/login)
+Files:
+- features/auth/pages/login-page/login-page.component.ts|html|scss
+UI:
+- auth-layout template
+- card with:
+  - usernameOrEmail input (required)
+  - password input (required)
+  - submit button with loading state
+  - link to /register
+Behavior:
+- on submit: call authStore.login
+- on success: navigate to returnUrl or /projects
+Errors:
+- invalid credentials -> inline error banner
+
+------------------------------------------------------------
+6.2 RegisterPage (/register)
+Fields:
+- email (required, email format)
+- username (required)
+- firstName (optional)
+- lastName (optional)
+- password (required, minLength 8)
+Behavior:
+- call authStore.register
+- on success:
+  - if returnUrl exists, go there (this supports invite accept return)
+  - else /projects
+
+------------------------------------------------------------
+6.3 InviteAcceptPage (/invite/:token)
+States:
+A) Not logged in
+- show message and buttons:
+  - Login -> /login?returnUrl=/invite/<token>
+  - Register -> /register?returnUrl=/invite/<token>
+
+B) Logged in, ready to accept
+- show card with:
+  - generic text "Invitation token detected"
+  - show signed-in email
+  - accept button
+
+C) Accepting
+- disable accept, show spinner
+
+D) Invalid/expired
+- show error panel and action back to /projects
+
+Behavior:
+- accept -> POST /api/projects/invites/accept {token}
+- on success, response has projectId, navigate /projects/{projectId}/issues
+
+Important:
+Do not show inviter or project name preview. Backend does not provide it.
+
+------------------------------------------------------------
+6.4 ProjectsDashboardPage (/projects)
+API:
+- GET /api/projects?page&size
+UI:
+- header with title "Projects" and button "New Project"
+- list as table:
+  - name
+  - ownerEmail
+  - createdAt (format)
+  - open button
+Empty:
+- empty-state organism
+Create project:
+- open NewProjectDialog:
+  - name input required, max 255
+- on success:
+  - navigate to /projects/{id}/issues
+
+------------------------------------------------------------
+6.5 ProjectWorkspacePage (/projects/:projectId)
+Purpose:
+- load project context and membership role
+- render tabs Issues and Members
+- render child routes in outlet
+
+Data loading:
+- GET /api/projects/{projectId}
+- GET /api/projects/{projectId}/members?page=0&size=100
+  - compute current membership by matching userId
+  - determine role (OWNER/MEMBER)
+
+UI:
+- header:
+  - project name
+  - role badge
+- tabs:
+  - Issues -> /projects/:projectId/issues
+  - Members -> /projects/:projectId/members
+
+Realtime:
+- subscribe to /topic/projects.{projectId} after role is confirmed
+- unsub on leaving project
+
+------------------------------------------------------------
+6.6 MembersPage (/projects/:projectId/members)
+API:
+- GET /api/projects/{projectId}/members?page&size
+
+UI:
+- members table:
+  - member email or name
+  - role badge
+  - status badge
+  - createdAt
+- pagination controls (server-driven)
+Owner-only section:
+- invite panel organism:
+  - email input
+  - invite button
+  - helper text that invite may require sharing a link depending on backend response
+Behavior:
+- invite -> POST /api/projects/{projectId}/invites {email}
+- on success:
+  - toast "Invite created"
+  - if response includes token or url, show copy-to-clipboard control
+Realtime:
+- MembershipDto event patches table
+
+------------------------------------------------------------
+6.7 IssuesListPage (/projects/:projectId/issues)
+API:
+- GET /api/projects/{projectId}/issues with params:
+  - status, priority, assigneeId, tag, q, page, size, sort
+
+UI composition:
+- IssuesFilterBar organism:
+  - search input mapped to q
+  - status dropdown:
+    - seed with OPEN, IN_PROGRESS, CLOSED
+    - plus dynamically discovered values from current results
+  - priority dropdown:
+    - seed with LOW, MEDIUM, HIGH
+    - plus discovered values
+  - assignee dropdown:
+    - preload from members list (ACTIVE)
+    - show "Unassigned" option
+  - tag input (free text)
+  - sort dropdown limited to:
+    - updatedAt desc default
+    - createdAt desc
+    - title asc
+  - clear filters button
+  - New Issue button opens CreateIssueDialog
+
+- IssuesTable organism:
+  - columns:
+    - title (click to /issues/:issueId)
+    - status badge
+    - priority badge
+    - assignee
+    - tags chips
+    - updatedAt
+
+Pagination:
+- use PageResponse totalPages and page
+- show page number and next/prev
+
+Behavior:
+- changes in filters reset page to 0 and refetch
+- debounce q input by 300ms
+- maintain URL query params for filters for shareable links
+
+Realtime:
+- IssueDto events patch rows if present in current page.
+- If not present, toast with "Refresh" action.
+
+------------------------------------------------------------
+6.8 CreateIssueDialog (modal)
+API:
+- POST /api/projects/{projectId}/issues
+
+Fields and validation:
+- Title required max 200 with live counter
+- Description optional max 20000
+- Priority required
+- Assignee optional
+- Tags chips input
+Actions:
+- Create (loading)
+- Cancel
+On success:
+- close modal
+- if filters allow, insert into list, otherwise toast
+
+------------------------------------------------------------
+6.9 IssueDetailPage (/issues/:issueId)
+Critical rule:
+Initial load must be ONE request:
+- GET /api/issues/{issueId}?commentsPage=0&commentsSize=20&activityPage=0&activitySize=20
+
+UI sections:
+A) Header (organism issue-detail-header)
+- editable title (inline edit)
+- status dropdown
+- priority dropdown
+- assignee dropdown (requires project members)
+- tags editor (chip input)
+All edits call PATCH /api/issues/{issueId} with minimal payload.
+
+B) Left column
+- Description panel (view and edit)
+  - edit mode textarea with counter max 20000
+  - save calls PATCH {description}
+- Comments thread organism
+  - composer textarea max 5000
+  - submit calls POST /api/issues/{issueId}/comments {body}
+  - thread list newest first
+  - server pagination controls that update commentsPage and refetch IssueDetailDto with the new page params
+
+C) Right column
+- Activity timeline organism
+  - list with timestamp and message
+  - pagination controls that update activityPage and refetch IssueDetailDto
+
+Realtime:
+- subscribe to /topic/issues.{issueId}
+- CommentDto:
+  - if commentsPage is 0, prepend comment
+  - else toast "New comment"
+- ActivityDto:
+  - if activityPage is 0, prepend activity
+  - else toast
+
+Ensure:
+- no full page reloads for realtime
+- patch local state
+
+Error handling:
+- 404 -> "Issue not found"
+- 403 -> "No access"
+- 401 -> logout
+
+============================================================
+7) Shared UI components (atomic design)
+============================================================
+
+Atoms
+- Button (variants, loading state)
+- Input (text)
+- Textarea
+- Badge
+- Avatar
+- Spinner
+- IconButton
+
+Molecules
+- FormField wrapper with label, hint, error
+- Pagination component that binds (page, totalPages) and emits events
+- EmptyState block with title, description, CTA
+- FilterChip
+
+Organisms
+- AppShell
+- Sidebar
+- Topbar
+- NotificationsDropdown
+- IssuesFilterBar
+- IssuesTable
+- MembersTable
+- InviteMemberPanel
+- CommentsThread
+- ActivityTimeline
+
+Templates
+- AuthLayout template
+- ProjectLayout template
+- PageLayout template
+
+============================================================
+8) State management and caching strategy
+============================================================
+
+Implement minimal stores with signals, not a full NgRx setup:
+- auth.store.ts
+- projects.store.ts (cache list and current project)
+- members.store.ts (cache per projectId)
+- issues.store.ts (cache per projectId + filter signature + page)
+- issue-detail.store.ts (cache per issueId + commentsPage/activityPage)
+
+Stores should expose:
+- state signals
+- load methods
+- mutation methods that update caches
+- hooks for realtime reconciler to apply patches
+
+Avoid global mutable singletons outside stores.
+
+============================================================
+9) Testing requirements
+============================================================
+
+Unit tests
+- auth.store login/register happy path and error mapping (mock http)
+- issues.store listIssues with filters and sort
+- realtime.dto-discriminators type guards
+- realtime.reconciler patch logic for IssueDto and CommentDto
+
+Integration style test (frontend)
+- One test that boots IssueDetailPage component with mocked API returning IssueDetailDto and verifies:
+  - comments render newest first
+  - pagination triggers refetch with updated query params
+
+Use Angular TestBed and HttpTestingController.
+
+============================================================
+10) Developer experience, scripts, and turnkey startup
+============================================================
+
+10.1 Root README updates
+Add instructions:
+- Start backend:
+  - docker compose up (backend) OR ./mvnw spring-boot:run
+- Start frontend:
+  - cd web
+  - npm install
+  - npm start
+- Open app:
+  - http://localhost:4200
+- Provide sample flow:
+  - register
+  - create project
+  - create issue
+  - open detail
+  - observe realtime by opening two browser windows
+
+10.2 Docker compose (optional but preferred)
+If repository already has docker compose for backend, extend it:
+- service: web
+  - build Angular app
+  - serve with nginx or node
+  - map 4200:80
+If not, create a root docker-compose.yml that can run:
+- postgres (if backend needs)
+- backend (8080)
+- web (4200)
+
+10.3 Seed data
+If backend has none, do not add.
+UI must work without seed data.
+
+============================================================
+11) Acceptance checklist (must pass)
+============================================================
+
+- Login and register work, token stored, protected routes enforced.
+- Projects list loads and paginates.
+- Create project works and navigates correctly.
+- Project workspace shows project name and role badge.
+- Members tab lists members with pagination.
+- Owner can invite, member cannot see invite controls.
+- Issues list supports:
+  - status filter
+  - priority filter
+  - assignee filter
+  - tag filter
+  - text search on title using q
+  - server-driven pagination
+  - sort limited to allowed fields
+- Create issue works and updates list.
+- Issue detail initial load uses aggregate endpoint only.
+- Issue detail supports:
+  - edit title, status, priority, assignee, tags
+  - edit description
+  - add comment
+  - comments pagination
+  - activity pagination
+- Realtime:
+  - issue updates patch list rows
+  - comment and activity events patch detail when on first page
+  - notifications dropdown receives realtime events
+- Two browser windows show realtime behavior without manual reload.
+
+Deliverables
+- Full Angular 20 implementation with the above structure
+- Clean, consistent UI, production-minded
+- Tests and README updated
+- No backend code changes
+
+Start implementing now. Follow the plan exactly, commit frequently, keep components small and reusable.
