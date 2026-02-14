@@ -128,7 +128,7 @@
                 (ngModelChange)="memberSearchTerm.set($event)"
                 placeholder="Type to search members..."
                 class="input-field"
-                ngModelOptions="{ updateOn: 'input' }"
+                [ngModelOptions]="{ updateOn: 'change' }"
                 aria-label="Search for members to invite"
               />
             </div>

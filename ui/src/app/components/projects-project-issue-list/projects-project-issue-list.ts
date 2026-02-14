@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { IssueRowComponent } from '../../shared/components/issue-row/issue-row'
 import { CreateIssueModal } from '../create-issue-modal/create-issue-modal'
+import { NoIssuesYetComponent } from '../no-issues-yet/no-issues-yet.component'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { WebSocketService } from '../../core/realtime/websocket.service'
@@ -19,7 +20,7 @@ import { IssueDto, MembershipDto, PageResponse, ProjectDto } from '../../models/
 @Component({
   selector: 'app-projects-project-issue-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, SidebarComponent, IssueRowComponent, CreateIssueModal],
+  imports: [CommonModule, FormsModule, RouterLink, SidebarComponent, IssueRowComponent, CreateIssueModal, NoIssuesYetComponent],
   templateUrl: './projects-project-issue-list.html',
   styleUrls: ['./projects-project-issue-list.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

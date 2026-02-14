@@ -1,0 +1,61 @@
+<!-- No Issues Yet Empty State -->
+<div class="no-issues-yet-container">
+  <section class="empty-state-section">
+    <div class="empty-state-content">
+      <!-- Illustration -->
+      <div class="illustration-wrapper">
+        <img
+          class="illustration-image"
+          loading="lazy"
+          alt="Empty folder illustration"
+          src="/assets/images/div@2x.png"
+          aria-hidden="true"
+        />
+      </div>
+
+      <!-- Heading -->
+      <div class="heading-wrapper">
+        <h2 class="empty-state-title">No issues yet</h2>
+      </div>
+
+      <!-- Description -->
+      <div class="description-wrapper">
+        <div class="description-content">
+          <p class="description-text">
+            Get started by creating your first project. Organize your
+            <br />
+            work, collaborate with your team, and track progress all in
+            <br />
+            one place.
+          </p>
+        </div>
+      </div>
+
+      <!-- Create Issue Button -->
+      <button
+        class="create-issue-button"
+        (click)="onCreateFirstIssue()"
+        aria-label="Create your first issue"
+      >
+        <div class="button-content">
+          <img class="button-icon" alt="" src="/assets/images/i.svg" aria-hidden="true" />
+          <span class="button-text">Create Your First Issue</span>
+        </div>
+      </button>
+
+      <!-- Getting Started Link -->
+      <div class="help-section">
+        <p class="help-text">Need help?</p>
+        <div class="help-link-wrapper">
+          <button
+            class="help-link"
+            (click)="onViewGettingStarted()"
+            aria-label="View our getting started guide"
+          >
+            <span class="help-link-text">View our getting started guide</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -81,192 +81,200 @@
 
               <!-- Issues List Content -->
               <div class="main2">
-                <!-- Filter Bar -->
-                <div class="div33">
-                  <div class="div34">
-                    <div class="div35">
-                      <img class="i-icon8" alt="Filter icon" src="/assets/images/i7.svg" />
-                      <div class="input2">
+                <!-- Empty State: Show when no issues exist -->
+                @if (issueRows.length === 0 && !isLoading()) {
+                  <app-no-issues-yet (createIssueRequested)="onOpenCreateIssue()"></app-no-issues-yet>
+                }
+
+                <!-- Loaded Issues Content -->
+                @if (issueRows.length > 0) {
+                  <!-- Filter Bar -->
+                  <div class="div33">
+                    <div class="div34">
+                      <div class="div35">
+                        <img class="i-icon8" alt="Filter icon" src="/assets/images/i7.svg" />
+                        <div class="input2">
+                          <input
+                            class="filter-by-title"
+                            placeholder="Filter by title..."
+                            type="text"
+                            aria-label="Filter issues by title"
+                            [(ngModel)]="searchQuery"
+                            (ngModelChange)="onSearchChange()"
+                          />
+                        </div>
+                      </div>
+                      <div class="select">
+                        <select class="filter-select" [(ngModel)]="statusFilter" (ngModelChange)="onFiltersChange()">
+                          <option value="">All Status</option>
+                          <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
+                        </select>
+                        <div class="frame">
+                          <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
+                        </div>
+                      </div>
+                      <div class="select2">
+                        <select class="filter-select" [(ngModel)]="priorityFilter" (ngModelChange)="onFiltersChange()">
+                          <option value="">All Priority</option>
+                          <option *ngFor="let option of priorityOptions" [value]="option">{{ option }}</option>
+                        </select>
+                        <div class="frame">
+                          <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
+                        </div>
+                      </div>
+                      <div class="select">
+                        <select
+                          class="filter-select"
+                          [(ngModel)]="assigneeFilter"
+                          (ngModelChange)="onFiltersChange()"
+                        >
+                          <option *ngFor="let option of assigneeOptions()" [value]="option.value">
+                            {{ option.label }}
+                          </option>
+                        </select>
+                        <div class="frame">
+                          <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
+                        </div>
+                      </div>
+                      <div class="select">
                         <input
                           class="filter-by-title"
-                          placeholder="Filter by title..."
+                          placeholder="Tag"
                           type="text"
-                          aria-label="Filter issues by title"
-                          [(ngModel)]="searchQuery"
-                          (ngModelChange)="onSearchChange()"
+                          aria-label="Filter by tag"
+                          [(ngModel)]="tagQuery"
+                          (ngModelChange)="onFiltersChange()"
                         />
                       </div>
-                    </div>
-                    <div class="select">
-                      <select class="filter-select" [(ngModel)]="statusFilter" (ngModelChange)="onFiltersChange()">
-                        <option value="">All Status</option>
-                        <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
-                      </select>
-                      <div class="frame">
-                        <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                      </div>
-                    </div>
-                    <div class="select2">
-                      <select class="filter-select" [(ngModel)]="priorityFilter" (ngModelChange)="onFiltersChange()">
-                        <option value="">All Priority</option>
-                        <option *ngFor="let option of priorityOptions" [value]="option">{{ option }}</option>
-                      </select>
-                      <div class="frame">
-                        <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                      </div>
-                    </div>
-                    <div class="select">
-                      <select
-                        class="filter-select"
-                        [(ngModel)]="assigneeFilter"
-                        (ngModelChange)="onFiltersChange()"
-                      >
-                        <option *ngFor="let option of assigneeOptions()" [value]="option.value">
-                          {{ option.label }}
-                        </option>
-                      </select>
-                      <div class="frame">
-                        <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                      </div>
-                    </div>
-                    <div class="select">
-                      <input
-                        class="filter-by-title"
-                        placeholder="Tag"
-                        type="text"
-                        aria-label="Filter by tag"
-                        [(ngModel)]="tagQuery"
-                        (ngModelChange)="onFiltersChange()"
-                      />
-                    </div>
-                    <div class="select4">
-                      <select class="filter-select" [(ngModel)]="sortFilter" (ngModelChange)="onFiltersChange()">
-                        <option value="">Sort: Updated</option>
-                        <option *ngFor="let option of sortOptions" [value]="option">{{ option }}</option>
-                      </select>
-                      <div class="frame">
-                        <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                      </div>
-                    </div>
-                    <div class="div36"></div>
-                    <button
-                      class="button4"
-                      aria-label="Create new issue"
-                      type="button"
-                      (click)="onOpenCreateIssue()"
-                    >
-                      <img class="i-icon9" alt="Plus icon" src="/assets/images/i8.svg" />
-                      <div class="new-issue">New Issue</div>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Issues Table -->
-                <div class="div37">
-                  <div class="div38">
-                    <!-- Table Header -->
-                    <div class="div39">
-                      <div class="frame5">
-                        <div class="div40">
-                          <div class="issue">Issue</div>
+                      <div class="select4">
+                        <select class="filter-select" [(ngModel)]="sortFilter" (ngModelChange)="onFiltersChange()">
+                          <option value="">Sort: Updated</option>
+                          <option *ngFor="let option of sortOptions" [value]="option">{{ option }}</option>
+                        </select>
+                        <div class="frame">
+                          <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
                         </div>
                       </div>
-                      <div class="frame6">
-                        <div class="div40">
-                          <div class="issue">Status</div>
-                        </div>
-                      </div>
-                      <div class="frame7">
-                        <div class="div40">
-                          <div class="recent-projects">Priority</div>
-                        </div>
-                      </div>
-                      <div class="frame8">
-                        <div class="div40">
-                          <div class="issue">Assignee</div>
-                        </div>
-                      </div>
-                      <div class="frame9">
-                        <div class="div40">
-                          <div class="issue">Updated</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Table Rows -->
-                    @for (item of issueRows; track item.id) {
-                    <div
-                      class="issue-row-wrapper"
-                      (click)="onIssueSelected(item.id)"
-                      (keydown.enter)="onIssueSelected(item.id)"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <app-issue-row
-                        [issueId]="item.id.toString()"
-                        [issueTitle]="item.title"
-                        [category]="''"
-                        [type]="''"
-                        [statusLabel]="item.status"
-                        [priorityLabel]="item.priority"
-                        [assigneeAvatar]="'/assets/images/img.svg'"
-                        [assigneeName]="toAssigneeLabel(item.assigneeUserId)"
-                        [updatedTime]="item.updatedAt"
-                        [borderBottom]="''"
-                        [padding]="''"
-                        [titleFlex]="''"
-                        [categoryPadding]="''"
-                        [categoryColor]="''"
-                        [categoryFlex]="''"
-                        [categoryDisplay]="''"
-                        [typeWidth]="''"
-                        [typeColor]="''"
-                        [typeDisplay]="''"
-                        [typeFlex]="''"
-                        [statusBgColor]="''"
-                        [statusPadding]="''"
-                        [statusColor]="''"
-                        [priorityBgColor]="''"
-                        [priorityPadding]="''"
-                        [priorityColor]="''"
-                        [assigneeOverflow]="''"
-                        [assigneeColor]="''"
-                        [timelineFlex]="''"
-                      ></app-issue-row>
-                    </div>
-                    }
-                  </div>
-
-                  <!-- Pagination -->
-                  <div class="div45">
-                    <div class="div46">
-                      <div class="showing">{{ paginationLabel() }}</div>
-                    </div>
-                    <div class="div50">
+                      <div class="div36"></div>
                       <button
-                        class="button5"
-                        aria-label="Previous page"
+                        class="button4"
+                        aria-label="Create new issue"
                         type="button"
-                        (click)="onPrevPage()"
-                        [disabled]="!hasPrevPage"
+                        (click)="onOpenCreateIssue()"
                       >
-                        <img class="button-icon2" alt="Previous page" src="/assets/images/button1.svg" />
-                      </button>
-                      <button class="button6" aria-label="Current page" type="button" aria-current="page">
-                        <div class="div52">{{ currentPage() }}</div>
-                      </button>
-                      <button
-                        class="button7"
-                        aria-label="Next page"
-                        type="button"
-                        (click)="onNextPage()"
-                        [disabled]="!hasNextPage"
-                      >
-                        <img class="button-icon3" alt="Next page" src="/assets/images/button2.svg" />
+                        <img class="i-icon9" alt="Plus icon" src="/assets/images/i8.svg" />
+                        <div class="new-issue">New Issue</div>
                       </button>
                     </div>
                   </div>
-                </div>
+
+                  <!-- Issues Table -->
+                  <div class="div37">
+                    <div class="div38">
+                      <!-- Table Header -->
+                      <div class="div39">
+                        <div class="frame5">
+                          <div class="div40">
+                            <div class="issue">Issue</div>
+                          </div>
+                        </div>
+                        <div class="frame6">
+                          <div class="div40">
+                            <div class="issue">Status</div>
+                          </div>
+                        </div>
+                        <div class="frame7">
+                          <div class="div40">
+                            <div class="recent-projects">Priority</div>
+                          </div>
+                        </div>
+                        <div class="frame8">
+                          <div class="div40">
+                            <div class="issue">Assignee</div>
+                          </div>
+                        </div>
+                        <div class="frame9">
+                          <div class="div40">
+                            <div class="issue">Updated</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Table Rows -->
+                      @for (item of issueRows; track item.id) {
+                      <div
+                        class="issue-row-wrapper"
+                        (click)="onIssueSelected(item.id)"
+                        (keydown.enter)="onIssueSelected(item.id)"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <app-issue-row
+                          [issueId]="item.id.toString()"
+                          [issueTitle]="item.title"
+                          [category]="''"
+                          [type]="''"
+                          [statusLabel]="item.status"
+                          [priorityLabel]="item.priority"
+                          [assigneeAvatar]="'/assets/images/img.svg'"
+                          [assigneeName]="toAssigneeLabel(item.assigneeUserId)"
+                          [updatedTime]="item.updatedAt"
+                          [borderBottom]="''"
+                          [padding]="''"
+                          [titleFlex]="''"
+                          [categoryPadding]="''"
+                          [categoryColor]="''"
+                          [categoryFlex]="''"
+                          [categoryDisplay]="''"
+                          [typeWidth]="''"
+                          [typeColor]="''"
+                          [typeDisplay]="''"
+                          [typeFlex]="''"
+                          [statusBgColor]="''"
+                          [statusPadding]="''"
+                          [statusColor]="''"
+                          [priorityBgColor]="''"
+                          [priorityPadding]="''"
+                          [priorityColor]="''"
+                          [assigneeOverflow]="''"
+                          [assigneeColor]="''"
+                          [timelineFlex]="''"
+                        ></app-issue-row>
+                      </div>
+                      }
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="div45">
+                      <div class="div46">
+                        <div class="showing">{{ paginationLabel() }}</div>
+                      </div>
+                      <div class="div50">
+                        <button
+                          class="button5"
+                          aria-label="Previous page"
+                          type="button"
+                          (click)="onPrevPage()"
+                          [disabled]="!hasPrevPage"
+                        >
+                          <img class="button-icon2" alt="Previous page" src="/assets/images/button1.svg" />
+                        </button>
+                        <button class="button6" aria-label="Current page" type="button" aria-current="page">
+                          <div class="div52">{{ currentPage() }}</div>
+                        </button>
+                        <button
+                          class="button7"
+                          aria-label="Next page"
+                          type="button"
+                          (click)="onNextPage()"
+                          [disabled]="!hasNextPage"
+                        >
+                          <img class="button-icon3" alt="Next page" src="/assets/images/button2.svg" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
           </div>

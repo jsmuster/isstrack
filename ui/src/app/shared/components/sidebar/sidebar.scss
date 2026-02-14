@@ -1,6 +1,7 @@
 .sidebar {
   align-self: stretch;
   width: 256px;
+  min-height: 100%;
   background-color: var(--color-white);
   border-right: 1px solid var(--color-gainsboro);
   box-sizing: border-box;
@@ -21,6 +22,7 @@
   align-items: center;
   padding: 15.5px 23.9px;
   font-size: var(--fs-18);
+  flex-shrink: 0;
 
   .logo-container {
     flex: 1;
@@ -56,8 +58,8 @@
   flex: 1;
   background-color: var(--color-gray-300);
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: stretch;
   padding: 23.9px var(--padding-0);
   color: var(--color-dimgray);
   overflow-y: auto;
@@ -69,6 +71,7 @@
     align-items: flex-start;
     gap: var(--gap-4);
     max-width: 223px;
+    justify-content: flex-start;
   }
 }
 
@@ -221,6 +224,7 @@
   align-items: center;
   justify-content: center;
   padding: 16px var(--padding-0);
+  flex-shrink: 0;
 
   .user-profile {
     flex: 1;

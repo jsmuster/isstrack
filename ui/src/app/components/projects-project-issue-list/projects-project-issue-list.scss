@@ -17,7 +17,7 @@
     height: 1024px;
     background-color: var(--color-whitesmoke-100);
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     flex-shrink: 0;
 
     .div {
@@ -25,10 +25,12 @@
       background-color: var(--color-gray-400);
       overflow: hidden;
       display: flex;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      align-content: flex-start;
+      align-items: stretch;
       gap: 0px;
+
+      app-sidebar {
+        display: contents;
+      }
 
       .aside {
         align-self: stretch;
@@ -589,8 +591,9 @@
   background-color: var(--color-gray-400);
   overflow: hidden;
   display: flex;
-  align-items: flex-start;
-  padding: var(--padding-0) var(--padding-0) 126px;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1;
 
   .div28 {
     flex: 1;
@@ -601,7 +604,7 @@
     padding: var(--padding-32) var(--padding-0) var(--padding-0);
     box-sizing: border-box;
     gap: var(--gap-24);
-    max-height: 834px;
+    overflow-y: auto;
 
     .div29 {
       width: 100%;
@@ -626,8 +629,8 @@
       align-self: stretch;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      flex-shrink: 0;
+      align-items: stretch;
+      flex: 1;
       text-align: center;
       font-size: var(--fs-14);
       color: var(--color-dimgray);
@@ -639,6 +642,7 @@
         align-items: center;
         justify-content: center;
         padding: var(--padding-0) var(--padding-30);
+        flex-shrink: 0;
       }
 
       .main2 {
@@ -647,8 +651,8 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        padding: var(--padding-0) var(--padding-0) 232px;
+        align-items: stretch;
+        flex: 1;
         text-align: left;
         color: var(--color-darkslategray);
       }
