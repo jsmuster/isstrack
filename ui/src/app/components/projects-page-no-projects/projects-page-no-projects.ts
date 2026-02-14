@@ -1,29 +1,30 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar';
-import { ProjectsApi } from '../../features/projects/data/projects.api';
+import { CreateNewProjectModalComponent } from '../create-new-project-modal/create-new-project-modal.component';
+import { ProjectDto } from '../../models/api.models';
 
 @Component({
   selector: 'projects-page-no-projects',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent],
+  imports: [CommonModule, FormsModule, SidebarComponent, CreateNewProjectModalComponent],
   templateUrl: './projects-page-no-projects.html',
   styleUrls: ['./projects-page-no-projects.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsPageNoProjects {
   searchQuery = '';
   role = 'OWNER';
   showNotifications = false
+  isCreateProjectOpen = signal(false)
   notifications = [
     { id: 'notif-1', message: 'Welcome to IssueTracker', time: 'Just now' },
     { id: 'notif-2', message: 'Invite teammates to get started', time: '5m ago' },
   ]
 
-  constructor(private readonly projectsApi: ProjectsApi, private readonly router: Router) {}
+  constructor(private readonly router: Router) {}
 
   onSearch(query: string) {
     this.searchQuery = query;
@@ -31,11 +32,11 @@ export class ProjectsPageNoProjects {
   }
 
   onNewProject() {
-    this.createProject();
+    this.isCreateProjectOpen.set(true)
   }
 
   onCreateFirstProject() {
-    this.createProject();
+    this.isCreateProjectOpen.set(true)
   }
 
   onViewGettingStarted() {
@@ -50,15 +51,12 @@ export class ProjectsPageNoProjects {
     console.log('Settings clicked');
   }
 
-  private createProject(): void {
-    const name = window.prompt('Project name')
-    if (!name) {
-      return
-    }
-    this.projectsApi.createProject({ name }).subscribe({
-      next: (project) => {
-        this.router.navigate(['/app/projects', project.id, 'issues'])
-      }
-    })
+  onCreateProjectClosed(): void {
+    this.isCreateProjectOpen.set(false)
+  }
+
+  onProjectCreated(project: ProjectDto): void {
+    this.isCreateProjectOpen.set(false)
+    this.router.navigate(['/app/projects', project.id, 'issues'])
   }
 }

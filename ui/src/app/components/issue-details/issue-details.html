@@ -41,12 +41,14 @@
       <div class="content-area">
         <div class="issue-container">
           <!-- Issue Number and Title -->
-          <div class="issue-header">
-            <div class="issue-number-section">
-              <img class="issue-icon" alt="" src="/assets/images/Vector.svg" />
-              <h3 class="issue-number">Issue #{{ issueData().id }}</h3>
-            </div>
-          </div>
+           <div class="issue-header">
+             <div class="issue-number-section">
+               <button class="back-button" type="button" (click)="onGoBack()" aria-label="Go back to issues">
+                 <img class="issue-icon" alt="Back" src="/assets/images/Vector.svg" />
+               </button>
+               <h3 class="issue-number">Issue #{{ issueData().id }}</h3>
+             </div>
+           </div>
 
           <!-- Content Grid -->
           <div class="content-grid">

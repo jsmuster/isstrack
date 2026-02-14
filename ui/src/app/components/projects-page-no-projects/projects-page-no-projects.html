@@ -92,3 +92,9 @@
     </section>
   </main>
 </div>
+
+<app-create-new-project-modal
+  *ngIf="isCreateProjectOpen()"
+  (closed)="onCreateProjectClosed()"
+  (created)="onProjectCreated($event)"
+></app-create-new-project-modal>

@@ -24,6 +24,7 @@
                 type="text"
                 placeholder="Search issues..."
                 [(ngModel)]="searchIssuesQuery"
+                name="searchIssuesQuery"
                 (input)="onSearchIssues($event.target.value)"
               />
             </div>
@@ -90,6 +91,7 @@
                     type="text"
                     placeholder="Search projects..."
                     [(ngModel)]="searchProjectsQuery"
+                    name="searchProjectsQuery"
                     (input)="onSearchProjects($event.target.value)"
                   />
                 </div>
@@ -173,3 +175,9 @@
     </section>
   </main>
 </div>
+
+<app-create-new-project-modal
+  *ngIf="isCreateProjectOpen()"
+  (closed)="onCreateProjectClosed()"
+  (created)="onProjectCreated($event)"
+></app-create-new-project-modal>

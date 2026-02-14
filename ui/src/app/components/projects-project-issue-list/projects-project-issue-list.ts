@@ -22,8 +22,7 @@ import { IssueDto, MembershipDto, PageResponse, ProjectDto } from '../../models/
   imports: [CommonModule, FormsModule, RouterLink, SidebarComponent, IssueRowComponent, CreateIssueModal],
   templateUrl: './projects-project-issue-list.html',
   styleUrls: ['./projects-project-issue-list.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsProjectIssueList implements OnInit, OnDestroy {
   project = signal<ProjectDto | null>(null)
@@ -133,10 +132,14 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
   }
 
   toggleNotifications(): void {
-    this.showNotifications.update((value) => !value)
-  }
+     this.showNotifications.update((value) => !value)
+   }
 
-  onOpenCreateIssue(): void {
+   onGoBack(): void {
+     this.router.navigate(['/app/projects'])
+   }
+
+   onOpenCreateIssue(): void {
     this.isCreateIssueOpen.set(true)
   }
 

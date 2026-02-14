@@ -34,7 +34,9 @@
         <section class="page-header" role="region" aria-label="Page header">
           <div class="header-content">
             <div class="header-title">
-              <img class="header-icon-vector" alt="" src="/assets/images/Vector.svg" />
+              <button class="back-button" type="button" (click)="onGoBack()" aria-label="Go back to members">
+                <img class="header-icon-vector" alt="Back" src="/assets/images/Vector.svg" />
+              </button>
               <h2 class="page-title-main">Invite members</h2>
             </div>
             <p class="header-description">Add people to this project by searching users or inviting by email.</p>

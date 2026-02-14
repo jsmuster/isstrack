@@ -11,8 +11,7 @@ type InviteStatus = 'ready' | 'accepted' | 'error'
   imports: [CommonModule],
   templateUrl: './invitation-page.html',
   styleUrls: ['./invitation-page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InvitationPage implements OnInit {
   inviteStatus: InviteStatus = 'ready'

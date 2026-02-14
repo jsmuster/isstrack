@@ -18,8 +18,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './activity-item.html',
   styleUrls: ['./activity-item.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivityItem {
   // Input props

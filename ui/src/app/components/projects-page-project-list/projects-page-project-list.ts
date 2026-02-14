@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { ProjectCardComponent } from '../../shared/components/project-card/project-card'
+import { CreateNewProjectModalComponent } from '../create-new-project-modal/create-new-project-modal.component'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { PageResponse, ProjectDto } from '../../models/api.models'
 
 @Component({
   selector: 'projects-page-project-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent, ProjectCardComponent],
+  imports: [CommonModule, FormsModule, SidebarComponent, ProjectCardComponent, CreateNewProjectModalComponent],
   templateUrl: './projects-page-project-list.html',
   styleUrls: ['./projects-page-project-list.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsPageProjectList implements OnInit {
   searchIssuesQuery = ''
@@ -28,6 +28,7 @@ export class ProjectsPageProjectList implements OnInit {
   isLoading = signal(false)
   errorMessage = signal('')
   showNotifications = signal(false)
+  isCreateProjectOpen = signal(false)
   notifications = [
     { id: 'notif-1', message: 'New project created', time: 'Just now' },
     { id: 'notif-2', message: 'Issue updated in workspace', time: '15m ago' },
@@ -73,14 +74,7 @@ export class ProjectsPageProjectList implements OnInit {
   }
 
   onNewProject() {
-    const name = window.prompt('Project name')
-    if (!name) {
-      return
-    }
-    this.projectsApi.createProject({ name }).subscribe({
-      next: (project) => this.router.navigate(['/app/projects', project.id, 'issues']),
-      error: () => this.errorMessage.set('Unable to create project.')
-    })
+    this.isCreateProjectOpen.set(true)
   }
 
   onNotificationClick() {
@@ -89,6 +83,15 @@ export class ProjectsPageProjectList implements OnInit {
 
   onSettingsClick() {
     console.log('Settings clicked')
+  }
+
+  onCreateProjectClosed(): void {
+    this.isCreateProjectOpen.set(false)
+  }
+
+  onProjectCreated(project: ProjectDto): void {
+    this.isCreateProjectOpen.set(false)
+    this.router.navigate(['/app/projects', project.id, 'issues'])
   }
 
   private loadProjects(pageIndex: number) {

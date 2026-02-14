@@ -5,6 +5,7 @@
 
   /* Color */
   --color-aliceblue: #e2e8f0;
+  --color-darkslategray: #475569;
   --color-darkslategray-100: #475569;
   --color-darkslategray-200: #334155;
   --color-gray-100: #0f172a;
@@ -13,41 +14,108 @@
   --color-lightgray-100: #cbd5e1;
   --color-lightgray-200: #ced4da;
   --color-royalblue: #2563eb;
+  --color-royalblue-100: #2563eb;
+  --color-royalblue-200: #1e40af;
   --color-slategray: #64748b;
   --color-white: #fff;
   --color-whitesmoke: #f9fafb;
+  --color-whitesmoke-100: #f9fafb;
+  --color-whitesmoke-200: #f1f5f9;
+  --color-gainsboro: #e2e8f0;
+  --color-dimgray: #64748b;
+  --color-black: #000;
+  --color-honeydew: #f0fdf4;
+  --color-seagreen-200: #16a34a;
+  --color-mistyrose: #ffe4e6;
+  --color-brown: #78350f;
+  --color-forestgreen: #16a34a;
+  --color-mediumslateblue: #7c3aed;
 
   /* Gap */
+  --gap-4: 4px;
+  --gap-4_1: 4px;
+  --gap-7: 7px;
   --gap-8: 8px;
+  --gap-10: 10px;
+  --gap-10_7: 10.7px;
+  --gap-11_9: 11.9px;
+  --gap-12: 12px;
+  --gap-15: 15px;
+  --gap-16: 16px;
+  --gap-24: 24px;
+  --gap-0: 0px;
 
   /* Padding */
   --padding-0: 0px;
   --padding-1: 1px;
   --padding-2: 2px;
+  --padding-3: 3px;
+  --padding-4: 4px;
+  --padding-5: 5px;
+  --padding-8: 8px;
+  --padding-9: 9px;
+  --padding-10: 10px;
+  --padding-11_9: 11.9px;
   --padding-12: 12px;
+  --padding-14: 14px;
   --padding-20: 20px;
+  --padding-24: 24px;
   --padding-30: 30px;
 
   /* BorderRadius */
+  --br-4: 4px;
+  --br-6: 6px;
   --br-8: 8px;
+  --br-9999: 9999px;
+  --br-12: 12px;
+
+  /* Border */
+  --border-1: 1px solid #e2e8f0;
 
   /* Font */
   --font-inter: Inter;
 
   /* FontSize */
+  --fs-12: 12px;
   --fs-14: 14px;
   --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-20: 20px;
+  --fs-30: 30px;
 
   /* WidthHeights */
+  --height-12: 12px;
+  --height-15: 15px;
+  --height-16: 16px;
+  --height-17: 17px;
+  --height-20: 20px;
   --height-24: 24px;
+  --height-32: 32px;
+  --height-36: 36px;
+  --height-40: 40px;
+  --width-12: 12px;
+  --width-12_3: 12.3px;
+  --width-14: 14px;
+  --width-20: 20px;
+  --width-24: 24px;
   --width-26: 26px;
+  --width-32: 32px;
+  --width-36: 36px;
+  --width-40: 40px;
 
   /* LineHeights */
+  --lh-15: 15px;
+  --lh-16: 16px;
+  --lh-17: 17px;
   --lh-20: 20px;
   --lh-24: 24px;
+  --lh-28: 28px;
 
   /* LetterSpacings */
   --ls--0_5: -0.5px;
+
+  /* Min-width */
+  --min-w-310: 310px;
 }
 
 * {

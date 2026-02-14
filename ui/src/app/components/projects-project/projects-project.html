@@ -15,9 +15,11 @@
             <div class="project-header">
               <div class="project-info">
                 <div class="project-title-section">
-                  <img class="back-icon" alt="Back" src="assets/Vector.svg" />
-                  <h2 class="project-name">{{ project()?.name || 'Project' }}</h2>
-                </div>
+                   <button class="back-button" type="button" (click)="onGoBack()" aria-label="Go back">
+                     <img class="back-icon" alt="Back" src="assets/Vector.svg" />
+                   </button>
+                   <h2 class="project-name">{{ project()?.name || 'Project' }}</h2>
+                 </div>
                 <p class="project-description">
                   {{ project()?.name ? '' : 'Loading project details...' }}
                 </p>

@@ -10,8 +10,7 @@ import { AuthService } from '../../core/auth/auth.service'
   imports: [CommonModule, FormsModule],
   templateUrl: './login-page.html',
   styleUrls: ['./login-page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPage {
   usernameOrEmail = ''

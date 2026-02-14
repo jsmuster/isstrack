@@ -24,8 +24,7 @@ interface MemberRow {
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SidebarComponent],
   templateUrl: './members.html',
   styleUrls: ['./members.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Members implements OnInit {
   // Search and filter form

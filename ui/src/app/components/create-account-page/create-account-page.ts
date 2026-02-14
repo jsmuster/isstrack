@@ -10,8 +10,7 @@ import { AuthService } from '../../core/auth/auth.service'
   imports: [CommonModule, FormsModule],
   templateUrl: './create-account-page.html',
   styleUrls: ['./create-account-page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateAccountPage {
   email = ''

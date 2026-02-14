@@ -40,8 +40,7 @@ interface AssigneeOption {
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './create-issue-modal.html',
   styleUrls: ['./create-issue-modal.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateIssueModal implements OnInit {
   // Form group

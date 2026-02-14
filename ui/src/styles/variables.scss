@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/**
+ * Global CSS Variables and Styles
+ * Contains design system tokens for colors, typography, spacing, and more
+ */
+
+:root {
+  /* ============================================
+     Color Palette
+     ============================================ */
+  --color-aliceblue: #eff6ff;
+  --color-crimson: #ef4444;
+  --color-darkslategray: #374151;
+  --color-dimgray: #4b5563;
+  --color-dodgerblue: #3b82f6;
+  --color-gainsboro: #e5e7eb;
+  --color-gray-100: #111827;
+  --color-gray-200: rgba(0, 0, 0, 0.5);
+  --color-gray-300: rgba(0, 0, 0, 0);
+  --color-lavender: #dbeafe;
+  --color-lightgray-100: #d1d5db;
+  --color-lightgray-200: #ced4da;
+  --color-slateblue: #1e40af;
+  --color-slategray: #6b7280;
+  --color-white: #fff;
+  --color-whitesmoke: #f9fafb;
+
+  /* ============================================
+     Border Radius
+     ============================================ */
+  --br-6: 6px;
+  --br-8: 8px;
+
+  /* ============================================
+     Typography
+     ============================================ */
+  --font-inter: 'Inter', sans-serif;
+
+  /* Font Sizes */
+  --fs-12: 12px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+
+  /* Line Heights */
+  --lh-16: 16px;
+  --lh-20: 20px;
+  --lh-24: 24px;
+  --lh-28: 28px;
+
+  /* Letter Spacing */
+  --ls--0_5: -0.5px;
+
+  /* ============================================
+     Borders
+     ============================================ */
+  --border-1: 1px solid var(--color-lightgray-100);
+
+  /* ============================================
+     Spacing (Width & Height)
+     ============================================ */
+  --height-20: 20px;
+  --height-28: 28px;
+  --height-36: 36px;
+  --height-80: 80px;
+  --width-20: 20px;
+  --width-512: 512px;
+
+  /* ============================================
+     Shadows
+     ============================================ */
+  --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0px 8px 10px rgba(0, 0, 0, 0.1), 0px 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   Reset and Base Styles
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: var(--font-inter);
+  font-size: var(--fs-14);
+  line-height: var(--lh-20);
+  color: var(--color-gray-100);
+  background-color: var(--color-white);
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-dodgerblue);
+  outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

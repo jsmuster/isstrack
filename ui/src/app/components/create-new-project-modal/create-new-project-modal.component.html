@@ -1,0 +1,210 @@
+<div class="create-new-project-modal" role="dialog" aria-labelledby="modal-title">
+  <main class="modal-body">
+    <section class="modal-wrapper">
+      <div class="modal-container">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <div class="header-content">
+            <h2 id="modal-title" class="modal-title">Create New Project</h2>
+            <p class="modal-subtitle">Set up a workspace to track issues and collaborate.</p>
+          </div>
+          <button
+            type="button"
+            class="close-button"
+            aria-label="Close modal"
+            (click)="onCancel()"
+          >
+            <img src="/assets/images/button.svg" alt="" aria-hidden="true" />
+          </button>
+        </div>
+
+        <!-- Form Section -->
+        <form [formGroup]="projectForm" class="project-form">
+          <!-- Project Name Field -->
+          <div class="form-group">
+            <label for="project-name" class="form-label">
+              <span>Project Name</span>
+              <span class="required-asterisk" aria-label="required">*</span>
+            </label>
+            <div class="form-input">
+              <input
+                id="project-name"
+                type="text"
+                formControlName="projectName"
+                placeholder="Enter project name"
+                class="input-field"
+                required
+                aria-required="true"
+              />
+            </div>
+          </div>
+
+          <!-- Description Field -->
+          <div class="form-group">
+            <label for="project-description" class="form-label">Description</label>
+            <div class="textarea-wrapper">
+              <textarea
+                id="project-description"
+                formControlName="description"
+                placeholder="Describe the purpose of this project..."
+                class="textarea-field"
+                aria-describedby="char-count"
+              ></textarea>
+            </div>
+            <div class="char-counter" id="char-count">
+              {{ descriptionCharCount() }}/{{ descriptionMaxChars }}
+            </div>
+          </div>
+
+          <!-- Visibility Field -->
+          <div class="form-group">
+            <fieldset class="visibility-fieldset">
+              <legend class="form-label">Visibility</legend>
+
+              <!-- Private Option -->
+              <div class="visibility-option">
+                <div class="radio-input">
+                  <input
+                    id="visibility-private"
+                    type="radio"
+                    formControlName="visibility"
+                    value="private"
+                    class="radio-button"
+                  />
+                  <label for="visibility-private" class="radio-label">
+                    <span class="lock-icon">🔒</span>
+                    <span class="radio-text">
+                      <strong>Private</strong>
+                      <span class="radio-description">Only invited members can access.</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Public Option -->
+              <div class="visibility-option">
+                <div class="radio-input">
+                  <input
+                    id="visibility-public"
+                    type="radio"
+                    formControlName="visibility"
+                    value="public"
+                    class="radio-button"
+                  />
+                  <label for="visibility-public" class="radio-label">
+                    <span class="globe-icon">🌐</span>
+                    <span class="radio-text">
+                      <strong>Public</strong>
+                      <span class="radio-description">Anyone in workspace can view.</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <!-- Owner Field -->
+          <div class="form-group">
+            <label class="form-label">Owner</label>
+            <div class="owner-display">
+              <img
+                [src]="currentUser.avatar"
+                alt=""
+                class="owner-avatar"
+                aria-hidden="true"
+              />
+              <span class="owner-name">{{ currentUser.name }}</span>
+            </div>
+          </div>
+
+          <!-- Invite Members Field -->
+          <div class="form-group">
+            <label for="member-search" class="form-label">Invite Members</label>
+            <div class="form-input">
+              <input
+                id="member-search"
+                type="text"
+                [ngModel]="memberSearchTerm()"
+                (ngModelChange)="memberSearchTerm.set($event)"
+                placeholder="Type to search members..."
+                class="input-field"
+                ngModelOptions="{ updateOn: 'input' }"
+                aria-label="Search for members to invite"
+              />
+            </div>
+
+            <!-- Selected Members List -->
+            <div class="members-list" role="list">
+              <div
+                *ngFor="let member of filteredMembers"
+                class="member-item"
+                role="listitem"
+              >
+                <div class="member-checkbox">
+                  <input
+                    [id]="'member-' + member.id"
+                    type="checkbox"
+                    [checked]="isMemberSelected(member.id)"
+                    (change)="toggleMemberSelection(member.id)"
+                    class="checkbox-input"
+                    [attr.aria-label]="'Select ' + member.name"
+                  />
+                  <label [for]="'member-' + member.id" class="member-label">
+                    <span class="member-name">{{ member.name }}</span>
+                  </label>
+                </div>
+                <button
+                  type="button"
+                  class="remove-button"
+                  aria-label="Remove {{ member.name }}"
+                  (click)="toggleMemberSelection(member.id)"
+                >
+                  <img src="/assets/images/button1.svg" alt="" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+
+            <!-- Helper Text -->
+            <p class="helper-text">You can add more members later.</p>
+          </div>
+
+          <!-- Advanced Settings -->
+          <div class="form-group advanced-settings-group">
+            <button
+              type="button"
+              class="advanced-settings-button"
+              (click)="onAdvancedSettings()"
+              aria-label="Open advanced settings"
+            >
+              <span>Advanced Settings</span>
+              <img src="/assets/images/i.svg" alt="" aria-hidden="true" />
+            </button>
+          </div>
+        </form>
+
+        <p class="error-message" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onCancel()"
+            aria-label="Cancel project creation"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!projectForm.valid || isSubmitting()"
+            (click)="onCreateProject()"
+            aria-label="Create new project"
+          >
+            {{ isSubmitting() ? 'Creating...' : 'Create Project' }}
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

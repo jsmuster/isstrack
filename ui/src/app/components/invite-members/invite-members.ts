@@ -43,8 +43,7 @@ interface InvitedRecipient {
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SidebarComponent],
   templateUrl: './invite-members.html',
   styleUrls: ['./invite-members.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InviteMembers implements OnInit {
   // Form groups
@@ -218,14 +217,23 @@ export class InviteMembers implements OnInit {
   }
 
   /**
-   * Cancels the invite operation
-   */
-  onCancel(): void {
-    this.resetForm();
-    if (this.projectId) {
-      this.router.navigate(['/app/projects', this.projectId, 'members']);
-    }
-  }
+    * Goes back to members page
+    */
+   onGoBack(): void {
+     if (this.projectId) {
+       this.router.navigate(['/app/projects', this.projectId, 'members']);
+     }
+   }
+
+   /**
+    * Cancels the invite operation
+    */
+   onCancel(): void {
+     this.resetForm();
+     if (this.projectId) {
+       this.router.navigate(['/app/projects', this.projectId, 'members']);
+     }
+   }
 
   /**
    * Resets all form fields and state

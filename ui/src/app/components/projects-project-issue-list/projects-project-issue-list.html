@@ -49,9 +49,11 @@
             <div class="div29">
               <div class="div30">
                 <div class="vector-parent">
-                  <img class="vector-icon" alt="Project icon" src="/assets/images/Vector.svg" />
-                  <h3 class="e-commerce-platform">{{ project()?.name || 'Project' }}</h3>
-                </div>
+                   <button class="back-button" type="button" (click)="onGoBack()" aria-label="Go back to projects">
+                     <img class="vector-icon" alt="Back" src="/assets/images/Vector.svg" />
+                   </button>
+                   <h3 class="e-commerce-platform">{{ project()?.name || 'Project' }}</h3>
+                 </div>
                 <div class="main-e-commerce-application-wi-wrapper">
                   <div class="main-e-commerce-application">
                     {{ project()?.name ? '' : 'Loading project details...' }}

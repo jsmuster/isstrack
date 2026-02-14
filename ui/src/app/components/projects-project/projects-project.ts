@@ -11,8 +11,7 @@ import { ProjectDto } from '../../models/api.models'
   imports: [CommonModule, SidebarComponent],
   templateUrl: './projects-project.html',
   styleUrls: ['./projects-project.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsProject implements OnInit {
   project = signal<ProjectDto | null>(null)
@@ -41,13 +40,17 @@ export class ProjectsProject implements OnInit {
   }
 
   onGoToMembers(): void {
-    if (this.projectId === null) {
-      return
-    }
-    this.router.navigate(['/app/projects', this.projectId, 'members'])
-  }
+     if (this.projectId === null) {
+       return
+     }
+     this.router.navigate(['/app/projects', this.projectId, 'members'])
+   }
 
-  private loadProject(projectId: number): void {
+   onGoBack(): void {
+     this.router.navigate(['/app/projects'])
+   }
+
+   private loadProject(projectId: number): void {
     this.projectsApi.getProject(projectId).subscribe({
       next: (project) => this.project.set(project),
       error: () => this.errorMessage.set('Unable to load project details.')

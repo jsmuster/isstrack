@@ -1,7 +1,7 @@
 import { Component, signal, ChangeDetectionStrategy, OnInit, OnDestroy, computed } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { ActivityItem } from './activity-item/activity-item'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
@@ -45,8 +45,7 @@ interface AssigneeOption {
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ActivityItem, SidebarComponent],
   templateUrl: './issue-details.html',
   styleUrls: ['./issue-details.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[style.display]': "'contents'" }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IssueDetails implements OnInit, OnDestroy {
   issue = signal<IssueDto | null>(null)
@@ -95,13 +94,14 @@ export class IssueDetails implements OnInit, OnDestroy {
   })
 
   constructor(
-    private readonly route: ActivatedRoute,
-    private readonly issuesApi: IssuesApi,
-    private readonly commentsApi: CommentsApi,
-    private readonly activityApi: ActivityApi,
-    private readonly projectsApi: ProjectsApi,
-    private readonly websocketService: WebSocketService
-  ) {}
+     private readonly route: ActivatedRoute,
+     private readonly router: Router,
+     private readonly issuesApi: IssuesApi,
+     private readonly commentsApi: CommentsApi,
+     private readonly activityApi: ActivityApi,
+     private readonly projectsApi: ProjectsApi,
+     private readonly websocketService: WebSocketService
+   ) {}
 
   ngOnInit(): void {
     const projectId = Number(this.route.snapshot.paramMap.get('projectId'))
@@ -288,13 +288,24 @@ export class IssueDetails implements OnInit, OnDestroy {
   }
 
   toggleNotifications(): void {
-    this.showNotifications.update((value) => !value)
-  }
+     this.showNotifications.update((value) => !value)
+   }
 
-  /**
-   * Deletes a comment
-   */
-  onDeleteComment(commentId: string): void {
+   /**
+    * Goes back to the issue list
+    */
+   onGoBack(): void {
+     if (this.projectId === null) {
+       this.router.navigate(['/app/projects'])
+       return
+     }
+     this.router.navigate(['/app/projects', this.projectId, 'issues'])
+   }
+
+   /**
+    * Deletes a comment
+    */
+   onDeleteComment(commentId: string): void {
     this.comments.update(comments => comments.filter(c => String(c.id) !== commentId))
   }
 
