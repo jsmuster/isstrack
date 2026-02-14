@@ -5,7 +5,7 @@ import { Router } from '@angular/router'
 import { TokenService } from '../auth/token.service'
 import { environment } from '../../environments/environment'
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private readonly tokenService: TokenService, private readonly router: Router) {}
 

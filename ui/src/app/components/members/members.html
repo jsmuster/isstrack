@@ -11,7 +11,7 @@
         <header class="content-header" role="banner">
           <div class="header-left">
             <h2 class="page-title">Project Workspace</h2>
-            <div class="owner-badge">OWNER</div>
+            <div class="owner-badge">{{ roleLabel() }}</div>
           </div>
           <div class="header-right">
             <!-- Search Bar -->
@@ -24,8 +24,17 @@
                 aria-label="Search issues"
               />
             </div>
-            <img class="header-icon" alt="" src="/assets/images/div1.svg" />
+            <button class="notification-button" type="button" (click)="toggleNotifications()">
+              <img class="header-icon" alt="" src="/assets/images/div1.svg" />
+            </button>
             <img class="header-button-icon" alt="" src="/assets/images/button.svg" />
+            <div class="notification-panel" *ngIf="showNotifications">
+              <div class="notification-header">Notifications</div>
+              <div class="notification-item" *ngFor="let item of notifications">
+                <div class="notification-message">{{ item.message }}</div>
+                <div class="notification-time">{{ item.time }}</div>
+              </div>
+            </div>
           </div>
         </header>
 
@@ -44,6 +53,7 @@
                   type="button"
                   (click)="openInviteDialog()"
                   aria-label="Invite new members to the project"
+                  *ngIf="isOwner()"
                 >
                   <img class="button-icon" alt="" src="/assets/images/i7.svg" />
                   <span>Invite Members</span>
@@ -103,7 +113,7 @@
             </div>
 
             <!-- Add Member Form -->
-            <div class="add-member-section">
+            <div class="add-member-section" *ngIf="isOwner()">
               <div class="add-member-wrapper">
                 <div class="add-member-fields">
                   <div class="email-input-field">
@@ -235,7 +245,7 @@
                         </span>
                       </td>
                       <td class="table-cell date-cell">
-                        {{ user.invitedDate }}
+                        {{ user.dateAdded }}
                       </td>
                       <td class="table-cell actions-cell">
                         <div class="action-menu">
@@ -273,7 +283,7 @@
                   class="pagination-button"
                   type="button"
                   (click)="onNextPage()"
-                  [disabled]="currentPage >= Math.ceil(totalItems / itemsPerPage)"
+                  [disabled]="currentPage >= totalPages()"
                   aria-label="Go to next page"
                 >
                   <span>Next</span>

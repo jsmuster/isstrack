@@ -292,5 +292,13 @@
       position: relative;
       flex-shrink: 0;
     }
+
+    .logout-button {
+      border: none;
+      background-color: transparent;
+      color: var(--color-royalblue-100);
+      font-size: var(--fs-12);
+      cursor: pointer;
+    }
   }
 }

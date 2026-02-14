@@ -29,8 +29,17 @@
             </div>
 
             <!-- Header Icons -->
-            <img class="header-icon notification-icon" alt="Notifications" src="assets/div1.svg" (click)="onNotificationClick()" />
+            <button class="notification-button" type="button" (click)="onNotificationClick()">
+              <img class="header-icon notification-icon" alt="Notifications" src="assets/div1.svg" />
+            </button>
             <img class="header-icon settings-icon" alt="Settings" src="assets/button.svg" (click)="onSettingsClick()" />
+            <div class="notification-panel" *ngIf="showNotifications">
+              <div class="notification-header">Notifications</div>
+              <div class="notification-item" *ngFor="let item of notifications">
+                <div class="notification-message">{{ item.message }}</div>
+                <div class="notification-time">{{ item.time }}</div>
+              </div>
+            </div>
           </div>
         </header>
 
@@ -43,7 +52,7 @@
                 <h2 class="section-title">Projects</h2>
                 <p class="section-description">Your workspaces and issue tracking environments.</p>
               </div>
-              <button class="new-project-button" (click)="onNewProject()">
+              <button class="new-project-button" type="button" (click)="onNewProject()">
                 <img class="button-icon" alt="Add" src="assets/i7.svg" />
                 <span class="button-text">New Project</span>
               </button>
@@ -64,7 +73,7 @@
                   one place.
                 </p>
               </div>
-              <button class="create-button" (click)="onCreateFirstProject()">
+              <button class="create-button" type="button" (click)="onCreateFirstProject()">
                 <div class="create-button-content">
                   <img class="create-button-icon" alt="Add" src="assets/i8.svg" />
                   <span class="create-button-text">Create Your First Project</span>
@@ -72,7 +81,7 @@
               </button>
               <div class="help-section">
                 <p class="help-text">Need help?</p>
-                <button class="help-link" (click)="onViewGettingStarted()">
+                <button class="help-link" type="button" (click)="onViewGettingStarted()">
                   View our getting started guide
                 </button>
               </div>

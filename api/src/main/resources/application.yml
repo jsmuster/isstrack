@@ -6,9 +6,9 @@ spring:
     virtual:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/issuetracker
-    username: issuetracker
-    password: issuetracker
+    url: jdbc:postgresql://localhost:5432/isstrack
+    username: postgres
+    password: admin
   jpa:
     hibernate:
       ddl-auto: validate
@@ -21,7 +21,7 @@ spring:
 
 app:
   jwt:
-    secret: "CHANGE_ME"
+    secret: "c8f9e3a1b5d74c2e9f3a8b6d1e4f7c9a2b5d6e8f1c3a7b9d4e6f2a1c8b3d5e7"
     issuer: "issue-tracker"
     expirationMinutes: 60
 

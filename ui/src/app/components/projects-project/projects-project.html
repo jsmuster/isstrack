@@ -1,220 +1,34 @@
 <div class="projects-project">
   <main class="body">
     <section class="page-wrapper">
-      <!-- Sidebar -->
       <app-sidebar></app-sidebar>
 
-      <!-- Main Content -->
       <main class="main-content">
-        <!-- Header -->
         <header class="page-header">
           <div class="header-title-section">
             <h1 class="page-title">Project Workspace</h1>
-            <div class="user-role">
-              <span class="role-label">{{ role() }}</span>
-            </div>
-          </div>
-
-          <div class="header-controls">
-            <div class="search-container">
-              <img class="search-icon" alt="Search" src="assets/i6.svg" />
-              <input
-                class="search-input"
-                type="text"
-                placeholder="Search issues..."
-                [(ngModel)]="searchQuery"
-                (input)="onSearch($event.target.value)"
-              />
-            </div>
-
-            <img class="header-icon" alt="Notifications" src="assets/div1.svg" />
-            <img class="header-icon" alt="Settings" src="assets/button.svg" />
           </div>
         </header>
 
-        <!-- Main Content Area -->
         <div class="main-wrapper">
           <div class="content-container">
-            <!-- Project Header -->
             <div class="project-header">
               <div class="project-info">
                 <div class="project-title-section">
                   <img class="back-icon" alt="Back" src="assets/Vector.svg" />
-                  <h2 class="project-name">{{ projectName() }}</h2>
+                  <h2 class="project-name">{{ project()?.name || 'Project' }}</h2>
                 </div>
-                <p class="project-description">{{ projectDescription() }}</p>
+                <p class="project-description">
+                  {{ project()?.name ? '' : 'Loading project details...' }}
+                </p>
               </div>
             </div>
 
-            <!-- Tabs -->
             <div class="tabs-section">
               <div class="tabs">
-                <button
-                  class="tab"
-                  [class.active]="activeTab() === 'issues'"
-                  (click)="switchTab('issues')"
-                >
-                  Issues
-                </button>
-                <button
-                  class="tab"
-                  [class.active]="activeTab() === 'members'"
-                  (click)="switchTab('members')"
-                >
-                  Members
-                </button>
-                <button
-                  class="tab"
-                  [class.active]="activeTab() === 'settings'"
-                  (click)="switchTab('settings')"
-                >
-                  Settings
-                </button>
+                <button class="tab active" type="button" (click)="onGoToIssues()">Issues</button>
+                <button class="tab" type="button" (click)="onGoToMembers()">Members</button>
               </div>
-            </div>
-
-            <!-- Issues Section -->
-            <div class="issues-section" *ngIf="activeTab() === 'issues'">
-              <!-- Filters -->
-              <div class="filters-section">
-                <div class="search-filter">
-                  <img class="filter-icon" alt="Search" src="assets/i7.svg" />
-                  <input
-                    class="filter-input"
-                    type="text"
-                    placeholder="Filter by title..."
-                  />
-                </div>
-
-                <div class="dropdown-filter">
-                  <span class="filter-label">{{ filterStatus() }}</span>
-                  <img class="dropdown-icon" alt="Dropdown" src="assets/Frame.svg" />
-                </div>
-
-                <div class="dropdown-filter">
-                  <span class="filter-label">{{ filterPriority() }}</span>
-                  <img class="dropdown-icon" alt="Dropdown" src="assets/Frame.svg" />
-                </div>
-
-                <div class="dropdown-filter">
-                  <span class="filter-label">{{ filterAssignees() }}</span>
-                  <img class="dropdown-icon" alt="Dropdown" src="assets/Frame.svg" />
-                </div>
-
-                <div class="dropdown-filter sort-filter">
-                  <span class="filter-label">{{ sortBy() }}</span>
-                  <img class="dropdown-icon" alt="Dropdown" src="assets/Frame.svg" />
-                </div>
-
-                <div class="divider"></div>
-
-                <button class="new-issue-button" (click)="onNewIssue()">
-                  <img class="button-icon" alt="Add" src="assets/i8.svg" />
-                  <span class="button-text">New Issue</span>
-                </button>
-              </div>
-
-              <!-- Issues Table -->
-              <div class="table-container">
-                <!-- Table Header -->
-                <div class="table-header">
-                  <div class="header-cell issue-col">
-                    <span class="header-text">Issue</span>
-                  </div>
-                  <div class="header-cell status-col">
-                    <span class="header-text">Status</span>
-                  </div>
-                  <div class="header-cell priority-col">
-                    <span class="header-text">Priority</span>
-                  </div>
-                  <div class="header-cell assignee-col">
-                    <span class="header-text">Assignee</span>
-                  </div>
-                  <div class="header-cell updated-col">
-                    <span class="header-text">Updated</span>
-                  </div>
-                </div>
-
-                <!-- Table Body -->
-                <div class="table-body">
-                  <app-issue-row
-                    *ngFor="let issue of issues(); trackBy: (_, i) => i"
-                    [issueId]="issue.prop"
-                    [issueTitle]="issue.title"
-                    [category]="issue.category"
-                    [type]="issue.type"
-                    [statusLabel]="issue.status"
-                    [priorityLabel]="issue.priority"
-                    [assigneeAvatar]="issue.img"
-                    [assigneeName]="issue.assignee"
-                    [updatedTime]="issue.time"
-                    [borderBottom]="issue.borderBottom"
-                    [padding]="issue.padding"
-                    [titleFlex]="issue.titleFlex"
-                    [categoryPadding]="issue.categoryPadding"
-                    [categoryColor]="issue.categoryColor"
-                    [categoryFlex]="issue.categoryFlex"
-                    [categoryDisplay]="issue.categoryDisplay"
-                    [typeWidth]="issue.typeWidth"
-                    [typeColor]="issue.typeColor"
-                    [typeDisplay]="issue.typeDisplay"
-                    [typeFlex]="issue.typeFlex"
-                    [statusBgColor]="issue.statusBgColor"
-                    [statusPadding]="issue.statusPadding"
-                    [statusColor]="issue.statusColor"
-                    [priorityBgColor]="issue.priorityBgColor"
-                    [priorityPadding]="issue.priorityPadding"
-                    [priorityColor]="issue.priorityColor"
-                    [assigneeOverflow]="issue.assigneeOverflow"
-                    [assigneeColor]="issue.assigneeColor"
-                    [timelineFlex]="issue.timelineFlex"
-                  ></app-issue-row>
-                </div>
-              </div>
-
-              <!-- Pagination -->
-              <div class="pagination">
-                <div class="pagination-info">
-                  <span>Showing </span>
-                  <strong>1</strong>
-                  <span> to </span>
-                  <strong>6</strong>
-                  <span> of </span>
-                  <strong>{{ totalIssues() }}</strong>
-                  <span> issues</span>
-                </div>
-                <div class="pagination-controls">
-                  <button class="pagination-btn prev" [disabled]="currentPage() === 1">
-                    <img alt="Previous" src="assets/button1.svg" />
-                  </button>
-                  <button class="pagination-btn" [class.active]="currentPage() === 1">
-                    1
-                  </button>
-                  <button class="pagination-btn" (click)="goToPage(2)">
-                    2
-                  </button>
-                  <button class="pagination-btn" (click)="goToPage(3)">
-                    3
-                  </button>
-                  <div class="pagination-dots">...</div>
-                  <button class="pagination-btn" (click)="goToPage(8)">
-                    8
-                  </button>
-                  <button class="pagination-btn next">
-                    <img alt="Next" src="assets/button2.svg" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Members Section -->
-            <div class="section-placeholder" *ngIf="activeTab() === 'members'">
-              <p>Members section coming soon...</p>
-            </div>
-
-            <!-- Settings Section -->
-            <div class="section-placeholder" *ngIf="activeTab() === 'settings'">
-              <p>Settings section coming soon...</p>
             </div>
           </div>
         </div>

@@ -1,13 +1,15 @@
-import { Component, signal, ChangeDetectionStrategy, OnInit, computed } from '@angular/core'
+import { Component, signal, ChangeDetectionStrategy, OnInit, OnDestroy, computed } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
+import { Subscription } from 'rxjs'
 import { ActivityItem } from './activity-item/activity-item'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { CommentsApi } from '../../features/comments/data/comments.api'
 import { ActivityApi } from '../../features/activity/data/activity.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
+import { WebSocketService } from '../../core/realtime/websocket.service'
 import { ActivityDto, CommentDto, IssueDto, MembershipDto } from '../../models/api.models'
 
 /**
@@ -46,7 +48,7 @@ interface AssigneeOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[style.display]': "'contents'" }
 })
-export class IssueDetails implements OnInit {
+export class IssueDetails implements OnInit, OnDestroy {
   issue = signal<IssueDto | null>(null)
   description = signal('')
   comments = signal<CommentDto[]>([])
@@ -55,6 +57,13 @@ export class IssueDetails implements OnInit {
   errorMessage = signal('')
   isLoading = signal(false)
   isSubmitting = signal(false)
+  showNotifications = signal(false)
+  notifications = [
+    { id: 'notif-1', message: 'New comment added', time: 'Just now' },
+    { id: 'notif-2', message: 'Issue status updated', time: '20m ago' },
+  ]
+
+  private readonly realtimeSubscriptions = new Subscription()
 
   totalComments = signal(0)
   totalActivityItems = signal(0)
@@ -90,7 +99,8 @@ export class IssueDetails implements OnInit {
     private readonly issuesApi: IssuesApi,
     private readonly commentsApi: CommentsApi,
     private readonly activityApi: ActivityApi,
-    private readonly projectsApi: ProjectsApi
+    private readonly projectsApi: ProjectsApi,
+    private readonly websocketService: WebSocketService
   ) {}
 
   ngOnInit(): void {
@@ -103,7 +113,12 @@ export class IssueDetails implements OnInit {
     if (!Number.isNaN(issueId)) {
       this.issueId = issueId
       this.loadIssue(issueId)
+      this.listenForRealtimeUpdates(issueId, this.projectId)
     }
+  }
+
+  ngOnDestroy(): void {
+    this.realtimeSubscriptions.unsubscribe()
   }
 
   /**
@@ -272,6 +287,10 @@ export class IssueDetails implements OnInit {
     })
   }
 
+  toggleNotifications(): void {
+    this.showNotifications.update((value) => !value)
+  }
+
   /**
    * Deletes a comment
    */
@@ -387,5 +406,88 @@ export class IssueDetails implements OnInit {
 
   private mapMemberLabel(member: MembershipDto): string {
     return member.userId ? `User ${member.userId}` : member.invitedEmail || 'Member'
+  }
+
+  private listenForRealtimeUpdates(issueId: number, projectId: number | null): void {
+    this.realtimeSubscriptions.add(
+      this.websocketService
+        .subscribeJson<unknown>(`/topic/issues.${issueId}`)
+        .subscribe({
+          next: (payload) => this.handleIssueStreamPayload(payload),
+          error: () => this.errorMessage.set('Realtime updates unavailable.')
+        })
+    )
+    if (projectId === null) {
+      return
+    }
+    this.realtimeSubscriptions.add(
+      this.websocketService
+        .subscribeJson<unknown>(`/topic/projects.${projectId}`)
+        .subscribe({
+          next: (payload) => this.handleProjectStreamPayload(payload),
+          error: () => this.errorMessage.set('Realtime updates unavailable.')
+        })
+    )
+  }
+
+  private handleRealtimeComment(comment: CommentDto): void {
+    if (!comment?.id || comment.issueId !== this.issueId) {
+      return
+    }
+    this.comments.update((items) => {
+      if (items.some((item) => item.id === comment.id)) {
+        return items
+      }
+      return [comment, ...items]
+    })
+    this.totalComments.update((total) => total + 1)
+  }
+
+  private handleRealtimeActivity(activity: ActivityDto): void {
+    if (!activity?.id || activity.issueId !== this.issueId) {
+      return
+    }
+    this.activityItems.update((items) => {
+      if (items.some((item) => item.id === activity.id)) {
+        return items
+      }
+      return [activity, ...items]
+    })
+    this.totalActivityItems.update((total) => total + 1)
+  }
+
+  private handleIssueStreamPayload(payload: unknown): void {
+    if (this.isCommentPayload(payload)) {
+      this.handleRealtimeComment(payload)
+      return
+    }
+    if (this.isActivityPayload(payload)) {
+      this.handleRealtimeActivity(payload)
+    }
+  }
+
+  private handleProjectStreamPayload(payload: unknown): void {
+    if (!this.isIssuePayload(payload)) {
+      return
+    }
+    if (this.issueId && payload.id === this.issueId) {
+      this.issue.set(payload)
+    }
+  }
+
+  private isCommentPayload(payload: unknown): payload is CommentDto {
+    return this.isObject(payload) && typeof payload['id'] === 'number' && typeof payload['body'] === 'string'
+  }
+
+  private isActivityPayload(payload: unknown): payload is ActivityDto {
+    return this.isObject(payload) && typeof payload['id'] === 'number' && typeof payload['message'] === 'string'
+  }
+
+  private isIssuePayload(payload: unknown): payload is IssueDto {
+    return this.isObject(payload) && typeof payload['id'] === 'number' && typeof payload['title'] === 'string'
+  }
+
+  private isObject(payload: unknown): payload is Record<string, unknown> {
+    return typeof payload === 'object' && payload !== null
   }
 }

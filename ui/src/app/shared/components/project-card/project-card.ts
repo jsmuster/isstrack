@@ -1,4 +1,4 @@
-import { Component, input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -36,7 +36,9 @@ export class ProjectCardComponent {
   issuesTextColor = input<string | undefined>('');
   statusColor = input<string | undefined>('');
 
+  @Output() openProject = new EventEmitter<void>();
+
   onOpenProject() {
-    console.log(`Open project: ${this.projectName()}`);
+    this.openProject.emit();
   }
 }

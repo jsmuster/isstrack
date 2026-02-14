@@ -1,10 +1,11 @@
-import { Component, signal, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from '../../shared/components/sidebar/sidebar';
-import { ProjectCardComponent } from '../../shared/components/project-card/project-card';
-import { ProjectsApi } from '../../features/projects/data/projects.api';
-import { PageResponse, ProjectDto } from '../../models/api.models';
+import { Component, signal, ChangeDetectionStrategy, OnInit } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms'
+import { Router } from '@angular/router'
+import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
+import { ProjectCardComponent } from '../../shared/components/project-card/project-card'
+import { ProjectsApi } from '../../features/projects/data/projects.api'
+import { PageResponse, ProjectDto } from '../../models/api.models'
 
 @Component({
   selector: 'projects-page-project-list',
@@ -16,19 +17,24 @@ import { PageResponse, ProjectDto } from '../../models/api.models';
   host: { '[style.display]': "'contents'" }
 })
 export class ProjectsPageProjectList implements OnInit {
-  searchIssuesQuery = '';
-  searchProjectsQuery = '';
-  role = 'OWNER';
-  viewMode = signal<'grid' | 'table'>('grid');
-  filterBy = signal('All Projects');
-  sortBy = signal('Recently Updated');
-  currentPage = signal(1);
-  projectsPage = signal<PageResponse<ProjectDto> | null>(null);
-  isLoading = signal(false);
-  errorMessage = signal('');
+  searchIssuesQuery = ''
+  searchProjectsQuery = ''
+  role = 'OWNER'
+  viewMode = signal<'grid' | 'table'>('grid')
+  filterBy = signal('All Projects')
+  sortBy = signal('Recently Updated')
+  currentPage = signal(1)
+  projectsPage = signal<PageResponse<ProjectDto> | null>(null)
+  isLoading = signal(false)
+  errorMessage = signal('')
+  showNotifications = signal(false)
+  notifications = [
+    { id: 'notif-1', message: 'New project created', time: 'Just now' },
+    { id: 'notif-2', message: 'Issue updated in workspace', time: '15m ago' },
+  ]
 
 
-  constructor(private readonly projectsApi: ProjectsApi) {}
+  constructor(private readonly projectsApi: ProjectsApi, private readonly router: Router) {}
 
   ngOnInit(): void {
     this.loadProjects(0)
@@ -43,13 +49,11 @@ export class ProjectsPageProjectList implements OnInit {
   }
 
   onSearchIssues(query: string) {
-    this.searchIssuesQuery = query;
-    console.log('Search issues:', query);
+    this.searchIssuesQuery = query
   }
 
   onSearchProjects(query: string) {
-    this.searchProjectsQuery = query;
-    console.log('Search projects:', query);
+    this.searchProjectsQuery = query
   }
 
   trackProject(index: number, project: ProjectDto): number {
@@ -57,18 +61,15 @@ export class ProjectsPageProjectList implements OnInit {
   }
 
   toggleViewMode(mode: 'grid' | 'table') {
-    this.viewMode.set(mode);
-    console.log('View mode:', mode);
+    this.viewMode.set(mode)
   }
 
   onFilterChange(filter: string) {
-    this.filterBy.set(filter);
-    console.log('Filter:', filter);
+    this.filterBy.set(filter)
   }
 
   onSortChange(sort: string) {
-    this.sortBy.set(sort);
-    console.log('Sort:', sort);
+    this.sortBy.set(sort)
   }
 
   onNewProject() {
@@ -77,17 +78,17 @@ export class ProjectsPageProjectList implements OnInit {
       return
     }
     this.projectsApi.createProject({ name }).subscribe({
-      next: () => this.loadProjects(0),
+      next: (project) => this.router.navigate(['/app/projects', project.id, 'issues']),
       error: () => this.errorMessage.set('Unable to create project.')
     })
   }
 
   onNotificationClick() {
-    console.log('Notification clicked');
+    this.showNotifications.update((value) => !value)
   }
 
   onSettingsClick() {
-    console.log('Settings clicked');
+    console.log('Settings clicked')
   }
 
   private loadProjects(pageIndex: number) {
@@ -104,5 +105,26 @@ export class ProjectsPageProjectList implements OnInit {
         this.isLoading.set(false)
       }
     })
+  }
+
+  onOpenProject(project: ProjectDto): void {
+    this.router.navigate(['/app/projects', project.id, 'issues'])
+  }
+
+  onPrevPage(): void {
+    const current = this.projectsPage()?.page ?? 0
+    if (current > 0) {
+      this.loadProjects(current - 1)
+    }
+  }
+
+  onNextPage(): void {
+    const page = this.projectsPage()
+    if (!page) {
+      return
+    }
+    if (page.page + 1 < page.totalPages) {
+      this.loadProjects(page.page + 1)
+    }
   }
 }

@@ -48,4 +48,8 @@ export class LoginPage {
   onGithubSignIn() {
     // Handle GitHub sign in
   }
+
+  onCreateAccount() {
+    this.router.navigate(['/register'])
+  }
 }

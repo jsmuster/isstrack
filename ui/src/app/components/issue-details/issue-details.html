@@ -23,8 +23,17 @@
               aria-label="Search issues"
             />
           </div>
-          <img class="header-icon" alt="" src="/assets/images/div1.svg" />
+          <button class="notification-button" type="button" (click)="toggleNotifications()">
+            <img class="header-icon" alt="" src="/assets/images/div1.svg" />
+          </button>
           <img class="header-button-icon" alt="" src="/assets/images/button.svg" />
+          <div class="notification-panel" *ngIf="showNotifications()">
+            <div class="notification-header">Notifications</div>
+            <div class="notification-item" *ngFor="let item of notifications">
+              <div class="notification-message">{{ item.message }}</div>
+              <div class="notification-time">{{ item.time }}</div>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -56,7 +65,7 @@
                     <select
                       class="property-select"
                       [value]="issueData().status"
-                      (change)="onStatusChange($event.target.value)"
+                      (change)="onStatusChange($any($event.target).value)"
                       aria-label="Issue status"
                     >
                       <option value="Open">Open</option>
@@ -70,7 +79,7 @@
                     <select
                       class="property-select"
                       [value]="issueData().priority"
-                      (change)="onPriorityChange($event.target.value)"
+                      (change)="onPriorityChange($any($event.target).value)"
                       aria-label="Issue priority"
                     >
                       <option value="Low">Low</option>
@@ -84,7 +93,7 @@
                     <select
                       class="property-select"
                       [value]="issue()?.assigneeUserId ?? ''"
-                      (change)="onAssigneeChange($event.target.value)"
+                      (change)="onAssigneeChange($any($event.target).value)"
                       aria-label="Issue assignee"
                     >
                       <option *ngFor="let option of assignees()" [value]="option.value">

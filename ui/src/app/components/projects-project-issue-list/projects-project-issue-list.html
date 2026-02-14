@@ -28,8 +28,17 @@
                 />
               </div>
             </div>
-            <img class="div-icon2" alt="Filter options" src="/assets/images/div1.svg" />
+            <button class="notification-button" type="button" (click)="toggleNotifications()">
+              <img class="div-icon2" alt="Notifications" src="/assets/images/div1.svg" />
+            </button>
             <img class="button-icon" alt="Additional actions" src="/assets/images/button.svg" />
+            <div class="notification-panel" *ngIf="showNotifications()">
+              <div class="notification-header">Notifications</div>
+              <div class="notification-item" *ngFor="let item of notifications">
+                <div class="notification-message">{{ item.message }}</div>
+                <div class="notification-time">{{ item.time }}</div>
+              </div>
+            </div>
           </div>
         </header>
 
@@ -105,14 +114,18 @@
                       </div>
                     </div>
                     <div class="select">
-                      <input
-                        class="filter-by-title"
-                        placeholder="Assignee user id"
-                        type="text"
-                        aria-label="Filter by assignee"
+                      <select
+                        class="filter-select"
                         [(ngModel)]="assigneeFilter"
                         (ngModelChange)="onFiltersChange()"
-                      />
+                      >
+                        <option *ngFor="let option of assigneeOptions()" [value]="option.value">
+                          {{ option.label }}
+                        </option>
+                      </select>
+                      <div class="frame">
+                        <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
+                      </div>
                     </div>
                     <div class="select">
                       <input
@@ -134,7 +147,12 @@
                       </div>
                     </div>
                     <div class="div36"></div>
-                    <button class="button4" aria-label="Create new issue" type="button">
+                    <button
+                      class="button4"
+                      aria-label="Create new issue"
+                      type="button"
+                      (click)="onOpenCreateIssue()"
+                    >
                       <img class="i-icon9" alt="Plus icon" src="/assets/images/i8.svg" />
                       <div class="new-issue">New Issue</div>
                     </button>
@@ -254,4 +272,11 @@
       </main>
     </section>
   </main>
+
+  <create-issue-modal
+    *ngIf="isCreateIssueOpen()"
+    [projectId]="projectId()"
+    (closed)="onCloseCreateIssue()"
+    (created)="onIssueCreated($event)"
+  ></create-issue-modal>
 </div>

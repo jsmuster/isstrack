@@ -29,8 +29,17 @@
             </div>
 
             <!-- Header Icons -->
-            <img class="header-icon notification-icon" alt="Notifications" src="assets/div1.svg" (click)="onNotificationClick()" />
+            <button class="notification-button" type="button" (click)="onNotificationClick()">
+              <img class="header-icon notification-icon" alt="Notifications" src="assets/div1.svg" />
+            </button>
             <img class="header-icon settings-icon" alt="Settings" src="assets/button.svg" (click)="onSettingsClick()" />
+            <div class="notification-panel" *ngIf="showNotifications()">
+              <div class="notification-header">Notifications</div>
+              <div class="notification-item" *ngFor="let item of notifications">
+                <div class="notification-message">{{ item.message }}</div>
+                <div class="notification-time">{{ item.time }}</div>
+              </div>
+            </div>
           </div>
         </header>
 
@@ -43,7 +52,7 @@
                 <h2 class="section-title">Projects</h2>
                 <p class="section-description">Your workspaces and issue tracking environments.</p>
               </div>
-              <button class="new-project-button" type="submit" (click)="onNewProject()">
+              <button class="new-project-button" type="button" (click)="onNewProject()">
                 <img class="button-icon" alt="Add" src="assets/i7.svg" />
                 <span class="button-text">New Project</span>
               </button>
@@ -125,6 +134,7 @@
                 [issuesPadding]="''"
                 [issuesTextColor]="''"
                 [statusColor]="''"
+                (openProject)="onOpenProject(project)"
               ></app-project-card>
             </div>
             <ng-template #emptyState>
@@ -141,13 +151,18 @@
                 </div>
               </div>
               <div class="pagination-controls">
-                <button class="pagination-button prev" type="button" [disabled]="page.page === 0">
+                <button class="pagination-button prev" type="button" [disabled]="page.page === 0" (click)="onPrevPage()">
                   <img alt="Previous" src="assets/button1.svg" />
                 </button>
                 <button class="pagination-button active" type="button">
                   <span class="page-number">{{ page.page + 1 }}</span>
                 </button>
-                <button class="pagination-button next" type="button" [disabled]="page.page + 1 >= page.totalPages">
+                <button
+                  class="pagination-button next"
+                  type="button"
+                  [disabled]="page.page + 1 >= page.totalPages"
+                  (click)="onNextPage()"
+                >
                   <img alt="Next" src="assets/button2.svg" />
                 </button>
               </div>

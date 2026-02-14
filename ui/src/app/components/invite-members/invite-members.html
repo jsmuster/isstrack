@@ -44,7 +44,7 @@
         <!-- Main Content Grid -->
         <div class="content-grid">
           <!-- Left Column: Invite Form -->
-          <section class="invite-form-section" role="region" aria-label="Invite form">
+          <section class="invite-form-section" [formGroup]="inviteForm" role="region" aria-label="Invite form">
             <!-- Find Existing Users -->
             <div class="form-group">
               <label class="form-label">Find existing users</label>
@@ -55,7 +55,7 @@
                   type="text"
                   placeholder="Type a name, username, or email"
                   [value]="searchQuery()"
-                  (input)="onSearchUsers($event.target.value)"
+                  (input)="onSearchUsers($any($event.target).value)"
                   aria-label="Search for users"
                 />
               </div>
@@ -85,7 +85,7 @@
                   class="form-input email-input"
                   type="email"
                   placeholder="Enter email and press Enter"
-                  [formControl]="inviteForm.get('email')"
+                  formControlName="email"
                   (keyup.enter)="onAddEmailRecipient(getEmailInput())"
                   aria-label="Enter email to invite"
                 />
@@ -97,7 +97,7 @@
                 <textarea
                   class="form-textarea"
                   placeholder="This note appears in the email invitation."
-                  [formControl]="inviteForm.get('message')"
+                  formControlName="message"
                   aria-label="Invitation message"
                 ></textarea>
                 <p class="form-help-text">This note appears in the email invitation.</p>

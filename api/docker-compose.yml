@@ -2,9 +2,9 @@ services:
   postgres:
     image: postgres:16
     environment:
-      POSTGRES_DB: issuetracker
-      POSTGRES_USER: issuetracker
-      POSTGRES_PASSWORD: issuetracker
+      POSTGRES_DB: isstrack
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
     ports:
       - "5432:5432"
   api:
@@ -12,9 +12,9 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/issuetracker
-      SPRING_DATASOURCE_USERNAME: issuetracker
-      SPRING_DATASOURCE_PASSWORD: issuetracker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/isstrack
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
       APP_JWT_SECRET: CHANGE_ME
       WEBSOCKET_ALLOWED_ORIGINS: http://localhost:4200
     ports:

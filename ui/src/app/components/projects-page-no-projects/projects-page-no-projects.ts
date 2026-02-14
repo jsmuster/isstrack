@@ -1,7 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar';
+import { ProjectsApi } from '../../features/projects/data/projects.api';
 
 @Component({
   selector: 'projects-page-no-projects',
@@ -15,6 +17,13 @@ import { SidebarComponent } from '../../shared/components/sidebar/sidebar';
 export class ProjectsPageNoProjects {
   searchQuery = '';
   role = 'OWNER';
+  showNotifications = false
+  notifications = [
+    { id: 'notif-1', message: 'Welcome to IssueTracker', time: 'Just now' },
+    { id: 'notif-2', message: 'Invite teammates to get started', time: '5m ago' },
+  ]
+
+  constructor(private readonly projectsApi: ProjectsApi, private readonly router: Router) {}
 
   onSearch(query: string) {
     this.searchQuery = query;
@@ -22,11 +31,11 @@ export class ProjectsPageNoProjects {
   }
 
   onNewProject() {
-    console.log('Create new project');
+    this.createProject();
   }
 
   onCreateFirstProject() {
-    console.log('Create first project');
+    this.createProject();
   }
 
   onViewGettingStarted() {
@@ -34,10 +43,22 @@ export class ProjectsPageNoProjects {
   }
 
   onNotificationClick() {
-    console.log('Notification clicked');
+    this.showNotifications = !this.showNotifications
   }
 
   onSettingsClick() {
     console.log('Settings clicked');
+  }
+
+  private createProject(): void {
+    const name = window.prompt('Project name')
+    if (!name) {
+      return
+    }
+    this.projectsApi.createProject({ name }).subscribe({
+      next: (project) => {
+        this.router.navigate(['/app/projects', project.id, 'issues'])
+      }
+    })
   }
 }

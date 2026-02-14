@@ -17,6 +17,9 @@
     <!-- Modal Content -->
     <section class="modal-content">
       <div class="form-container">
+        <div class="error-message" role="alert" *ngIf="errorMessage()">
+          {{ errorMessage() }}
+        </div>
         <!-- Issue Title Field -->
         <div class="form-group">
           <div class="form-label">
@@ -71,7 +74,7 @@
               id="priority-select"
               class="form-select"
               [value]="selectedPriority()"
-              (change)="onPriorityChange($event.target.value)"
+              (change)="onPriorityChange($any($event.target).value)"
               aria-label="Select priority level"
             >
               <option value="Low">Low</option>
@@ -93,11 +96,11 @@
               id="assignee-select"
               class="form-select assignee-select"
               [value]="selectedAssignee()"
-              (change)="onAssigneeChange($event.target.value)"
+              (change)="onAssigneeChange($any($event.target).value)"
               aria-label="Select assignee"
             >
               <option value="">Select assignee...</option>
-              <option *ngFor="let assignee of assigneeOptions" [value]="assignee.id">
+              <option *ngFor="let assignee of assigneeOptions()" [value]="assignee.id">
                 {{ assignee.name }}
               </option>
             </select>
@@ -119,7 +122,7 @@
                 type="text"
                 placeholder="Add tags (press Enter to add)..."
                 [value]="currentTagInput()"
-                (input)="currentTagInput.set($event.target.value)"
+                (input)="currentTagInput.set($any($event.target).value)"
                 (keydown)="onTagInput($event)"
                 aria-label="Add tags, press Enter to add a tag"
               />

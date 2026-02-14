@@ -12,13 +12,7 @@
     <div class="nav-wrapper">
       <!-- Main Navigation -->
       <ul class="nav-list">
-        <li
-          *ngFor="let item of navItems"
-          class="nav-item"
-          [class.active]="item.active"
-          [routerLinkActive]="'active'"
-          [routerLink]="item.route"
-        >
+        <li *ngFor="let item of navItems" class="nav-item" [routerLinkActive]="'active'" [routerLink]="item.route">
           <div class="nav-link">
             <img class="nav-icon" [alt]="item.label + ' icon'" [src]="item.icon" />
             <span class="nav-label">{{ item.label }}</span>
@@ -46,13 +40,13 @@
 
   <!-- User Section -->
   <div class="user-section">
-    <div class="user-profile" (click)="openUserMenu()">
+    <div class="user-profile">
       <img class="user-avatar" [alt]="userInfo.name" [src]="userInfo.avatar" />
       <div class="user-info">
         <div class="user-name">{{ userInfo.name }}</div>
         <div class="user-email">{{ userInfo.email }}</div>
       </div>
-      <img class="user-menu-icon" alt="Menu" src="assets/i5.svg" />
+      <button class="logout-button" type="button" (click)="onLogout()">Logout</button>
     </div>
   </div>
 </aside>

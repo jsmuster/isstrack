@@ -386,6 +386,7 @@
     gap: var(--gap-16);
     min-width: 231px;
     max-width: 420px;
+    position: relative;
 
     .search-wrapper {
       flex: 1;
@@ -440,6 +441,50 @@
       position: relative;
       border-radius: var(--br-8);
     }
+  }
+}
+
+.notification-button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.notification-panel {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 240px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gainsboro);
+  border-radius: var(--br-8);
+  padding: 12px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+  z-index: 5;
+
+  .notification-header {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .notification-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-gainsboro);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .notification-message {
+    font-size: 12px;
+    color: var(--color-darkslategray);
+  }
+
+  .notification-time {
+    font-size: 12px;
+    color: var(--color-slategray);
   }
 }
 

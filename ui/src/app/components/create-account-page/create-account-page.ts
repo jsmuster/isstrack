@@ -104,3 +104,5 @@ export class CreateAccountPage {
     this.router.navigate(['/login'])
   }
 }
+
+
