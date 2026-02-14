@@ -15,8 +15,23 @@ import {
 export class ProjectsApi {
   constructor(private readonly http: HttpClient) {}
 
-  listProjects(page: number, size: number): Observable<PageResponse<ProjectDto>> {
-    const params = new HttpParams().set('page', page).set('size', size)
+  listProjects(
+    page: number,
+    size: number,
+    search?: string,
+    sortBy?: 'recently-updated' | 'oldest-first',
+    filter?: 'all' | 'owned' | 'shared'
+  ): Observable<PageResponse<ProjectDto>> {
+    let params = new HttpParams().set('page', page).set('size', size)
+    if (search) {
+      params = params.set('search', search)
+    }
+    if (sortBy) {
+      params = params.set('sortBy', sortBy)
+    }
+    if (filter && filter !== 'all') {
+      params = params.set('filter', filter)
+    }
     return this.http.get<PageResponse<ProjectDto>>(apiUrl('/api/projects'), { params })
   }
 

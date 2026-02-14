@@ -37,10 +37,8 @@
         padding: var(--padding-0) var(--padding-0) 21px;
 
         .illustration-image {
-          height: 192px;
-          width: 256px;
           position: relative;
-          object-fit: cover;
+          object-fit: contain;
           flex-shrink: 0;
         }
       }

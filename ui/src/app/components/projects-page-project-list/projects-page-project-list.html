@@ -98,7 +98,14 @@
 
                 <!-- Filter Dropdown -->
                 <div class="filter-dropdown">
-                  <div class="filter-label">{{ filterBy() }}</div>
+                  <select
+                    class="filter-select"
+                    [ngModel]="filterBy()"
+                    (ngModelChange)="onFilterChange($event)"
+                    name="filterBy"
+                  >
+                    <option *ngFor="let opt of filterOptions" [value]="opt.value">{{ opt.label }}</option>
+                  </select>
                   <div class="filter-icon">
                     <img alt="Dropdown" src="assets/Frame.svg" />
                   </div>
@@ -106,7 +113,14 @@
 
                 <!-- Sort Dropdown -->
                 <div class="sort-dropdown">
-                  <div class="sort-label">{{ sortBy() }}</div>
+                  <select
+                    class="filter-select"
+                    [ngModel]="sortBy()"
+                    (ngModelChange)="onSortChange($event)"
+                    name="sortBy"
+                  >
+                    <option *ngFor="let opt of sortOptions" [value]="opt.value">{{ opt.label }}</option>
+                  </select>
                   <div class="sort-icon">
                     <img alt="Dropdown" src="assets/Frame.svg" />
                   </div>

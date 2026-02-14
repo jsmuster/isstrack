@@ -39,8 +39,8 @@ export class CreateNewProjectModalComponent implements OnInit {
 
   // Available members to invite
   availableMembers = signal([
-    { id: '1', name: 'Sarah Wilson', avatar: '/assets/images/img@2x.png' },
-    { id: '2', name: 'Mike Johnson', avatar: '/assets/images/img@2x.png' }
+    { id: '1', name: 'Sarah Wilson', avatar: '/assets/images/img.svg' },
+    { id: '2', name: 'Mike Johnson', avatar: '/assets/images/img.svg' }
   ]);
 
   // Search filter for members
@@ -49,7 +49,7 @@ export class CreateNewProjectModalComponent implements OnInit {
   // Current user (project owner)
   currentUser = {
     name: 'John Smith (You)',
-    avatar: '/assets/images/img@2x.png'
+    avatar: '/assets/images/img.svg'
   };
 
   @Output() closed = new EventEmitter<void>();

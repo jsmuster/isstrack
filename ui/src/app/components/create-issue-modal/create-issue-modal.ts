@@ -262,6 +262,10 @@ export class CreateIssueModal implements OnInit {
   }
 
   private mapMemberLabel(member: MembershipDto): string {
-    return member.userId ? `User ${member.userId}` : member.invitedEmail || 'Member'
+    // Show email or user ID if available
+    if (member.invitedEmail) {
+      return member.invitedEmail
+    }
+    return member.userId ? `User ${member.userId}` : 'Member'
   }
 }

@@ -85,14 +85,16 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
+    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 
     img {
-      width: 13.5px;
-      height: 28px;
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
     }
 
     &:hover {
@@ -312,10 +314,11 @@
 
   .owner-avatar {
     border-radius: 9999px;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
     flex-shrink: 0;
+    background-color: var(--color-gainsboro);
   }
 
   .owner-name {
@@ -323,6 +326,7 @@
     color: var(--color-gray-100);
     letter-spacing: var(--ls--0_5);
     line-height: var(--lh-24);
+    font-weight: 500;
   }
 }
 
