@@ -18,7 +18,14 @@
             <div class="div27">
               <img class="i-icon7" alt="Search icon" src="/assets/images/i6.svg" />
               <div class="input">
-                <input class="search-issues" placeholder="Search issues..." type="text" aria-label="Search issues" />
+                <input
+                  class="search-issues"
+                  placeholder="Search issues..."
+                  type="text"
+                  aria-label="Search issues"
+                  [(ngModel)]="searchQuery"
+                  (ngModelChange)="onSearchChange()"
+                />
               </div>
             </div>
             <img class="div-icon2" alt="Filter options" src="/assets/images/div1.svg" />
@@ -52,7 +59,7 @@
                   <button class="button" aria-current="page">
                     <div class="john-smith">Issues</div>
                   </button>
-                  <button class="button2">
+                  <button class="button2" [routerLink]="['/app/projects', projectId(), 'members']">
                     <div class="john-smith">Members</div>
                   </button>
                   <button class="button3">
@@ -74,35 +81,60 @@
                           placeholder="Filter by title..."
                           type="text"
                           aria-label="Filter issues by title"
+                          [(ngModel)]="searchQuery"
+                          (ngModelChange)="onSearchChange()"
                         />
                       </div>
                     </div>
                     <div class="select">
-                      <div class="all-status">All Status</div>
+                      <select class="filter-select" [(ngModel)]="statusFilter" (ngModelChange)="onFiltersChange()">
+                        <option value="">All Status</option>
+                        <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
+                      </select>
                       <div class="frame">
                         <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
                       </div>
                     </div>
                     <div class="select2">
-                      <div class="all-status">All Priority</div>
+                      <select class="filter-select" [(ngModel)]="priorityFilter" (ngModelChange)="onFiltersChange()">
+                        <option value="">All Priority</option>
+                        <option *ngFor="let option of priorityOptions" [value]="option">{{ option }}</option>
+                      </select>
                       <div class="frame">
                         <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
                       </div>
                     </div>
                     <div class="select">
-                      <div class="all-status">All Assignees</div>
-                      <div class="frame">
-                        <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                      </div>
+                      <input
+                        class="filter-by-title"
+                        placeholder="Assignee user id"
+                        type="text"
+                        aria-label="Filter by assignee"
+                        [(ngModel)]="assigneeFilter"
+                        (ngModelChange)="onFiltersChange()"
+                      />
+                    </div>
+                    <div class="select">
+                      <input
+                        class="filter-by-title"
+                        placeholder="Tag"
+                        type="text"
+                        aria-label="Filter by tag"
+                        [(ngModel)]="tagQuery"
+                        (ngModelChange)="onFiltersChange()"
+                      />
                     </div>
                     <div class="select4">
-                      <div class="sort-updated">Sort: Updated</div>
+                      <select class="filter-select" [(ngModel)]="sortFilter" (ngModelChange)="onFiltersChange()">
+                        <option value="">Sort: Updated</option>
+                        <option *ngFor="let option of sortOptions" [value]="option">{{ option }}</option>
+                      </select>
                       <div class="frame">
                         <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
                       </div>
                     </div>
                     <div class="div36"></div>
-                    <button class="button4" aria-label="Create new issue">
+                    <button class="button4" aria-label="Create new issue" type="button">
                       <img class="i-icon9" alt="Plus icon" src="/assets/images/i8.svg" />
                       <div class="new-issue">New Issue</div>
                     </button>
@@ -143,73 +175,75 @@
 
                     <!-- Table Rows -->
                     @for (item of issueRows; track item.id) {
-                    <app-issue-row
-                      [issueId]="item.id.toString()"
-                      [issueTitle]="item.title"
-                      [category]="''"
-                      [type]="''"
-                      [statusLabel]="item.status"
-                      [priorityLabel]="item.priority"
-                      [assigneeAvatar]="''"
-                      [assigneeName]="toAssigneeLabel(item.assigneeUserId)"
-                      [updatedTime]="item.updatedAt"
-                      [borderBottom]="''"
-                      [padding]="''"
-                      [titleFlex]="''"
-                      [categoryPadding]="''"
-                      [categoryColor]="''"
-                      [categoryFlex]="''"
-                      [categoryDisplay]="''"
-                      [typeWidth]="''"
-                      [typeColor]="''"
-                      [typeDisplay]="''"
-                      [typeFlex]="''"
-                      [statusBgColor]="''"
-                      [statusPadding]="''"
-                      [statusColor]="''"
-                      [priorityBgColor]="''"
-                      [priorityPadding]="''"
-                      [priorityColor]="''"
-                      [assigneeOverflow]="''"
-                      [assigneeColor]="''"
-                      [timelineFlex]="''"
-                    ></app-issue-row>
+                    <div
+                      class="issue-row-wrapper"
+                      (click)="onIssueSelected(item.id)"
+                      (keydown.enter)="onIssueSelected(item.id)"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <app-issue-row
+                        [issueId]="item.id.toString()"
+                        [issueTitle]="item.title"
+                        [category]="''"
+                        [type]="''"
+                        [statusLabel]="item.status"
+                        [priorityLabel]="item.priority"
+                        [assigneeAvatar]="'/assets/images/img.svg'"
+                        [assigneeName]="toAssigneeLabel(item.assigneeUserId)"
+                        [updatedTime]="item.updatedAt"
+                        [borderBottom]="''"
+                        [padding]="''"
+                        [titleFlex]="''"
+                        [categoryPadding]="''"
+                        [categoryColor]="''"
+                        [categoryFlex]="''"
+                        [categoryDisplay]="''"
+                        [typeWidth]="''"
+                        [typeColor]="''"
+                        [typeDisplay]="''"
+                        [typeFlex]="''"
+                        [statusBgColor]="''"
+                        [statusPadding]="''"
+                        [statusColor]="''"
+                        [priorityBgColor]="''"
+                        [priorityPadding]="''"
+                        [priorityColor]="''"
+                        [assigneeOverflow]="''"
+                        [assigneeColor]="''"
+                        [timelineFlex]="''"
+                      ></app-issue-row>
+                    </div>
                     }
                   </div>
 
                   <!-- Pagination -->
                   <div class="div45">
                     <div class="div46">
-                      <div class="showing">Showing</div>
-                      <div class="div47">1</div>
-                      <div class="to">
-                        <div class="to2">to</div>
-                      </div>
-                      <div class="div48">6</div>
-                      <div class="of">
-                        <div class="to2">of</div>
-                      </div>
-                      <div class="div49">47</div>
-                      <div class="issues2">issues</div>
+                      <div class="showing">{{ paginationLabel() }}</div>
                     </div>
                     <div class="div50">
-                      <img class="button-icon2" alt="Previous page" src="/assets/images/button1.svg" />
-                      <button class="button5" aria-label="Go to page 1" aria-current="page">
-                        <div class="new-issue">1</div>
+                      <button
+                        class="button5"
+                        aria-label="Previous page"
+                        type="button"
+                        (click)="onPrevPage()"
+                        [disabled]="!hasPrevPage"
+                      >
+                        <img class="button-icon2" alt="Previous page" src="/assets/images/button1.svg" />
                       </button>
-                      <button class="button6" aria-label="Go to page 2">
-                        <div class="div52">2</div>
+                      <button class="button6" aria-label="Current page" type="button" aria-current="page">
+                        <div class="div52">{{ currentPage() }}</div>
                       </button>
-                      <button class="button7" aria-label="Go to page 3">
-                        <div class="div52">3</div>
+                      <button
+                        class="button7"
+                        aria-label="Next page"
+                        type="button"
+                        (click)="onNextPage()"
+                        [disabled]="!hasNextPage"
+                      >
+                        <img class="button-icon3" alt="Next page" src="/assets/images/button2.svg" />
                       </button>
-                      <div class="div54">
-                        <div class="div55">...</div>
-                      </div>
-                      <button class="button7" aria-label="Go to page 8">
-                        <div class="div52">8</div>
-                      </button>
-                      <img class="button-icon3" alt="Next page" src="/assets/images/button2.svg" />
                     </div>
                   </div>
                 </div>
