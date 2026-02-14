@@ -504,12 +504,19 @@
 }
 
 .btn-primary {
-  background-color: var(--color-lightgray-100);
-  color: var(--color-white);
+  background-color: var(--color-royalblue);
+  color: #ffffff;
   min-width: 156px;
+  font-weight: 600;
 
   &:hover:not(:disabled) {
-    background-color: var(--color-dodgerblue);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    background-color: #1d4ed8;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  &:disabled {
+    background-color: #c7d2e8;
+    color: #6b7280;
+    cursor: not-allowed;
   }
 }

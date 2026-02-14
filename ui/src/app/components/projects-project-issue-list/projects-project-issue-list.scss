@@ -14,11 +14,11 @@
 
   .body {
     align-self: stretch;
-    height: 1024px;
+    flex: 1;
     background-color: var(--color-whitesmoke-100);
     display: flex;
     align-items: stretch;
-    flex-shrink: 0;
+    overflow: hidden;
 
     .div {
       flex: 1;
@@ -29,7 +29,7 @@
       gap: 0px;
 
       app-sidebar {
-        display: contents;
+        align-self: stretch;
       }
 
       .aside {
