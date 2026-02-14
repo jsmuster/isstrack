@@ -1,34 +1,40 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms'
+import { Router } from '@angular/router'
+import { AuthService } from '../../core/auth/auth.service'
 
 @Component({
   selector: 'create-account-page',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './create-account-page.html',
   styleUrls: ['./create-account-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[style.display]': "'contents'" }
 })
 export class CreateAccountPage {
-  // Form state
-  email = signal('');
-  username = signal('');
-  firstName = signal('');
-  lastName = signal('');
-  password = signal('');
-  termsAgreed = signal(false);
+  email = ''
+  username = ''
+  firstName = ''
+  lastName = ''
+  password = ''
+  termsAgreed = false
+  errorMessage = ''
+  isSubmitting = false
 
-  // Password validation requirements
   passwordRequirements = signal({
     minLength: false,
     hasUppercase: false,
     hasLowercase: false,
     hasNumber: false
-  });
+  })
+
+  constructor(private readonly authService: AuthService, private readonly router: Router) {}
 
   onPasswordChange(password: string) {
-    this.password.set(password);
-    this.updatePasswordRequirements(password);
+    this.password = password
+    this.updatePasswordRequirements(password)
   }
 
   private updatePasswordRequirements(password: string) {
@@ -37,53 +43,64 @@ export class CreateAccountPage {
       hasUppercase: /[A-Z]/.test(password),
       hasLowercase: /[a-z]/.test(password),
       hasNumber: /\d/.test(password)
-    });
+    })
   }
 
   isPasswordValid(): boolean {
-    const requirements = this.passwordRequirements();
-    return requirements.minLength && requirements.hasUppercase && 
-           requirements.hasLowercase && requirements.hasNumber;
+    const requirements = this.passwordRequirements()
+    return requirements.minLength && requirements.hasUppercase && requirements.hasLowercase && requirements.hasNumber
   }
 
   onSubmit() {
-    if (!this.email() || !this.username() || !this.firstName() || !this.lastName() || !this.password()) {
-      console.error('All fields are required');
-      return;
+    if (this.isSubmitting) {
+      return
+    }
+
+    if (!this.email || !this.username || !this.firstName || !this.lastName || !this.password) {
+      this.errorMessage = 'All fields are required.'
+      return
     }
 
     if (!this.isPasswordValid()) {
-      console.error('Password does not meet requirements');
-      return;
+      this.errorMessage = 'Password does not meet requirements.'
+      return
     }
 
-    if (!this.termsAgreed()) {
-      console.error('You must agree to the Terms of Service and Privacy Policy');
-      return;
+    if (!this.termsAgreed) {
+      this.errorMessage = 'You must agree to the Terms of Service and Privacy Policy.'
+      return
     }
 
-    // Handle form submission
-    console.log('Account creation:', {
-      email: this.email(),
-      username: this.username(),
-      firstName: this.firstName(),
-      lastName: this.lastName(),
-      password: this.password()
-    });
+    this.errorMessage = ''
+    this.isSubmitting = true
+    this.authService.register({
+      email: this.email,
+      username: this.username,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      password: this.password
+    }).subscribe({
+      next: (response) => {
+        this.authService.persistSession(response)
+        this.isSubmitting = false
+        this.router.navigate(['/app/projects'])
+      },
+      error: () => {
+        this.errorMessage = 'Unable to create account. Please try again.'
+        this.isSubmitting = false
+      }
+    })
   }
 
   onGoogleSignUp() {
-    // Handle Google sign up
-    console.log('Sign up with Google');
+    console.log('Sign up with Google')
   }
 
   onGithubSignUp() {
-    // Handle GitHub sign up
-    console.log('Sign up with GitHub');
+    console.log('Sign up with GitHub')
   }
 
   onSignIn() {
-    // Navigate to sign in page
-    console.log('Navigate to sign in');
+    this.router.navigate(['/login'])
   }
 }

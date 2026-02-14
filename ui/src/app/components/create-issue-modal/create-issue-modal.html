@@ -1,0 +1,167 @@
+<!-- Create Issue Modal Component -->
+<div class="modal-overlay" role="presentation" aria-hidden="true">
+  <form class="create-issue-modal" [formGroup]="issueForm" (ngSubmit)="onCreateIssue()" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">Create New Issue</h2>
+      <button
+        type="button"
+        class="close-button"
+        (click)="onCancel()"
+        aria-label="Close dialog"
+      >
+        <img class="close-icon" alt="" src="/assets/images/button.svg" />
+      </button>
+    </div>
+
+    <!-- Modal Content -->
+    <section class="modal-content">
+      <div class="form-container">
+        <!-- Issue Title Field -->
+        <div class="form-group">
+          <div class="form-label">
+            <label for="issue-title" class="label-text">Issue Title</label>
+            <span class="required-indicator" aria-label="required">*</span>
+          </div>
+          <div class="form-input-wrapper">
+            <input
+              id="issue-title"
+              class="form-input"
+              type="text"
+              placeholder="Enter issue title..."
+              formControlName="title"
+              aria-required="true"
+              [attr.aria-invalid]="issueForm.get('title')?.invalid && issueForm.get('title')?.touched"
+              [attr.aria-describedby]="issueForm.get('title')?.invalid ? 'title-error' : null"
+            />
+            <div
+              *ngIf="issueForm.get('title')?.invalid && issueForm.get('title')?.touched"
+              id="title-error"
+              class="error-message"
+              role="alert"
+            >
+              {{ getTitleErrorMessage() }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="form-group">
+          <div class="form-label">
+            <label for="issue-description" class="label-text">Description</label>
+          </div>
+          <div class="form-textarea-wrapper">
+            <textarea
+              id="issue-description"
+              class="form-textarea"
+              placeholder="Describe the issue in detail..."
+              formControlName="description"
+              aria-label="Issue description"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Priority Field -->
+        <div class="form-group">
+          <div class="form-label">
+            <label for="priority-select" class="label-text">Priority</label>
+          </div>
+          <div class="form-select-wrapper">
+            <select
+              id="priority-select"
+              class="form-select"
+              [value]="selectedPriority()"
+              (change)="onPriorityChange($event.target.value)"
+              aria-label="Select priority level"
+            >
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Critical">Critical</option>
+            </select>
+            <img class="select-icon" alt="" src="/assets/images/i.svg" />
+          </div>
+        </div>
+
+        <!-- Assignee Field -->
+        <div class="form-group">
+          <div class="form-label">
+            <label for="assignee-select" class="label-text">Assignee</label>
+          </div>
+          <div class="form-select-wrapper">
+            <select
+              id="assignee-select"
+              class="form-select assignee-select"
+              [value]="selectedAssignee()"
+              (change)="onAssigneeChange($event.target.value)"
+              aria-label="Select assignee"
+            >
+              <option value="">Select assignee...</option>
+              <option *ngFor="let assignee of assigneeOptions" [value]="assignee.id">
+                {{ assignee.name }}
+              </option>
+            </select>
+            <img class="select-icon" alt="" src="/assets/images/i.svg" />
+          </div>
+        </div>
+
+        <!-- Tags Field -->
+        <div class="form-group tags-group">
+          <div class="form-label">
+            <label for="tags-input" class="label-text">Tags</label>
+          </div>
+          <div class="tags-container">
+            <div class="tag-input-wrapper">
+              <div class="tag-divider"></div>
+              <input
+                id="tags-input"
+                class="form-input tags-input"
+                type="text"
+                placeholder="Add tags (press Enter to add)..."
+                [value]="currentTagInput()"
+                (input)="currentTagInput.set($event.target.value)"
+                (keydown)="onTagInput($event)"
+                aria-label="Add tags, press Enter to add a tag"
+              />
+            </div>
+            <p class="tags-help-text">Press Enter to add a tag</p>
+            <div class="tags-list" *ngIf="tags().length > 0" role="list">
+              <span *ngFor="let tag of tags()" class="tag-badge" role="listitem">
+                {{ tag }}
+                <button
+                  type="button"
+                  class="tag-remove"
+                  (click)="removeTag(tag)"
+                  [attr.aria-label]="'Remove tag ' + tag"
+                >
+                  ×
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="button-secondary"
+        (click)="onCancel()"
+        [disabled]="isSubmitting()"
+        aria-label="Cancel creating issue"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="button-primary"
+        [disabled]="!isFormValid() || isSubmitting()"
+        aria-label="Create issue"
+      >
+        Create Issue
+      </button>
+    </div>
+  </form>
+</div>

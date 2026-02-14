@@ -1,0 +1,13 @@
+<!-- Activity Item Component -->
+<div class="activity-item" role="listitem">
+  <img class="activity-avatar" [src]="div()" alt="Activity user avatar" />
+  <div class="activity-content">
+    <div class="activity-description" [style.color]="sarahJohnsonAddedContainerColor()">
+      <span class="activity-user">{{ actorLabel() || 'User' }}</span>
+      <span> {{ message() || 'updated the issue' }}</span>
+    </div>
+    <div class="activity-timestamp">
+      <span class="timestamp">{{ hoursAgo() }}</span>
+    </div>
+  </div>
+</div>

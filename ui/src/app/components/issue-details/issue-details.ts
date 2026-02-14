@@ -1,0 +1,391 @@
+import { Component, signal, ChangeDetectionStrategy, OnInit, computed } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
+import { ActivityItem } from './activity-item/activity-item'
+import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
+import { IssuesApi } from '../../features/issues/data/issues.api'
+import { CommentsApi } from '../../features/comments/data/comments.api'
+import { ActivityApi } from '../../features/activity/data/activity.api'
+import { ProjectsApi } from '../../features/projects/data/projects.api'
+import { ActivityDto, CommentDto, IssueDto, MembershipDto } from '../../models/api.models'
+
+/**
+ * Issue Details Component
+ * Displays detailed information about a project issue including:
+ * - Issue title, status, priority, assignee
+ * - Tags and description
+ * - Comments section
+ * - Activity timeline
+ */
+interface IssueViewModel {
+  id: number | null
+  title: string
+  status: string
+  priority: string
+  assigneeLabel: string
+  tags: string[]
+  description: string
+  stepsToReproduce: string[]
+  expectedBehavior: string
+  createdDate: string
+  updatedDate: string
+}
+
+interface AssigneeOption {
+  value: string
+  label: string
+}
+
+@Component({
+  selector: 'issue-details',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ActivityItem, SidebarComponent],
+  templateUrl: './issue-details.html',
+  styleUrls: ['./issue-details.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[style.display]': "'contents'" }
+})
+export class IssueDetails implements OnInit {
+  issue = signal<IssueDto | null>(null)
+  description = signal('')
+  comments = signal<CommentDto[]>([])
+  activityItems = signal<ActivityDto[]>([])
+  assignees = signal<AssigneeOption[]>([])
+  errorMessage = signal('')
+  isLoading = signal(false)
+  isSubmitting = signal(false)
+
+  totalComments = signal(0)
+  totalActivityItems = signal(0)
+  commentsPageIndex = signal(0)
+  activityPageIndex = signal(0)
+  readonly pageSize = 5
+
+  projectId: number | null = null
+  issueId: number | null = null
+
+  newComment = ''
+
+  issueData = computed<IssueViewModel>(() => {
+    const issue = this.issue()
+    const description = this.description()
+    return {
+      id: issue?.id ?? null,
+      title: issue?.title ?? 'Issue details',
+      status: issue?.status ?? 'Open',
+      priority: issue?.priority ?? 'Medium',
+      assigneeLabel: this.toAssigneeLabel(issue?.assigneeUserId ?? null),
+      tags: issue?.tags ?? [],
+      description: description || 'No description available.',
+      stepsToReproduce: [],
+      expectedBehavior: '',
+      createdDate: issue?.updatedAt ?? '',
+      updatedDate: issue?.updatedAt ?? ''
+    }
+  })
+
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly issuesApi: IssuesApi,
+    private readonly commentsApi: CommentsApi,
+    private readonly activityApi: ActivityApi,
+    private readonly projectsApi: ProjectsApi
+  ) {}
+
+  ngOnInit(): void {
+    const projectId = Number(this.route.snapshot.paramMap.get('projectId'))
+    const issueId = Number(this.route.snapshot.paramMap.get('issueId'))
+    if (!Number.isNaN(projectId)) {
+      this.projectId = projectId
+      this.loadAssignees(projectId)
+    }
+    if (!Number.isNaN(issueId)) {
+      this.issueId = issueId
+      this.loadIssue(issueId)
+    }
+  }
+
+  /**
+   * Updates the issue status
+   */
+  onStatusChange(newStatus: string): void {
+    if (!this.issueId) {
+      return
+    }
+    this.issuesApi.patchIssue(this.issueId, { status: newStatus }).subscribe({
+      next: (issue) => this.issue.set(issue),
+      error: () => this.errorMessage.set('Unable to update status.')
+    })
+  }
+
+  /**
+   * Updates the issue priority
+   */
+  onPriorityChange(newPriority: string): void {
+    if (!this.issueId) {
+      return
+    }
+    this.issuesApi.patchIssue(this.issueId, { priority: newPriority }).subscribe({
+      next: (issue) => this.issue.set(issue),
+      error: () => this.errorMessage.set('Unable to update priority.')
+    })
+  }
+
+  /**
+   * Updates the issue assignee
+   */
+  onAssigneeChange(newAssignee: string): void {
+    if (!this.issueId) {
+      return
+    }
+    const assigneeId = Number(newAssignee)
+    const payload = newAssignee
+      ? { assigneeUserId: assigneeId }
+      : { clearAssignee: true }
+    this.issuesApi.patchIssue(this.issueId, payload).subscribe({
+      next: (issue) => this.issue.set(issue),
+      error: () => this.errorMessage.set('Unable to update assignee.')
+    })
+  }
+
+  /**
+   * Adds a new tag to the issue
+   */
+  onAddTag(newTag: string): void {
+    if (!this.issueId) {
+      return
+    }
+    const tag = newTag.trim()
+    const current = this.issue()
+    if (!tag || !current) {
+      return
+    }
+    if (current.tags.includes(tag)) {
+      return
+    }
+    const tags = [...current.tags, tag]
+    this.issuesApi.patchIssue(this.issueId, { tags }).subscribe({
+      next: (issue) => this.issue.set(issue),
+      error: () => this.errorMessage.set('Unable to update tags.')
+    })
+  }
+
+  /**
+   * Removes a tag from the issue
+   */
+  onRemoveTag(tag: string): void {
+    if (!this.issueId) {
+      return
+    }
+    const current = this.issue()
+    if (!current) {
+      return
+    }
+    const tags = current.tags.filter(t => t !== tag)
+    this.issuesApi.patchIssue(this.issueId, { tags }).subscribe({
+      next: (issue) => this.issue.set(issue),
+      error: () => this.errorMessage.set('Unable to update tags.')
+    })
+  }
+
+  /**
+   * Edits the issue description
+   */
+  onEditDescription(): void {
+    if (!this.issueId) {
+      return
+    }
+    const updated = window.prompt('Update description', this.description())
+    if (updated === null) {
+      return
+    }
+    this.issuesApi.patchIssue(this.issueId, { description: updated }).subscribe({
+      next: () => this.description.set(updated),
+      error: () => this.errorMessage.set('Unable to update description.')
+    })
+  }
+
+  /**
+   * Submits a new comment
+   */
+  onAddComment(): void {
+    if (!this.issueId || this.isSubmitting()) {
+      return
+    }
+    const content = this.newComment.trim()
+    if (!content) {
+      return
+    }
+    this.isSubmitting.set(true)
+    this.commentsApi.addComment(this.issueId, { body: content }).subscribe({
+      next: (comment) => {
+        this.comments.update(items => [comment, ...items])
+        this.totalComments.update(total => total + 1)
+        this.newComment = ''
+        this.isSubmitting.set(false)
+      },
+      error: () => {
+        this.errorMessage.set('Unable to add comment.')
+        this.isSubmitting.set(false)
+      }
+    })
+  }
+
+  /**
+   * Loads more comments
+   */
+  onLoadMoreComments(): void {
+    if (!this.issueId) {
+      return
+    }
+    if (this.comments().length >= this.totalComments()) {
+      return
+    }
+    const nextPage = this.commentsPageIndex() + 1
+    this.commentsApi.listComments(this.issueId, nextPage, this.pageSize).subscribe({
+      next: (page) => {
+        this.comments.update(items => [...items, ...page.items])
+        this.commentsPageIndex.set(page.page)
+      },
+      error: () => this.errorMessage.set('Unable to load more comments.')
+    })
+  }
+
+  /**
+   * Loads more activity items
+   */
+  onLoadMoreActivity(): void {
+    if (!this.issueId) {
+      return
+    }
+    if (this.activityItems().length >= this.totalActivityItems()) {
+      return
+    }
+    const nextPage = this.activityPageIndex() + 1
+    this.activityApi.listActivity(this.issueId, nextPage, this.pageSize).subscribe({
+      next: (page) => {
+        this.activityItems.update(items => [...items, ...page.items])
+        this.activityPageIndex.set(page.page)
+      },
+      error: () => this.errorMessage.set('Unable to load more activity.')
+    })
+  }
+
+  /**
+   * Deletes a comment
+   */
+  onDeleteComment(commentId: string): void {
+    this.comments.update(comments => comments.filter(c => String(c.id) !== commentId))
+  }
+
+  /**
+   * Edits a comment
+   */
+  onEditComment(commentId: string): void {
+    console.log('Edit comment:', commentId)
+  }
+
+  /**
+   * Get status color class
+   */
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'Open':
+        return 'status-open';
+      case 'In Progress':
+        return 'status-in-progress';
+      case 'Closed':
+        return 'status-closed';
+      default:
+        return ''
+    }
+  }
+
+  /**
+   * Get priority color class
+   */
+  getPriorityColor(priority: string): string {
+    switch (priority) {
+      case 'Low':
+        return 'priority-low';
+      case 'Medium':
+        return 'priority-medium';
+      case 'High':
+        return 'priority-high';
+      default:
+        return ''
+    }
+  }
+
+  /**
+   * Get tag color class
+   */
+  getTagColor(tag: string): string {
+    const tagLower = tag.toLowerCase()
+    if (tagLower === 'bug') return 'tag-bug'
+    if (tagLower === 'feature') return 'tag-feature'
+    if (tagLower === 'authentication' || tagLower === 'mobile') return 'tag-default'
+    return 'tag-default'
+  }
+
+  onAddTagPrompt(): void {
+    const tag = window.prompt('Tag name')
+    if (tag) {
+      this.onAddTag(tag)
+    }
+  }
+
+  formatTimestamp(dateValue: string): string {
+    if (!dateValue) {
+      return ''
+    }
+    const date = new Date(dateValue)
+    return Number.isNaN(date.getTime()) ? dateValue : date.toLocaleString()
+  }
+
+  private toAssigneeLabel(assigneeUserId: number | null): string {
+    return assigneeUserId ? `User ${assigneeUserId}` : 'Unassigned'
+  }
+
+  private loadIssue(issueId: number): void {
+    this.isLoading.set(true)
+    this.errorMessage.set('')
+    this.issuesApi.getIssueDetail(issueId, 0, this.pageSize, 0, this.pageSize).subscribe({
+      next: (detail) => {
+        this.issue.set(detail.issue)
+        this.description.set(detail.description ?? '')
+        this.comments.set(detail.comments.items)
+        this.activityItems.set(detail.activity.items)
+        this.totalComments.set(detail.comments.totalElements)
+        this.totalActivityItems.set(detail.activity.totalElements)
+        this.commentsPageIndex.set(detail.comments.page)
+        this.activityPageIndex.set(detail.activity.page)
+        this.isLoading.set(false)
+      },
+      error: () => {
+        this.errorMessage.set('Unable to load issue details.')
+        this.isLoading.set(false)
+      }
+    })
+  }
+
+  private loadAssignees(projectId: number): void {
+    this.projectsApi.listMembers(projectId, 0, 50).subscribe({
+      next: (page) => {
+        const options = page.items
+          .filter(member => member.status === 'ACTIVE')
+          .filter(member => member.userId !== null)
+          .map(member => ({ value: String(member.userId), label: this.mapMemberLabel(member) }))
+        this.assignees.set([{ value: '', label: 'Unassigned' }, ...options])
+      },
+      error: () => {
+        this.assignees.set([{ value: '', label: 'Unassigned' }])
+      }
+    })
+  }
+
+  private mapMemberLabel(member: MembershipDto): string {
+    return member.userId ? `User ${member.userId}` : member.invitedEmail || 'Member'
+  }
+}

@@ -1,0 +1,202 @@
+<!-- Invite Members Component -->
+<div class="invite-members-container" role="main" aria-label="Invite members section">
+  <main class="body">
+    <!-- Sidebar Navigation -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Main Content Area -->
+    <main class="main-content" role="region" aria-label="Invite members content">
+      <!-- Header -->
+      <header class="content-header" role="banner">
+        <div class="header-left">
+          <h2 class="page-title">Project Workspace</h2>
+          <div class="owner-badge">OWNER</div>
+        </div>
+        <div class="header-right">
+          <!-- Search Bar -->
+          <div class="search-wrapper">
+            <img class="search-icon" alt="" src="/assets/images/i6.svg" />
+            <input
+              class="search-input"
+              type="search"
+              placeholder="Search issues..."
+              aria-label="Search issues"
+            />
+          </div>
+          <img class="header-icon" alt="" src="/assets/images/div1.svg" />
+          <img class="header-button-icon" alt="" src="/assets/images/button.svg" />
+        </div>
+      </header>
+
+      <!-- Page Section -->
+      <div class="page-section">
+        <!-- Page Header -->
+        <section class="page-header" role="region" aria-label="Page header">
+          <div class="header-content">
+            <div class="header-title">
+              <img class="header-icon-vector" alt="" src="/assets/images/Vector.svg" />
+              <h2 class="page-title-main">Invite members</h2>
+            </div>
+            <p class="header-description">Add people to this project by searching users or inviting by email.</p>
+          </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+          <!-- Left Column: Invite Form -->
+          <section class="invite-form-section" role="region" aria-label="Invite form">
+            <!-- Find Existing Users -->
+            <div class="form-group">
+              <label class="form-label">Find existing users</label>
+              <div class="search-field">
+                <img class="search-icon-inner" alt="" src="/assets/images/div2@2x.png" />
+                <input
+                  class="form-input"
+                  type="text"
+                  placeholder="Type a name, username, or email"
+                  [value]="searchQuery()"
+                  (input)="onSearchUsers($event.target.value)"
+                  aria-label="Search for users"
+                />
+              </div>
+              <p class="form-help-text">Search across all registered users. Select to add to invite list.</p>
+
+              <!-- Search Results -->
+              <div *ngIf="showSearchResults() && searchResults().length > 0" class="search-results">
+                <div *ngFor="let user of searchResults()" class="search-result-item">
+                  <button
+                    type="button"
+                    class="result-button"
+                    (click)="onAddUserFromSearch(user)"
+                    [attr.aria-label]="'Add ' + user.name + ' to recipients'"
+                  >
+                    <span class="result-name">{{ user.name }}</span>
+                    <span class="result-email">{{ user.email }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Invite by Email Section -->
+            <div class="form-group">
+              <label class="form-label">Invite by email</label>
+              <div class="email-input-wrapper">
+                <input
+                  class="form-input email-input"
+                  type="email"
+                  placeholder="Enter email and press Enter"
+                  [formControl]="inviteForm.get('email')"
+                  (keyup.enter)="onAddEmailRecipient(getEmailInput())"
+                  aria-label="Enter email to invite"
+                />
+              </div>
+
+              <!-- Message Section -->
+              <div class="form-group nested">
+                <label class="form-label">Add a message (optional)</label>
+                <textarea
+                  class="form-textarea"
+                  placeholder="This note appears in the email invitation."
+                  [formControl]="inviteForm.get('message')"
+                  aria-label="Invitation message"
+                ></textarea>
+                <p class="form-help-text">This note appears in the email invitation.</p>
+              </div>
+            </div>
+
+            <!-- Role Selection -->
+            <div class="form-group">
+              <label class="form-label">Role</label>
+              <div class="role-buttons">
+                <button
+                  type="button"
+                  class="role-button"
+                  [class.active]="selectedRole() === 'Member'"
+                  (click)="onRoleChange('Member')"
+                  aria-label="Select Member role"
+                >
+                  Member
+                </button>
+                <button
+                  type="button"
+                  class="role-button"
+                  [class.active]="selectedRole() === 'Owner'"
+                  (click)="onRoleChange('Owner')"
+                  aria-label="Select Owner role"
+                >
+                  Owner
+                </button>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="form-actions">
+              <button
+                type="button"
+                class="button-primary"
+                (click)="onSendInvites()"
+                [disabled]="recipientCount() === 0"
+                aria-label="Send invitations"
+              >
+                Send Invites
+              </button>
+              <button
+                type="button"
+                class="button-secondary"
+                (click)="onCancel()"
+                aria-label="Cancel invite operation"
+              >
+                Cancel
+              </button>
+            </div>
+          </section>
+
+          <!-- Right Column: Recipients and Preview -->
+          <section class="sidebar-section" role="region" aria-label="Recipients and email preview">
+            <!-- Recipients List -->
+            <div class="recipients-card">
+              <div class="recipients-header">
+                <h3 class="recipients-title">Recipients</h3>
+                <span class="recipients-count">{{ recipientCount() }}</span>
+              </div>
+              <div class="recipients-content">
+                <div *ngIf="recipientCount() === 0" class="empty-state">
+                  <img class="empty-icon" alt="" src="/assets/images/div3@2x.png" />
+                  <p class="empty-title">No one added yet</p>
+                  <p class="empty-description">Search by name on the left to add people.</p>
+                </div>
+                <div *ngIf="recipientCount() > 0" class="recipients-list">
+                  <div *ngFor="let recipient of recipients()" class="recipient-item">
+                    <span class="recipient-email">{{ recipient.email }}</span>
+                    <span class="recipient-role">{{ getRoleDisplay(recipient.role) }}</span>
+                    <button
+                      type="button"
+                      class="remove-button"
+                      (click)="onRemoveRecipient(recipient.id)"
+                      [attr.aria-label]="'Remove ' + recipient.email + ' from recipients'"
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email Preview Card -->
+            <div class="preview-card">
+              <h3 class="preview-title">Email Preview</h3>
+              <div class="email-preview">
+                <div class="email-from">From: ProjectHub</div>
+                <h4 class="email-subject">You've been invited to join Design System Project</h4>
+                <p class="email-body">John Doe has invited you to collaborate on Design System Project.</p>
+                <button type="button" class="button-invite-accept" aria-label="Accept invitation button">
+                  Accept Invitation
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </main>
+</div>

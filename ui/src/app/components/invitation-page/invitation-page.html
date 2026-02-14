@@ -1,0 +1,41 @@
+<div class="invitation-page" role="main" aria-label="Invitation acceptance">
+  <main class="body">
+    <section class="page-container">
+      <div class="card">
+        <div class="card-header">
+          <img class="logo" alt="Issue Tracker" src="assets/div@2x.png" />
+          <h1 class="title">Project Invitation</h1>
+          <p class="subtitle">You have been invited to join a project.</p>
+        </div>
+
+        <div class="card-body">
+          <div class="invite-details" *ngIf="inviteStatus === 'ready'">
+            <div class="detail-row">
+              <span class="label">Project</span>
+              <span class="value">{{ inviteProjectName || 'Project' }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Status</span>
+              <span class="value">Invitation ready</span>
+            </div>
+          </div>
+
+          <div class="invite-details" *ngIf="inviteStatus === 'accepted'">
+            <p class="success-message">Invitation accepted. Redirecting to project…</p>
+          </div>
+
+          <div class="invite-details" *ngIf="inviteStatus === 'error'">
+            <p class="error-message">{{ errorMessage }}</p>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button class="primary-button" type="button" (click)="onAcceptInvite()" [disabled]="isSubmitting">
+            Accept Invitation
+          </button>
+          <button class="secondary-button" type="button" (click)="onBackToLogin()">Back to login</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

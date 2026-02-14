@@ -1,0 +1,60 @@
+// Activity Item Component Styles
+
+.activity-item {
+  align-self: stretch;
+  background-color: var(--color-gray-300);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-12);
+
+  .activity-avatar {
+    height: var(--height-32);
+    width: var(--width-32);
+    position: relative;
+    border-radius: var(--br-9999);
+    flex-shrink: 0;
+  }
+
+  .activity-content {
+    flex: 1;
+    background-color: var(--color-gray-300);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    .activity-description {
+      flex: 1;
+      background-color: var(--color-gray-300);
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0;
+      line-height: var(--lh-24);
+      font-size: var(--fs-16);
+      font-family: var(--font-inter);
+      letter-spacing: var(--ls--0_5);
+
+      .activity-user {
+        font-weight: 500;
+      }
+    }
+
+    .activity-timestamp {
+      align-self: stretch;
+      background-color: var(--color-gray-300);
+      display: flex;
+      align-items: flex-start;
+      padding: var(--padding-2) var(--padding-0) var(--padding-0);
+
+      .timestamp {
+        position: relative;
+        font-size: var(--fs-14);
+        letter-spacing: var(--ls--0_5);
+        line-height: var(--lh-20);
+        font-family: var(--font-inter);
+        color: var(--color-slategray);
+      }
+    }
+  }
+}

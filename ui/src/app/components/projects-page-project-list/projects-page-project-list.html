@@ -23,7 +23,7 @@
                 class="search-input"
                 type="text"
                 placeholder="Search issues..."
-                [(ngModel)]="searchIssuesQuery()"
+                [(ngModel)]="searchIssuesQuery"
                 (input)="onSearchIssues($event.target.value)"
               />
             </div>
@@ -80,7 +80,7 @@
                     class="search-input"
                     type="text"
                     placeholder="Search projects..."
-                    [(ngModel)]="searchProjectsQuery()"
+                    [(ngModel)]="searchProjectsQuery"
                     (input)="onSearchProjects($event.target.value)"
                   />
                 </div>
@@ -103,45 +103,51 @@
               </div>
             </div>
 
-            <!-- Projects Grid -->
-            <div class="projects-grid">
+            <div class="projects-grid" *ngIf="hasProjects; else emptyState">
               <app-project-card
-                *ngFor="let project of divItems(); trackBy: (_, i) => i"
-                [projectIcon]="project.div"
-                [projectName]="project.eCommercePlatform"
-                [projectRole]="project.oWNER"
-                [ownerEmail]="project.johndoecompanycom"
-                [createdDate]="project.createdOnMar152024"
-                [projectDescription]="project.mainECommerceApplicationWith"
-                [openIssuesIcon]="project.i"
-                [openIssuesCount]="project.openIssues"
-                [statusIcon]="project.i1"
-                [statusLabel]="project.active"
-                [roleBgColor]="project.spanBackgroundColor"
-                [rolePadding]="project.spanPadding"
-                [roleColor]="project.oWNERColor"
-                [issuesGap]="project.divGap"
-                [issuesMinWidth]="project.divMinWidth"
-                [issuesBgColor]="project.spanBackgroundColor1"
-                [issuesPadding]="project.spanPadding1"
-                [issuesTextColor]="project.openIssuesColor"
-                [statusColor]="project.activeColor"
+                *ngFor="let project of projects; trackBy: trackProject"
+                [projectIcon]="'assets/div2.svg'"
+                [projectName]="project.name"
+                [projectRole]="role"
+                [ownerEmail]="project.ownerEmail"
+                [createdDate]="project.createdAt"
+                [projectDescription]="''"
+                [openIssuesIcon]="'assets/i10.svg'"
+                [openIssuesCount]="''"
+                [statusIcon]="'assets/i11.svg'"
+                [statusLabel]="''"
+                [roleBgColor]="''"
+                [rolePadding]="''"
+                [roleColor]="''"
+                [issuesGap]="''"
+                [issuesMinWidth]="''"
+                [issuesBgColor]="''"
+                [issuesPadding]="''"
+                [issuesTextColor]="''"
+                [statusColor]="''"
               ></app-project-card>
             </div>
+            <ng-template #emptyState>
+              <div class="projects-grid empty">
+                <div class="empty-message">No projects yet.</div>
+              </div>
+            </ng-template>
 
             <!-- Pagination -->
-            <div class="pagination-section">
+            <div class="pagination-section" *ngIf="projectsPage() as page">
               <div class="pagination-info">
-                <div class="pagination-text">Showing 1 to 6 of 6 projects</div>
+                <div class="pagination-text">
+                  Showing {{ page.items.length }} of {{ page.totalElements }} projects
+                </div>
               </div>
               <div class="pagination-controls">
-                <button class="pagination-button prev" type="button" disabled>
+                <button class="pagination-button prev" type="button" [disabled]="page.page === 0">
                   <img alt="Previous" src="assets/button1.svg" />
                 </button>
                 <button class="pagination-button active" type="button">
-                  <span class="page-number">1</span>
+                  <span class="page-number">{{ page.page + 1 }}</span>
                 </button>
-                <button class="pagination-button next" type="button">
+                <button class="pagination-button next" type="button" [disabled]="page.page + 1 >= page.totalPages">
                   <img alt="Next" src="assets/button2.svg" />
                 </button>
               </div>

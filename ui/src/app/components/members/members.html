@@ -1,0 +1,289 @@
+<!-- Members Management Component -->
+<div class="members" role="main" aria-label="Members management section">
+  <main class="body">
+    <section class="div">
+      <!-- Sidebar Navigation -->
+      <app-sidebar></app-sidebar>
+
+      <!-- Main Content Area -->
+      <main class="main-content" role="region" aria-label="Members content">
+        <!-- Header -->
+        <header class="content-header" role="banner">
+          <div class="header-left">
+            <h2 class="page-title">Project Workspace</h2>
+            <div class="owner-badge">OWNER</div>
+          </div>
+          <div class="header-right">
+            <!-- Search Bar -->
+            <div class="search-wrapper">
+              <img class="search-icon" alt="" src="/assets/images/i6.svg" />
+              <input
+                class="search-input"
+                type="search"
+                placeholder="Search issues..."
+                aria-label="Search issues"
+              />
+            </div>
+            <img class="header-icon" alt="" src="/assets/images/div1.svg" />
+            <img class="header-button-icon" alt="" src="/assets/images/button.svg" />
+          </div>
+        </header>
+
+        <!-- Main Content Form -->
+        <div class="content-area">
+          <form class="members-form" [formGroup]="inviteForm" (ngSubmit)="onInviteMember()" novalidate>
+            <!-- Page Title and Action -->
+            <div class="page-header-section">
+              <div class="page-header-content">
+                <div class="page-header-text">
+                  <h3 class="section-title">Members</h3>
+                  <p class="section-subtitle">Manage project access and collaboration</p>
+                </div>
+                <button
+                  class="invite-button"
+                  type="button"
+                  (click)="openInviteDialog()"
+                  aria-label="Invite new members to the project"
+                >
+                  <img class="button-icon" alt="" src="/assets/images/i7.svg" />
+                  <span>Invite Members</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="filters-container" [formGroup]="searchForm">
+              <div class="filters-wrapper">
+                <!-- Search Input -->
+                <div class="search-field">
+                  <div class="search-input-wrapper">
+                    <img class="search-icon" alt="" src="/assets/images/i8.svg" />
+                    <input
+                      class="filter-search-input"
+                      type="text"
+                      placeholder="Search members by name or email"
+                      formControlName="searchMembers"
+                      (input)="onSearchMembers()"
+                      aria-label="Search members by name or email"
+                    />
+                  </div>
+                </div>
+
+                <!-- Filter Dropdowns -->
+                <div class="filter-dropdowns">
+                  <div class="filter-select">
+                    <select
+                      class="dropdown"
+                      formControlName="roleFilter"
+                      (change)="onRoleFilterChange()"
+                      aria-label="Filter by role"
+                    >
+                      <option value="All Roles">All Roles</option>
+                      <option value="Owner">Owner</option>
+                      <option value="Member">Member</option>
+                    </select>
+                    <img class="dropdown-icon" alt="" src="/assets/images/i9.svg" />
+                  </div>
+
+                  <div class="filter-select">
+                    <select
+                      class="dropdown"
+                      formControlName="statusFilter"
+                      (change)="onStatusFilterChange()"
+                      aria-label="Filter by status"
+                    >
+                      <option value="All Status">All Status</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                    <img class="dropdown-icon" alt="" src="/assets/images/i9.svg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add Member Form -->
+            <div class="add-member-section">
+              <div class="add-member-wrapper">
+                <div class="add-member-fields">
+                  <div class="email-input-field">
+                    <input
+                      class="member-input"
+                      type="email"
+                      placeholder="Add by name or email"
+                      formControlName="email"
+                      aria-label="Email address to add member"
+                    />
+                  </div>
+
+                  <div class="role-select-wrapper">
+                    <select
+                      class="role-dropdown"
+                      formControlName="role"
+                      aria-label="Select role for new member"
+                    >
+                      <option value="Member">Member</option>
+                      <option value="Owner">Owner</option>
+                    </select>
+                    <img class="dropdown-icon" alt="" src="/assets/images/i9.svg" />
+                  </div>
+
+                  <button
+                    class="invite-submit-button"
+                    type="submit"
+                    aria-label="Send invite to member"
+                  >
+                    Invite
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Members Table Section -->
+            <section class="table-section" role="region" aria-label="Active members table">
+              <div class="table-header-wrapper">
+                <h3 class="table-title">Active Members</h3>
+              </div>
+
+              <div class="table-wrapper">
+                <table class="members-table" role="table">
+                  <thead class="table-head">
+                    <tr class="table-row">
+                      <th class="table-cell header-cell user-column" scope="col">User</th>
+                      <th class="table-cell header-cell role-column" scope="col">Role</th>
+                      <th class="table-cell header-cell status-column" scope="col">Status</th>
+                      <th class="table-cell header-cell date-column" scope="col">Added</th>
+                      <th class="table-cell header-cell actions-column" scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-body">
+                    <tr class="table-row" *ngFor="let member of filteredActiveMembers">
+                      <td class="table-cell user-cell">
+                        <div class="member-info">
+                          <img class="member-avatar" [src]="member.avatar" [alt]="member.name" />
+                          <div class="member-details">
+                            <div class="member-name">{{ member.name }}</div>
+                            <div class="member-email">{{ member.email }}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="table-cell role-cell">
+                        <span class="role-badge" [class.owner]="member.role === 'Owner'">
+                          {{ member.role }}
+                        </span>
+                      </td>
+                      <td class="table-cell status-cell">
+                        <span class="status-badge" [class.active]="member.status === 'Active'">
+                          {{ member.status }}
+                        </span>
+                      </td>
+                      <td class="table-cell date-cell">
+                        {{ member.dateAdded }}
+                      </td>
+                      <td class="table-cell actions-cell">
+                        <div class="action-menu">
+                          <button
+                            class="action-button"
+                            type="button"
+                            (click)="onMemberAction(member.id, 'edit')"
+                            aria-label="Edit member {{ member.name }}"
+                          ></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <!-- Invited Users Table Section -->
+            <section class="table-section" role="region" aria-label="Invited users table">
+              <div class="table-header-wrapper">
+                <h3 class="table-title">Invited Users</h3>
+              </div>
+
+              <div class="table-wrapper">
+                <table class="members-table" role="table">
+                  <thead class="table-head">
+                    <tr class="table-row">
+                      <th class="table-cell header-cell user-column" scope="col">User</th>
+                      <th class="table-cell header-cell role-column" scope="col">Role</th>
+                      <th class="table-cell header-cell status-column" scope="col">Status</th>
+                      <th class="table-cell header-cell date-column" scope="col">Invited</th>
+                      <th class="table-cell header-cell actions-column" scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-body">
+                    <tr class="table-row" *ngFor="let user of filteredInvitedUsers">
+                      <td class="table-cell user-cell">
+                        <div class="member-info">
+                          <img class="member-avatar" alt="User avatar" src="/assets/images/div2.svg" />
+                          <div class="member-details">
+                            <div class="member-email">{{ user.email }}</div>
+                            <div class="invitation-status">Invitation pending</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="table-cell role-cell">
+                        <span class="role-badge">
+                          {{ user.role }}
+                        </span>
+                      </td>
+                      <td class="table-cell status-cell">
+                        <span class="status-badge" [class.invited]="user.status === 'Invited'">
+                          {{ user.status }}
+                        </span>
+                      </td>
+                      <td class="table-cell date-cell">
+                        {{ user.invitedDate }}
+                      </td>
+                      <td class="table-cell actions-cell">
+                        <div class="action-menu">
+                          <button
+                            class="action-button"
+                            type="button"
+                            (click)="onInvitedUserAction(user.id, 'resend')"
+                            aria-label="Resend invite to {{ user.email }}"
+                          ></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <!-- Pagination Section -->
+            <div class="pagination-section">
+              <div class="pagination-info">
+                <span class="pagination-text">{{ getPaginationText() }}</span>
+              </div>
+              <div class="pagination-controls">
+                <button
+                  class="pagination-button"
+                  type="button"
+                  (click)="onPreviousPage()"
+                  [disabled]="currentPage === 1"
+                  aria-label="Go to previous page"
+                >
+                  <img class="pagination-icon" alt="" src="/assets/images/i10.svg" />
+                  <span>Previous</span>
+                </button>
+                <button
+                  class="pagination-button"
+                  type="button"
+                  (click)="onNextPage()"
+                  [disabled]="currentPage >= Math.ceil(totalItems / itemsPerPage)"
+                  aria-label="Go to next page"
+                >
+                  <span>Next</span>
+                  <img class="pagination-icon" alt="" src="/assets/images/i11.svg" />
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </main>
+    </section>
+  </main>
+</div>

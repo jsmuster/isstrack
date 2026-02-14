@@ -1,11 +1,12 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar';
 
 @Component({
   selector: 'projects-page-no-projects',
   standalone: true,
-  imports: [CommonModule, SidebarComponent],
+  imports: [CommonModule, FormsModule, SidebarComponent],
   templateUrl: './projects-page-no-projects.html',
   styleUrls: ['./projects-page-no-projects.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

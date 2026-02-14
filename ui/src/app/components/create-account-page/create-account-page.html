@@ -14,6 +14,7 @@
         <!-- Form Section -->
         <section class="form-section">
           <form class="signup-form" (ngSubmit)="onSubmit()">
+            <div class="form-error" *ngIf="errorMessage">{{ errorMessage }}</div>
             <!-- Email Field -->
             <div class="form-group">
               <label class="form-label">
@@ -25,7 +26,8 @@
                   class="form-input"
                   type="email"
                   placeholder="Enter your email"
-                  [(ngModel)]="email()"
+                  [(ngModel)]="email"
+                  name="email"
                   required
                 />
               </div>
@@ -42,7 +44,8 @@
                   class="form-input"
                   type="text"
                   placeholder="Choose a username"
-                  [(ngModel)]="username()"
+                  [(ngModel)]="username"
+                  name="username"
                   required
                 />
               </div>
@@ -60,7 +63,8 @@
                     class="form-input"
                     type="text"
                     placeholder="First name"
-                    [(ngModel)]="firstName()"
+                    [(ngModel)]="firstName"
+                    name="firstName"
                     required
                   />
                 </div>
@@ -76,7 +80,8 @@
                     class="form-input"
                     type="text"
                     placeholder="Last name"
-                    [(ngModel)]="lastName()"
+                    [(ngModel)]="lastName"
+                    name="lastName"
                     required
                   />
                 </div>
@@ -95,6 +100,8 @@
                   type="password"
                   placeholder="Create a password"
                   (input)="onPasswordChange($event.target.value)"
+                  [value]="password"
+                  name="password"
                   required
                 />
                 <img class="visibility-icon" alt="Show password" src="assets/button@2x.png" />
@@ -129,7 +136,8 @@
               <input
                 type="checkbox"
                 class="terms-checkbox"
-                [(ngModel)]="termsAgreed()"
+                [(ngModel)]="termsAgreed"
+                name="termsAgreed"
                 required
               />
               <div class="terms-text">
@@ -144,7 +152,7 @@
             <button
               type="submit"
               class="submit-button"
-              [disabled]="!isPasswordValid() || !termsAgreed() || !email() || !username() || !firstName() || !lastName()"
+              [disabled]="!isPasswordValid() || !termsAgreed || !email || !username || !firstName || !lastName || isSubmitting"
             >
               Create Account
             </button>

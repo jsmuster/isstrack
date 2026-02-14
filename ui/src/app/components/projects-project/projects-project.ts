@@ -1,5 +1,6 @@
 import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar';
 import { IssueRowComponent } from '../../shared/components/issue-row/issue-row';
 
@@ -38,7 +39,7 @@ interface Issue {
 @Component({
   selector: 'projects-project',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, IssueRowComponent],
+  imports: [CommonModule, FormsModule, SidebarComponent, IssueRowComponent],
   templateUrl: './projects-project.html',
   styleUrls: ['./projects-project.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,7 +49,7 @@ export class ProjectsProject {
   projectName = signal('E-commerce Platform');
   projectDescription = signal('Main e-commerce application with user management and payment processing.');
   role = signal('OWNER');
-  searchQuery = signal('');
+  searchQuery = '';
   activeTab = signal('issues');
   filterStatus = signal('All Status');
   filterPriority = signal('All Priority');
@@ -247,7 +248,7 @@ export class ProjectsProject {
   ]);
 
   onSearch(query: string) {
-    this.searchQuery.set(query);
+    this.searchQuery = query;
   }
 
   switchTab(tab: string) {
