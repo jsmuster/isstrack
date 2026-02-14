@@ -27,6 +27,19 @@
                 name="searchIssuesQuery"
                 (input)="onSearchIssues($event.target.value)"
               />
+              <div class="issue-results-panel" *ngIf="showIssueResults()">
+                <div
+                  class="issue-result-item"
+                  *ngFor="let issue of issueResults()"
+                  (click)="onIssueResultClick(issue)"
+                >
+                  <span class="issue-result-title">{{ issue.title }}</span>
+                  <span class="issue-result-status">{{ issue.status }}</span>
+                </div>
+                <div class="issue-result-item empty" *ngIf="issueResults().length === 0">
+                  No issues found.
+                </div>
+              </div>
             </div>
 
             <!-- Header Icons -->
@@ -90,9 +103,9 @@
                     class="search-input"
                     type="text"
                     placeholder="Search projects..."
-                    [(ngModel)]="searchProjectsQuery"
+                    [ngModel]="searchQuery()"
                     name="searchProjectsQuery"
-                    (input)="onSearchProjects($event.target.value)"
+                    (ngModelChange)="onSearchProjects($event)"
                   />
                 </div>
 
@@ -159,28 +172,12 @@
               </div>
             </ng-template>
 
-            <!-- Pagination -->
-            <div class="pagination-section" *ngIf="projectsPage() as page">
+            <!-- Project Count -->
+            <div class="pagination-section" *ngIf="allProjects().length > 0">
               <div class="pagination-info">
                 <div class="pagination-text">
-                  Showing {{ page.items.length }} of {{ page.totalElements }} projects
+                  Showing {{ filteredProjects().length }} of {{ allProjects().length }} projects
                 </div>
-              </div>
-              <div class="pagination-controls">
-                <button class="pagination-button prev" type="button" [disabled]="page.page === 0" (click)="onPrevPage()">
-                  <img alt="Previous" src="assets/button1.svg" />
-                </button>
-                <button class="pagination-button active" type="button">
-                  <span class="page-number">{{ page.page + 1 }}</span>
-                </button>
-                <button
-                  class="pagination-button next"
-                  type="button"
-                  [disabled]="page.page + 1 >= page.totalPages"
-                  (click)="onNextPage()"
-                >
-                  <img alt="Next" src="assets/button2.svg" />
-                </button>
               </div>
             </div>
           </form>

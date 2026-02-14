@@ -19,6 +19,11 @@ export interface IssueQueryParams {
 export class IssuesApi {
   constructor(private readonly http: HttpClient) {}
 
+  searchIssues(q: string, page = 0, size = 10): Observable<PageResponse<IssueDto>> {
+    const params = new HttpParams().set('q', q).set('page', page).set('size', size)
+    return this.http.get<PageResponse<IssueDto>>(apiUrl('/api/issues'), { params })
+  }
+
   listIssues(projectId: number, params: IssueQueryParams): Observable<PageResponse<IssueDto>> {
     let httpParams = new HttpParams()
     if (params.status) httpParams = httpParams.set('status', params.status)

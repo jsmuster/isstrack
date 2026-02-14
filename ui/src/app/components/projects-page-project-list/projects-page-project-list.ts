@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy, OnInit } from '@angular/core'
+import { Component, signal, computed, ChangeDetectionStrategy, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router'
@@ -6,7 +6,9 @@ import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { ProjectCardComponent } from '../../shared/components/project-card/project-card'
 import { CreateNewProjectModalComponent } from '../create-new-project-modal/create-new-project-modal.component'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
-import { PageResponse, ProjectDto } from '../../models/api.models'
+import { IssuesApi } from '../../features/issues/data/issues.api'
+import { AuthStore } from '../../core/state/auth.store'
+import { IssueDto, ProjectDto } from '../../models/api.models'
 import { debounceTime, Subject } from 'rxjs'
 
 @Component({
@@ -19,13 +21,14 @@ import { debounceTime, Subject } from 'rxjs'
 })
 export class ProjectsPageProjectList implements OnInit {
   searchIssuesQuery = ''
-  searchProjectsQuery = ''
+  issueResults = signal<IssueDto[]>([])
+  showIssueResults = signal(false)
   role = 'OWNER'
   viewMode = signal<'grid' | 'table'>('grid')
   filterBy = signal<'all' | 'owned' | 'shared'>('all')
   sortBy = signal<'recently-updated' | 'oldest-first'>('recently-updated')
-  currentPage = signal(1)
-  projectsPage = signal<PageResponse<ProjectDto> | null>(null)
+  searchQuery = signal('')
+  allProjects = signal<ProjectDto[]>([])
   isLoading = signal(false)
   errorMessage = signal('')
   showNotifications = signal(false)
@@ -45,33 +48,83 @@ export class ProjectsPageProjectList implements OnInit {
     { value: 'oldest-first' as const, label: 'Oldest First' },
   ]
 
-  private searchSubject = new Subject<string>()
+  filteredProjects = computed(() => {
+    let projects = this.allProjects()
+    const currentUserId = this.authStore.currentUser()?.id
 
-  constructor(private readonly projectsApi: ProjectsApi, private readonly router: Router) {}
+    const filter = this.filterBy()
+    if (filter === 'owned' && currentUserId != null) {
+      projects = projects.filter(p => p.ownerUserId === currentUserId)
+    } else if (filter === 'shared' && currentUserId != null) {
+      projects = projects.filter(p => p.ownerUserId !== currentUserId)
+    }
 
-  ngOnInit(): void {
-    this.searchSubject.pipe(debounceTime(300)).subscribe((query) => {
-      this.currentPage.set(1)
-      this.loadProjects(0)
+    const query = this.searchQuery().toLowerCase()
+    if (query) {
+      projects = projects.filter(p => p.name.toLowerCase().includes(query))
+    }
+
+    const sort = this.sortBy()
+    projects = [...projects].sort((a, b) => {
+      const dateA = new Date(a.updatedAt).getTime()
+      const dateB = new Date(b.updatedAt).getTime()
+      return sort === 'recently-updated' ? dateB - dateA : dateA - dateB
     })
-    this.loadProjects(0)
-  }
+
+    return projects
+  })
 
   get hasProjects(): boolean {
-    return (this.projectsPage()?.totalElements ?? 0) > 0
+    return this.filteredProjects().length > 0
   }
 
   get projects(): ProjectDto[] {
-    return this.projectsPage()?.items ?? []
+    return this.filteredProjects()
+  }
+
+  private issueSearchSubject = new Subject<string>()
+
+  constructor(
+    private readonly projectsApi: ProjectsApi,
+    private readonly issuesApi: IssuesApi,
+    private readonly authStore: AuthStore,
+    private readonly router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.issueSearchSubject.pipe(debounceTime(300)).subscribe((query) => {
+      if (!query.trim()) {
+        this.issueResults.set([])
+        this.showIssueResults.set(false)
+        return
+      }
+      this.issuesApi.searchIssues(query.trim()).subscribe({
+        next: (page) => {
+          this.issueResults.set(page.items)
+          this.showIssueResults.set(true)
+        },
+        error: () => {
+          this.issueResults.set([])
+          this.showIssueResults.set(false)
+        }
+      })
+    })
+    this.loadProjects()
   }
 
   onSearchIssues(query: string) {
     this.searchIssuesQuery = query
+    this.issueSearchSubject.next(query)
+  }
+
+  onIssueResultClick(issue: IssueDto) {
+    this.showIssueResults.set(false)
+    this.searchIssuesQuery = ''
+    this.router.navigate(['/app/projects', issue.projectId, 'issues', issue.id])
   }
 
   onSearchProjects(query: string) {
-    this.searchProjectsQuery = query
-    this.searchSubject.next(query)
+    this.searchQuery.set(query)
   }
 
   trackProject(index: number, project: ProjectDto): number {
@@ -84,14 +137,10 @@ export class ProjectsPageProjectList implements OnInit {
 
   onFilterChange(filter: 'all' | 'owned' | 'shared') {
     this.filterBy.set(filter)
-    this.currentPage.set(1)
-    this.loadProjects(0)
   }
 
   onSortChange(sort: 'recently-updated' | 'oldest-first') {
     this.sortBy.set(sort)
-    this.currentPage.set(1)
-    this.loadProjects(0)
   }
 
   onNewProject() {
@@ -115,14 +164,12 @@ export class ProjectsPageProjectList implements OnInit {
     this.router.navigate(['/app/projects', project.id, 'issues'])
   }
 
-  private loadProjects(pageIndex: number) {
+  private loadProjects() {
     this.isLoading.set(true)
     this.errorMessage.set('')
-    const search = this.searchProjectsQuery.trim() || undefined
-    this.projectsApi.listProjects(pageIndex, 6, search, this.sortBy(), this.filterBy()).subscribe({
+    this.projectsApi.listProjects(0, 1000).subscribe({
       next: (page) => {
-        this.projectsPage.set(page)
-        this.currentPage.set(page.page + 1)
+        this.allProjects.set(page.items)
         this.isLoading.set(false)
       },
       error: () => {
@@ -134,22 +181,5 @@ export class ProjectsPageProjectList implements OnInit {
 
   onOpenProject(project: ProjectDto): void {
     this.router.navigate(['/app/projects', project.id, 'issues'])
-  }
-
-  onPrevPage(): void {
-    const current = this.projectsPage()?.page ?? 0
-    if (current > 0) {
-      this.loadProjects(current - 1)
-    }
-  }
-
-  onNextPage(): void {
-    const page = this.projectsPage()
-    if (!page) {
-      return
-    }
-    if (page.page + 1 < page.totalPages) {
-      this.loadProjects(page.page + 1)
-    }
   }
 }
