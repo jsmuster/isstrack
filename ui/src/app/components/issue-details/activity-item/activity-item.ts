@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
  * Displays a single activity log item in the issue's activity timeline
  * 
  * Props:
- * - div: Avatar image path
+ * - div: Avatar image path (legacy)
  * - hoursAgo: Relative timestamp (e.g., "2 hours ago")
  * - actorLabel: Display name for the activity actor
  * - message: Activity message
- * - sarahJohnsonAddedContainerColor: CSS color value for text styling
+ * - sarahJohnsonAddedContainerColor: CSS color value for text styling (legacy)
+ * - activityType: Type of activity ('comment' | 'priority' | 'assignment' | 'status' | 'tag' | 'created')
  */
 @Component({
   selector: 'activity-item',
@@ -27,4 +28,17 @@ export class ActivityItem {
   actorLabel = input<string>('');
   message = input<string>('');
   sarahJohnsonAddedContainerColor = input<string | number | undefined>('');
+  activityType = input<string>('comment');
+
+  getIconSymbol(): string {
+    const symbols: Record<string, string> = {
+      'comment': '💬',
+      'priority': '⚑',
+      'assignment': '👤',
+      'status': '⟳',
+      'tag': '#',
+      'created': '+',
+    };
+    return symbols[this.activityType()] || '•';
+  }
 }

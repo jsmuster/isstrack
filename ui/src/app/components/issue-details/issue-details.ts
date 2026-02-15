@@ -354,9 +354,21 @@ export class IssueDetails implements OnInit, OnDestroy {
   getTagColor(tag: string): string {
     const tagLower = tag.toLowerCase()
     if (tagLower === 'bug') return 'tag-bug'
-    if (tagLower === 'feature') return 'tag-feature'
-    if (tagLower === 'authentication' || tagLower === 'mobile') return 'tag-default'
+    if (tagLower === 'feature' || tagLower === 'mobile') return 'tag-feature'
+    if (tagLower === 'authentication') return 'tag-default'
     return 'tag-default'
+  }
+
+  getActivityType(message: string): string {
+    if (!message) return 'comment'
+    const msg = message.toLowerCase()
+    if (msg.includes('comment')) return 'comment'
+    if (msg.includes('priority')) return 'priority'
+    if (msg.includes('assign')) return 'assignment'
+    if (msg.includes('status')) return 'status'
+    if (msg.includes('tag')) return 'tag'
+    if (msg.includes('created') || msg.includes('opened')) return 'created'
+    return 'comment'
   }
 
   onAddTagPrompt(): void {

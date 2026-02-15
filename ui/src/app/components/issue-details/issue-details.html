@@ -54,64 +54,60 @@
           <div class="content-grid">
             <!-- Main Content Column -->
             <div class="main-column">
-              <!-- Issue Title -->
+              <!-- Issue Title, Properties & Tags -->
               <section class="issue-title-section" role="region" aria-label="Issue title">
                 <h2 class="issue-title">{{ issueData().title }}</h2>
-              </section>
 
-              <!-- Issue Properties -->
-              <section class="issue-properties" role="region" aria-label="Issue properties">
-                <div class="property-row">
-                  <div class="property-item">
-                    <label class="property-label">Status</label>
-                    <select
-                      class="property-select"
-                      [value]="issueData().status"
-                      (change)="onStatusChange($any($event.target).value)"
-                      aria-label="Issue status"
-                    >
-                      <option value="Open">Open</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Closed">Closed</option>
-                    </select>
-                  </div>
+                <div class="issue-properties">
+                  <div class="property-row">
+                    <div class="property-item">
+                      <label class="property-label">Status</label>
+                      <select
+                        class="property-select"
+                        [ngClass]="getStatusColor(issueData().status)"
+                        [value]="issueData().status"
+                        (change)="onStatusChange($any($event.target).value)"
+                        aria-label="Issue status"
+                      >
+                        <option value="Open">Open</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Closed">Closed</option>
+                      </select>
+                    </div>
 
-                  <div class="property-item">
-                    <label class="property-label">Priority</label>
-                    <select
-                      class="property-select"
-                      [value]="issueData().priority"
-                      (change)="onPriorityChange($any($event.target).value)"
-                      aria-label="Issue priority"
-                    >
-                      <option value="Low">Low</option>
-                      <option value="Medium">Medium</option>
-                      <option value="High">High</option>
-                    </select>
-                  </div>
+                    <div class="property-item">
+                      <label class="property-label">Priority</label>
+                      <select
+                        class="property-select"
+                        [ngClass]="getPriorityColor(issueData().priority)"
+                        [value]="issueData().priority"
+                        (change)="onPriorityChange($any($event.target).value)"
+                        aria-label="Issue priority"
+                      >
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                      </select>
+                    </div>
 
-                  <div class="property-item">
-                    <label class="property-label">Assignee</label>
-                    <select
-                      class="property-select"
-                      [value]="issue()?.assigneeUserId ?? ''"
-                      (change)="onAssigneeChange($any($event.target).value)"
-                      aria-label="Issue assignee"
-                    >
-                      <option *ngFor="let option of assignees()" [value]="option.value">
-                        {{ option.label }}
-                      </option>
-                    </select>
+                    <div class="property-item">
+                      <label class="property-label">Assignee</label>
+                      <select
+                        class="property-select assignee-select"
+                        [value]="issue()?.assigneeUserId ?? ''"
+                        (change)="onAssigneeChange($any($event.target).value)"
+                        aria-label="Issue assignee"
+                      >
+                        <option *ngFor="let option of assignees()" [value]="option.value">
+                          {{ option.label }}
+                        </option>
+                      </select>
+                    </div>
                   </div>
                 </div>
-              </section>
 
-              <!-- Tags Section -->
-              <section class="tags-section" role="region" aria-label="Issue tags">
-                <div class="tags-header">
+                <div class="tags-row">
                   <h3 class="tags-title">Tags</h3>
-                </div>
-                <div class="tags-container">
                   <div class="tags-list">
                     <span *ngFor="let tag of issueData().tags" [class]="'tag-badge ' + getTagColor(tag)">
                       {{ tag }}
@@ -214,11 +210,10 @@
               <div class="activity-list">
                 <activity-item
                   *ngFor="let item of activityItems()"
-                  [div]="'/assets/images/div2.svg'"
+                  [activityType]="getActivityType(item.message)"
                   [actorLabel]="'User ' + item.actorUserId"
                   [message]="item.message"
                   [hoursAgo]="formatTimestamp(item.createdAt)"
-                  [sarahJohnsonAddedContainerColor]="''"
                 ></activity-item>
               </div>
               <button

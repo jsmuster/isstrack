@@ -1,8 +1,10 @@
 <!-- Activity Item Component -->
 <div class="activity-item" role="listitem">
-  <img class="activity-avatar" [src]="div()" alt="Activity user avatar" />
+  <div class="activity-icon" [ngClass]="'icon-' + activityType()">
+    <span class="icon-symbol">{{ getIconSymbol() }}</span>
+  </div>
   <div class="activity-content">
-    <div class="activity-description" [style.color]="sarahJohnsonAddedContainerColor()">
+    <div class="activity-description">
       <span class="activity-user">{{ actorLabel() || 'User' }}</span>
       <span> {{ message() || 'updated the issue' }}</span>
     </div>
