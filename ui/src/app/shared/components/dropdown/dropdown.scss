@@ -1,0 +1,94 @@
+.dropdown-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  // Default variant: bordered box with chevron (filter bar style)
+  &.default {
+    border-radius: var(--br-8);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-lightgray-100);
+    min-height: 38px;
+    cursor: pointer;
+
+    .dropdown-select {
+      appearance: none;
+      -webkit-appearance: none;
+      border: none;
+      background: transparent;
+      font-size: var(--fs-14);
+      letter-spacing: var(--ls--0_5);
+      font-family: var(--font-inter);
+      color: var(--color-gray-100);
+      padding: 8px 28px 8px 12px;
+      cursor: pointer;
+      outline: none;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .dropdown-icon {
+      position: absolute;
+      right: 8px;
+      height: 20px;
+      width: 20px;
+      pointer-events: none;
+    }
+  }
+
+  // Pill variant: colored rounded pill (issue details metadata style)
+  &.pill {
+    border-radius: var(--br-9999);
+    padding: 0;
+    cursor: pointer;
+
+    .dropdown-select {
+      appearance: none;
+      -webkit-appearance: none;
+      border: none;
+      background: transparent;
+      border-radius: var(--br-9999);
+      padding: 4px 12px;
+      font-size: var(--fs-14);
+      font-family: var(--font-inter);
+      font-weight: 500;
+      letter-spacing: var(--ls--0_5);
+      cursor: pointer;
+      outline: none;
+    }
+
+    // Status colors
+    &.status-open .dropdown-select {
+      background-color: #DBEAFE;
+      color: #1E40AF;
+    }
+    &.status-in-progress .dropdown-select {
+      background-color: #FFEDD5;
+      color: #9A3412;
+    }
+    &.status-closed .dropdown-select {
+      background-color: #D1FAE5;
+      color: #16A34A;
+    }
+
+    // Priority colors
+    &.priority-low .dropdown-select {
+      background-color: #DBEAFE;
+      color: #1E40AF;
+    }
+    &.priority-medium .dropdown-select {
+      background-color: #FEF9C3;
+      color: #854D0E;
+    }
+    &.priority-high .dropdown-select {
+      background-color: #FEE2E2;
+      color: #991B1B;
+    }
+
+    // Neutral (assignee, etc.)
+    &.neutral .dropdown-select {
+      background-color: #F3F4F6;
+      color: var(--color-gray-100);
+    }
+  }
+}

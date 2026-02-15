@@ -1,0 +1,12 @@
+<div class="dropdown-wrapper" [ngClass]="[variant(), colorClass()]">
+  <select
+    class="dropdown-select"
+    [attr.aria-label]="ariaLabel()"
+    [value]="value()"
+    (change)="onSelectChange($any($event.target).value)"
+  >
+    <option *ngIf="placeholder()" value="" disabled>{{ placeholder() }}</option>
+    <option *ngFor="let opt of options()" [value]="opt.value">{{ opt.label }}</option>
+  </select>
+  <img *ngIf="variant() === 'default'" class="dropdown-icon" alt="" src="/assets/images/Frame.svg" />
+</div>

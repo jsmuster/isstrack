@@ -110,34 +110,20 @@
                 </div>
 
                 <!-- Filter Dropdown -->
-                <div class="filter-dropdown">
-                  <select
-                    class="filter-select"
-                    [ngModel]="filterBy()"
-                    (ngModelChange)="onFilterChange($event)"
-                    name="filterBy"
-                  >
-                    <option *ngFor="let opt of filterOptions" [value]="opt.value">{{ opt.label }}</option>
-                  </select>
-                  <div class="filter-icon">
-                    <img alt="Dropdown" src="assets/Frame.svg" />
-                  </div>
-                </div>
+                <app-dropdown
+                  [options]="filterOptions"
+                  ariaLabel="Filter projects"
+                  [ngModel]="filterBy()"
+                  (ngModelChange)="onFilterChange($event)"
+                ></app-dropdown>
 
                 <!-- Sort Dropdown -->
-                <div class="sort-dropdown">
-                  <select
-                    class="filter-select"
-                    [ngModel]="sortBy()"
-                    (ngModelChange)="onSortChange($event)"
-                    name="sortBy"
-                  >
-                    <option *ngFor="let opt of sortOptions" [value]="opt.value">{{ opt.label }}</option>
-                  </select>
-                  <div class="sort-icon">
-                    <img alt="Dropdown" src="assets/Frame.svg" />
-                  </div>
-                </div>
+                <app-dropdown
+                  [options]="sortOptions"
+                  ariaLabel="Sort projects"
+                  [ngModel]="sortBy()"
+                  (ngModelChange)="onSortChange($event)"
+                ></app-dropdown>
               </div>
             </div>
 

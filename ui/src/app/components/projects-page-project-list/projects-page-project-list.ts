@@ -5,6 +5,7 @@ import { Router } from '@angular/router'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { ProjectCardComponent } from '../../shared/components/project-card/project-card'
 import { CreateNewProjectModalComponent } from '../create-new-project-modal/create-new-project-modal.component'
+import { DropdownComponent } from '../../shared/components/dropdown/dropdown'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { AuthStore } from '../../core/state/auth.store'
@@ -14,7 +15,7 @@ import { debounceTime, Subject } from 'rxjs'
 @Component({
   selector: 'projects-page-project-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent, ProjectCardComponent, CreateNewProjectModalComponent],
+  imports: [CommonModule, FormsModule, SidebarComponent, ProjectCardComponent, CreateNewProjectModalComponent, DropdownComponent],
   templateUrl: './projects-page-project-list.html',
   styleUrls: ['./projects-page-project-list.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

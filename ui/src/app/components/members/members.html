@@ -81,33 +81,19 @@
 
                 <!-- Filter Dropdowns -->
                 <div class="filter-dropdowns">
-                  <div class="filter-select">
-                    <select
-                      class="dropdown"
-                      formControlName="roleFilter"
-                      (change)="onRoleFilterChange()"
-                      aria-label="Filter by role"
-                    >
-                      <option value="All Roles">All Roles</option>
-                      <option value="Owner">Owner</option>
-                      <option value="Member">Member</option>
-                    </select>
-                    <img class="dropdown-icon" alt="" src="/assets/images/i9.svg" />
-                  </div>
+                  <app-dropdown
+                    [options]="roleFilterOptions"
+                    ariaLabel="Filter by role"
+                    formControlName="roleFilter"
+                    (ngModelChange)="onRoleFilterChange()"
+                  ></app-dropdown>
 
-                  <div class="filter-select">
-                    <select
-                      class="dropdown"
-                      formControlName="statusFilter"
-                      (change)="onStatusFilterChange()"
-                      aria-label="Filter by status"
-                    >
-                      <option value="All Status">All Status</option>
-                      <option value="Active">Active</option>
-                      <option value="Inactive">Inactive</option>
-                    </select>
-                    <img class="dropdown-icon" alt="" src="/assets/images/i9.svg" />
-                  </div>
+                  <app-dropdown
+                    [options]="statusFilterOptions"
+                    ariaLabel="Filter by status"
+                    formControlName="statusFilter"
+                    (ngModelChange)="onStatusFilterChange()"
+                  ></app-dropdown>
                 </div>
               </div>
             </div>
@@ -126,17 +112,11 @@
                     />
                   </div>
 
-                  <div class="role-select-wrapper">
-                    <select
-                      class="role-dropdown"
-                      formControlName="role"
-                      aria-label="Select role for new member"
-                    >
-                      <option value="Member">Member</option>
-                      <option value="Owner">Owner</option>
-                    </select>
-                    <img class="dropdown-icon" alt="" src="/assets/images/i9.svg" />
-                  </div>
+                  <app-dropdown
+                    [options]="roleOptions"
+                    ariaLabel="Select role for new member"
+                    formControlName="role"
+                  ></app-dropdown>
 
                   <button
                     class="invite-submit-button"

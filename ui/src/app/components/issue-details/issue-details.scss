@@ -348,53 +348,7 @@
         color: var(--color-darkslategray);
       }
 
-      .property-select {
-        border-radius: var(--br-9999);
-        padding: 4px 12px;
-        font-size: var(--fs-14);
-        font-family: var(--font-inter);
-        font-weight: 500;
-        letter-spacing: var(--ls--0_5);
-        cursor: pointer;
-        border: none;
-        appearance: auto;
-        -webkit-appearance: auto;
 
-        &.status-open {
-          background-color: #DBEAFE;
-          color: #1E40AF;
-        }
-
-        &.status-in-progress {
-          background-color: #FFEDD5;
-          color: #9A3412;
-        }
-
-        &.status-closed {
-          background-color: #D1FAE5;
-          color: #16A34A;
-        }
-
-        &.priority-low {
-          background-color: #DBEAFE;
-          color: #1E40AF;
-        }
-
-        &.priority-medium {
-          background-color: #FEF9C3;
-          color: #854D0E;
-        }
-
-        &.priority-high {
-          background-color: #FEE2E2;
-          color: #991B1B;
-        }
-
-        &.assignee-select {
-          background-color: #F3F4F6;
-          color: var(--color-gray-100);
-        }
-      }
     }
   }
 }

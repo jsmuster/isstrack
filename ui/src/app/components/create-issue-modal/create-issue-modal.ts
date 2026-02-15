@@ -1,10 +1,11 @@
-import { Component, signal, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, signal, computed, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { IssueDto, MembershipDto } from '../../models/api.models'
+import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
 
 /**
  * Priority option interface
@@ -37,7 +38,7 @@ interface AssigneeOption {
 @Component({
   selector: 'create-issue-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, DropdownComponent],
   templateUrl: './create-issue-modal.html',
   styleUrls: ['./create-issue-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -61,8 +62,23 @@ export class CreateIssueModal implements OnInit {
     { value: 'Critical', label: 'Critical', color: '#7c3aed' }
   ]
 
+  priorityDropdownOptions: DropdownOption[] = [
+    { value: 'Low', label: 'Low' },
+    { value: 'Medium', label: 'Medium' },
+    { value: 'High', label: 'High' },
+    { value: 'Critical', label: 'Critical' },
+  ]
+
   // Assignee options
   assigneeOptions = signal<AssigneeOption[]>([])
+
+  assigneeDropdownOptions = computed(() => {
+    const options: DropdownOption[] = [{ value: '', label: 'Select assignee...' }]
+    for (const a of this.assigneeOptions()) {
+      options.push({ value: a.id, label: a.name })
+    }
+    return options
+  })
   errorMessage = signal('')
 
   @Input() projectId: number | null = null

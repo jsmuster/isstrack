@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { ActivityItem } from './activity-item/activity-item'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
+import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { CommentsApi } from '../../features/comments/data/comments.api'
 import { ActivityApi } from '../../features/activity/data/activity.api'
@@ -42,7 +43,7 @@ interface AssigneeOption {
 @Component({
   selector: 'issue-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ActivityItem, SidebarComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ActivityItem, SidebarComponent, DropdownComponent],
   templateUrl: './issue-details.html',
   styleUrls: ['./issue-details.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -60,6 +61,18 @@ export class IssueDetails implements OnInit, OnDestroy {
   notifications = [
     { id: 'notif-1', message: 'New comment added', time: 'Just now' },
     { id: 'notif-2', message: 'Issue status updated', time: '20m ago' },
+  ]
+
+  statusOptions: DropdownOption[] = [
+    { value: 'Open', label: 'Open' },
+    { value: 'In Progress', label: 'In Progress' },
+    { value: 'Closed', label: 'Closed' },
+  ]
+
+  priorityOptions: DropdownOption[] = [
+    { value: 'Low', label: 'Low' },
+    { value: 'Medium', label: 'Medium' },
+    { value: 'High', label: 'High' },
   ]
 
   private readonly realtimeSubscriptions = new Subscription()
@@ -314,38 +327,6 @@ export class IssueDetails implements OnInit, OnDestroy {
    */
   onEditComment(commentId: string): void {
     console.log('Edit comment:', commentId)
-  }
-
-  /**
-   * Get status color class
-   */
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'Open':
-        return 'status-open';
-      case 'In Progress':
-        return 'status-in-progress';
-      case 'Closed':
-        return 'status-closed';
-      default:
-        return ''
-    }
-  }
-
-  /**
-   * Get priority color class
-   */
-  getPriorityColor(priority: string): string {
-    switch (priority) {
-      case 'Low':
-        return 'priority-low';
-      case 'Medium':
-        return 'priority-medium';
-      case 'High':
-        return 'priority-high';
-      default:
-        return ''
-    }
   }
 
   /**

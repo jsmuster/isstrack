@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
+import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
 import { IssueRowComponent } from '../../shared/components/issue-row/issue-row'
 import { CreateIssueModal } from '../create-issue-modal/create-issue-modal'
 import { NoIssuesYetComponent } from '../no-issues-yet/no-issues-yet.component'
@@ -20,7 +21,7 @@ import { IssueDto, MembershipDto, PageResponse, ProjectDto } from '../../models/
 @Component({
   selector: 'app-projects-project-issue-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, SidebarComponent, IssueRowComponent, CreateIssueModal, NoIssuesYetComponent],
+  imports: [CommonModule, FormsModule, RouterLink, SidebarComponent, IssueRowComponent, CreateIssueModal, NoIssuesYetComponent, DropdownComponent],
   templateUrl: './projects-project-issue-list.html',
   styleUrls: ['./projects-project-issue-list.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -48,9 +49,25 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
 
   private readonly realtimeSubscriptions = new Subscription()
 
-  statusOptions = ['Open', 'In Progress', 'Closed']
-  priorityOptions = ['Low', 'Medium', 'High']
-  sortOptions = ['updatedAt,desc', 'updatedAt,asc', 'priority,desc', 'priority,asc']
+  statusDropdownOptions: DropdownOption[] = [
+    { value: '', label: 'All Status' },
+    { value: 'Open', label: 'Open' },
+    { value: 'In Progress', label: 'In Progress' },
+    { value: 'Closed', label: 'Closed' },
+  ]
+  priorityDropdownOptions: DropdownOption[] = [
+    { value: '', label: 'All Priority' },
+    { value: 'Low', label: 'Low' },
+    { value: 'Medium', label: 'Medium' },
+    { value: 'High', label: 'High' },
+  ]
+  sortDropdownOptions: DropdownOption[] = [
+    { value: '', label: 'Sort: Updated' },
+    { value: 'updatedAt,desc', label: 'updatedAt,desc' },
+    { value: 'updatedAt,asc', label: 'updatedAt,asc' },
+    { value: 'priority,desc', label: 'priority,desc' },
+    { value: 'priority,asc', label: 'priority,asc' },
+  ]
 
   paginationLabel = computed(() => {
     const page = this.issuesPage()

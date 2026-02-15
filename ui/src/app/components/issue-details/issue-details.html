@@ -62,46 +62,38 @@
                   <div class="property-row">
                     <div class="property-item">
                       <label class="property-label">Status</label>
-                      <select
-                        class="property-select"
-                        [ngClass]="getStatusColor(issueData().status)"
-                        [value]="issueData().status"
-                        (change)="onStatusChange($any($event.target).value)"
-                        aria-label="Issue status"
-                      >
-                        <option value="Open">Open</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Closed">Closed</option>
-                      </select>
+                      <app-dropdown
+                        [options]="statusOptions"
+                        variant="pill"
+                        [colorClass]="'status-' + issueData().status.toLowerCase().replace(' ', '-')"
+                        ariaLabel="Issue status"
+                        [ngModel]="issueData().status"
+                        (ngModelChange)="onStatusChange($event)"
+                      ></app-dropdown>
                     </div>
 
                     <div class="property-item">
                       <label class="property-label">Priority</label>
-                      <select
-                        class="property-select"
-                        [ngClass]="getPriorityColor(issueData().priority)"
-                        [value]="issueData().priority"
-                        (change)="onPriorityChange($any($event.target).value)"
-                        aria-label="Issue priority"
-                      >
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                      </select>
+                      <app-dropdown
+                        [options]="priorityOptions"
+                        variant="pill"
+                        [colorClass]="'priority-' + issueData().priority.toLowerCase()"
+                        ariaLabel="Issue priority"
+                        [ngModel]="issueData().priority"
+                        (ngModelChange)="onPriorityChange($event)"
+                      ></app-dropdown>
                     </div>
 
                     <div class="property-item">
                       <label class="property-label">Assignee</label>
-                      <select
-                        class="property-select assignee-select"
-                        [value]="issue()?.assigneeUserId ?? ''"
-                        (change)="onAssigneeChange($any($event.target).value)"
-                        aria-label="Issue assignee"
-                      >
-                        <option *ngFor="let option of assignees()" [value]="option.value">
-                          {{ option.label }}
-                        </option>
-                      </select>
+                      <app-dropdown
+                        [options]="assignees()"
+                        variant="pill"
+                        colorClass="neutral"
+                        ariaLabel="Issue assignee"
+                        [ngModel]="'' + (issue()?.assigneeUserId ?? '')"
+                        (ngModelChange)="onAssigneeChange($event)"
+                      ></app-dropdown>
                     </div>
                   </div>
                 </div>

@@ -69,21 +69,12 @@
           <div class="form-label">
             <label for="priority-select" class="label-text">Priority</label>
           </div>
-          <div class="form-select-wrapper">
-            <select
-              id="priority-select"
-              class="form-select"
-              [value]="selectedPriority()"
-              (change)="onPriorityChange($any($event.target).value)"
-              aria-label="Select priority level"
-            >
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-              <option value="Critical">Critical</option>
-            </select>
-            <img class="select-icon" alt="" src="/assets/images/i.svg" />
-          </div>
+          <app-dropdown
+            [options]="priorityDropdownOptions"
+            ariaLabel="Select priority level"
+            [ngModel]="selectedPriority()"
+            (ngModelChange)="onPriorityChange($event)"
+          ></app-dropdown>
         </div>
 
         <!-- Assignee Field -->
@@ -91,21 +82,12 @@
           <div class="form-label">
             <label for="assignee-select" class="label-text">Assignee</label>
           </div>
-          <div class="form-select-wrapper">
-            <select
-              id="assignee-select"
-              class="form-select assignee-select"
-              [value]="selectedAssignee()"
-              (change)="onAssigneeChange($any($event.target).value)"
-              aria-label="Select assignee"
-            >
-              <option value="">Select assignee...</option>
-              <option *ngFor="let assignee of assigneeOptions()" [value]="assignee.id">
-                {{ assignee.name }}
-              </option>
-            </select>
-            <img class="select-icon" alt="" src="/assets/images/i.svg" />
-          </div>
+          <app-dropdown
+            [options]="assigneeDropdownOptions()"
+            ariaLabel="Select assignee"
+            [ngModel]="selectedAssignee()"
+            (ngModelChange)="onAssigneeChange($event)"
+          ></app-dropdown>
         </div>
 
         <!-- Tags Field -->

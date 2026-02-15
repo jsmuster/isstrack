@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
+import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { MembershipDto, PageResponse } from '../../models/api.models'
 import { AuthStore } from '../../core/state/auth.store'
@@ -21,12 +22,29 @@ interface MemberRow {
 @Component({
   selector: 'members',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SidebarComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SidebarComponent, DropdownComponent],
   templateUrl: './members.html',
   styleUrls: ['./members.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Members implements OnInit {
+  roleFilterOptions: DropdownOption[] = [
+    { value: 'All Roles', label: 'All Roles' },
+    { value: 'Owner', label: 'Owner' },
+    { value: 'Member', label: 'Member' },
+  ]
+
+  statusFilterOptions: DropdownOption[] = [
+    { value: 'All Status', label: 'All Status' },
+    { value: 'Active', label: 'Active' },
+    { value: 'Inactive', label: 'Inactive' },
+  ]
+
+  roleOptions: DropdownOption[] = [
+    { value: 'Member', label: 'Member' },
+    { value: 'Owner', label: 'Owner' },
+  ]
+
   // Search and filter form
   searchForm: FormGroup
   inviteForm: FormGroup

@@ -104,38 +104,24 @@
                           />
                         </div>
                       </div>
-                      <div class="select">
-                        <select class="filter-select" [(ngModel)]="statusFilter" (ngModelChange)="onFiltersChange()">
-                          <option value="">All Status</option>
-                          <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
-                        </select>
-                        <div class="frame">
-                          <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                        </div>
-                      </div>
-                      <div class="select2">
-                        <select class="filter-select" [(ngModel)]="priorityFilter" (ngModelChange)="onFiltersChange()">
-                          <option value="">All Priority</option>
-                          <option *ngFor="let option of priorityOptions" [value]="option">{{ option }}</option>
-                        </select>
-                        <div class="frame">
-                          <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                        </div>
-                      </div>
-                      <div class="select">
-                        <select
-                          class="filter-select"
-                          [(ngModel)]="assigneeFilter"
-                          (ngModelChange)="onFiltersChange()"
-                        >
-                          <option *ngFor="let option of assigneeOptions()" [value]="option.value">
-                            {{ option.label }}
-                          </option>
-                        </select>
-                        <div class="frame">
-                          <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                        </div>
-                      </div>
+                      <app-dropdown
+                        [options]="statusDropdownOptions"
+                        ariaLabel="Filter by status"
+                        [(ngModel)]="statusFilter"
+                        (ngModelChange)="onFiltersChange()"
+                      ></app-dropdown>
+                      <app-dropdown
+                        [options]="priorityDropdownOptions"
+                        ariaLabel="Filter by priority"
+                        [(ngModel)]="priorityFilter"
+                        (ngModelChange)="onFiltersChange()"
+                      ></app-dropdown>
+                      <app-dropdown
+                        [options]="assigneeOptions()"
+                        ariaLabel="Filter by assignee"
+                        [(ngModel)]="assigneeFilter"
+                        (ngModelChange)="onFiltersChange()"
+                      ></app-dropdown>
                       <div class="select">
                         <input
                           class="filter-by-title"
@@ -146,15 +132,12 @@
                           (ngModelChange)="onFiltersChange()"
                         />
                       </div>
-                      <div class="select4">
-                        <select class="filter-select" [(ngModel)]="sortFilter" (ngModelChange)="onFiltersChange()">
-                          <option value="">Sort: Updated</option>
-                          <option *ngFor="let option of sortOptions" [value]="option">{{ option }}</option>
-                        </select>
-                        <div class="frame">
-                          <img class="frame-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
-                        </div>
-                      </div>
+                      <app-dropdown
+                        [options]="sortDropdownOptions"
+                        ariaLabel="Sort issues"
+                        [(ngModel)]="sortFilter"
+                        (ngModelChange)="onFiltersChange()"
+                      ></app-dropdown>
                       <div class="div36"></div>
                       <button
                         class="button4"
