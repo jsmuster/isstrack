@@ -52,6 +52,7 @@
   --padding-12: 12px;
   --padding-16: 16px;
   --padding-20: 20px;
+  --padding-24: 24px;
   --padding-32: 32px;
 
   // Borders
@@ -78,7 +79,9 @@
   display: flex;
   flex-direction: column;
   background-color: var(--color-gray-300);
-  min-height: 100vh;
+  min-height: 100%;
+  gap: var(--gap-16);
+  padding: var(--padding-16) var(--padding-24);
 }
 
 // Kanban Columns Container
@@ -87,7 +90,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: var(--gap-16);
-  padding: var(--padding-16) var(--padding-32);
+  padding: 0;
   overflow-x: auto;
   flex: 1;
 
@@ -108,6 +111,11 @@
       background-color: var(--color-dimgray);
     }
   }
+}
+
+.scrollable-board {
+  width: 100%;
+  height: 100%;
 }
 
 // Kanban Column
@@ -157,33 +165,34 @@
     }
   }
 
-  .column-content {
+  .scrollable-list {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: var(--gap-12);
     padding: var(--padding-16);
-    overflow-y: auto;
-    min-height: 300px;
-
-    // Custom scrollbar for column content
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background-color: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--color-lightgray-200);
-      border-radius: var(--br-8);
-
-      &:hover {
-        background-color: var(--color-dimgray);
-      }
-    }
+    min-height: 320px;
   }
+}
+
+.sortable-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-12);
+  min-height: 260px;
+}
+
+::ng-deep .scrollable-list .dx-scrollable-container {
+  width: 100%;
+}
+
+::ng-deep .scrollable-list .dx-scrollable-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-12);
+}
+
+::ng-deep .scrollable-board .dx-scrollable-container {
+  width: 100%;
 }
 
 // Issue Card
@@ -211,6 +220,7 @@
     display: flex;
     align-items: center;
     gap: var(--gap-8);
+    justify-content: space-between;
 
     .issue-id {
       font-size: var(--fs-12);
@@ -218,6 +228,14 @@
       color: var(--color-royalblue-100);
       font-family: var(--font-inter);
       letter-spacing: var(--ls--0_5);
+    }
+
+    .issue-status {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-slategray);
+      letter-spacing: var(--ls--0_5);
+      text-transform: uppercase;
     }
   }
 
@@ -285,6 +303,11 @@
           background-color: rgba(107, 33, 168, 0.1);
           color: var(--color-tag-responsive);
         }
+
+        &.tag-default {
+          background-color: rgba(113, 128, 150, 0.12);
+          color: var(--color-slategray);
+        }
       }
     }
   }
@@ -321,6 +344,22 @@
       }
     }
 
+    .assignee-pill {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-4);
+      padding: 2px 8px;
+      border-radius: var(--br-9999);
+      background-color: rgba(30, 136, 229, 0.08);
+      color: var(--color-royalblue-100);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .assignee-label {
+      line-height: 1.2;
+    }
+
     .avatar {
       width: var(--width-20);
       height: var(--height-20);
@@ -337,6 +376,18 @@
       margin-left: auto;
     }
   }
+}
+
+::ng-deep .sortable-cards .dx-sortable-placeholder {
+  border-radius: var(--br-8);
+  border: 2px dashed var(--color-lightgray-200);
+  background-color: rgba(30, 136, 229, 0.08);
+  min-height: 120px;
+}
+
+::ng-deep .sortable-cards .dx-sortable-ghost {
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.2);
+  border-radius: var(--br-8);
 }
 
 // Add Issue Button
@@ -377,6 +428,15 @@
   }
 }
 
+.kanban-error {
+  background-color: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  color: var(--color-priority-high);
+  padding: var(--padding-12) var(--padding-16);
+  border-radius: var(--br-8);
+  font-size: var(--fs-14);
+}
+
 // Empty State
 .empty-state {
   display: flex;
@@ -408,7 +468,7 @@
 .kanban-footer {
   background-color: var(--color-white);
   border-top: var(--border-1);
-  padding: var(--padding-16) var(--padding-32);
+  padding: var(--padding-16) var(--padding-24);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -453,6 +513,11 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.2s ease;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
 
   &:hover {
     opacity: 0.7;
@@ -513,7 +578,7 @@
 
 @media (max-width: 1024px) {
   .kanban-columns {
-    padding: var(--padding-12) var(--padding-16);
+    padding: 0;
   }
 
   .kanban-column {
@@ -526,8 +591,12 @@
 }
 
 @media (max-width: 768px) {
+  .kanban-board-container {
+    padding: var(--padding-12);
+  }
+
   .kanban-columns {
-    padding: var(--padding-8);
+    padding: 0;
     gap: var(--gap-8);
   }
 
@@ -536,11 +605,6 @@
 
     .column-header {
       padding: var(--padding-12);
-    }
-
-    .column-content {
-      padding: var(--padding-12);
-      gap: var(--gap-8);
     }
   }
 

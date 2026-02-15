@@ -8,6 +8,8 @@ import { DropdownComponent, DropdownOption } from '../../shared/components/dropd
 import { IssueRowComponent } from '../../shared/components/issue-row/issue-row'
 import { CreateIssueModal } from '../create-issue-modal/create-issue-modal'
 import { NoIssuesYetComponent } from '../no-issues-yet/no-issues-yet.component'
+import { ProjectViewSubtabsComponent, ViewType } from '../project-view-subtabs/project-view-subtabs.component'
+import { KanbanBoardComponent } from '../kanban-board/kanban-board.component'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { WebSocketService } from '../../core/realtime/websocket.service'
@@ -21,7 +23,18 @@ import { IssueDto, MembershipDto, PageResponse, ProjectDto } from '../../models/
 @Component({
   selector: 'app-projects-project-issue-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, SidebarComponent, IssueRowComponent, CreateIssueModal, NoIssuesYetComponent, DropdownComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    SidebarComponent,
+    IssueRowComponent,
+    CreateIssueModal,
+    NoIssuesYetComponent,
+    DropdownComponent,
+    ProjectViewSubtabsComponent,
+    KanbanBoardComponent
+  ],
   templateUrl: './projects-project-issue-list.html',
   styleUrls: ['./projects-project-issue-list.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -39,6 +52,7 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
   assigneeFilter = ''
   sortFilter = ''
   readonly pageSize = 10
+  activeView = signal<ViewType>('table')
   isCreateIssueOpen = signal(false)
   assigneeOptions = signal<AssigneeOption[]>([])
   showNotifications = signal(false)
@@ -81,6 +95,7 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
 
   totalPages = computed(() => this.issuesPage()?.totalPages ?? 0)
   currentPage = computed(() => (this.issuesPage()?.page ?? 0) + 1)
+  totalIssues = computed(() => this.issuesPage()?.totalElements ?? 0)
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -169,6 +184,18 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
     this.isCreateIssueOpen.set(false)
     this.loadIssuesPage(0)
     this.onIssueSelected(issue.id)
+  }
+
+  onViewChange(view: ViewType): void {
+    this.activeView.set(view)
+    if (view === 'kanban' && this.statusFilter) {
+      this.statusFilter = ''
+      this.loadIssuesPage(0)
+    }
+  }
+
+  onKanbanIssueUpdated(issue: IssueDto): void {
+    this.mergeIssueUpdate(issue)
   }
 
   toAssigneeLabel(assigneeUserId: number | null): string {

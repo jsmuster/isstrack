@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core'
+import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core'
 
 export type ViewType = 'table' | 'kanban'
 
@@ -16,6 +16,8 @@ export type ViewType = 'table' | 'kanban'
   host: { '[style.display]': "'contents'" }
 })
 export class ProjectViewSubtabsComponent {
+  @Input() activeView: ViewType = 'table'
+  @Input() issueCount = 0
   @Output() viewChanged = new EventEmitter<ViewType>()
 
   /**

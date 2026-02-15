@@ -588,6 +588,118 @@
   }
 }
 
+.main2.kanban-active {
+  background-color: var(--color-gray-400);
+}
+
+.kanban-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-16);
+  padding: var(--padding-24) var(--padding-32) var(--padding-32);
+  flex: 1;
+  min-height: 0;
+}
+
+.kanban-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-12);
+  flex-wrap: wrap;
+
+  .select {
+    position: relative;
+    border-radius: var(--br-8);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-lightgray-100);
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+    cursor: pointer;
+
+    .filter-by-title {
+      border: none;
+      outline: none;
+      font-family: var(--font-inter);
+      font-size: var(--fs-14);
+      background-color: transparent;
+      color: var(--color-gray-100);
+      padding: 8px 12px;
+      flex: 1;
+
+      &::placeholder {
+        color: var(--color-slategray);
+      }
+    }
+  }
+
+  .div36 {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .button4 {
+    cursor: pointer;
+    border: none;
+    padding: var(--padding-9) 14.8px var(--padding-10) var(--padding-16);
+    background-color: var(--color-royalblue-100);
+    border-radius: var(--br-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-8);
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    .i-icon9 {
+      height: var(--height-16);
+      width: 10.5px;
+      position: relative;
+    }
+
+    .new-issue {
+      position: relative;
+      font-size: var(--fs-14);
+      letter-spacing: var(--ls--0_5);
+      line-height: var(--lh-17);
+      font-weight: 500;
+      font-family: var(--font-inter);
+      color: var(--color-white);
+      text-align: center;
+    }
+  }
+}
+
+.kanban-filter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-8);
+  border-radius: var(--br-8);
+  background-color: var(--color-white);
+  border: var(--border-1);
+  padding: 8px 12px;
+  min-width: 240px;
+
+  .filter-by-title {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: var(--font-inter);
+    font-size: var(--fs-14);
+    background-color: transparent;
+    letter-spacing: var(--ls--0_5);
+    color: var(--color-gray-100);
+
+    &::placeholder {
+      color: var(--color-slategray);
+    }
+  }
+}
+
 /* Main Content Area */
 .main {
   align-self: stretch;

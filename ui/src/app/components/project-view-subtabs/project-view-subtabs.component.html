@@ -4,6 +4,7 @@
     <!-- Table View Button -->
     <button
       class="view-button"
+      [class.view-active]="activeView === 'table'"
       (click)="onViewChange('table')"
       type="button"
       aria-label="Switch to table view"
@@ -14,7 +15,8 @@
 
     <!-- Kanban View Button (Active) -->
     <button
-      class="view-button view-active"
+      class="view-button"
+      [class.view-active]="activeView === 'kanban'"
       (click)="onViewChange('kanban')"
       type="button"
       aria-label="Switch to kanban view"
@@ -26,7 +28,7 @@
 
   <!-- Issue Count -->
   <div class="issue-count-badge">
-    <span class="count-number">47</span>
+    <span class="count-number">{{ issueCount }}</span>
     <span class="count-label">issues</span>
   </div>
 </div>
