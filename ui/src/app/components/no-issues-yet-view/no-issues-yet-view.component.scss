@@ -1,0 +1,212 @@
+// No Issues Yet View Component Styles
+// Empty state display when no issues exist
+
+.no-issues-yet-view {
+  width: 448px;
+  background-color: var(--color-gray-200);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 29px;
+  text-align: center;
+  font-size: var(--fs-14);
+  color: var(--color-slategray);
+  font-family: var(--font-inter);
+
+  // Illustration image styling
+  .illustration-image {
+    width: 256px;
+    height: 192px;
+    position: relative;
+    object-fit: cover;
+  }
+
+  // Main content section
+  .content-section {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--padding-3) var(--padding-0) var(--padding-0);
+    gap: 11px;
+    text-align: center;
+    font-size: 24px;
+    color: var(--color-gray-100);
+    font-family: var(--font-inter);
+
+    // Heading wrapper
+    .heading-wrapper {
+      background-color: var(--color-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--padding-1) 13.3px var(--padding-0) 12.2px;
+
+      // Main heading title
+      .heading-title {
+        margin: 0;
+        position: relative;
+        font-size: inherit;
+        letter-spacing: var(--ls--0_5);
+        line-height: 32px;
+        font-weight: 700;
+        font-family: inherit;
+      }
+    }
+
+    // Description wrapper
+    .description-wrapper {
+      align-self: stretch;
+      background-color: var(--color-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--padding-3) var(--padding-0) var(--padding-0);
+      font-size: 16px;
+      color: var(--color-dimgray);
+
+      // Description text
+      .description-text {
+        flex: 1;
+        position: relative;
+        letter-spacing: var(--ls--0_5);
+        line-height: 26px;
+        display: inline-block;
+        max-width: 413px;
+        margin: 0;
+      }
+    }
+  }
+
+  // Create issue button styling
+  .create-issue-button {
+    cursor: pointer;
+    border: none;
+    padding: var(--padding-0) var(--padding-20) var(--padding-3);
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    max-width: 343.8px;
+    transition: all 0.2s ease-in-out;
+
+    // Inner button container
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    // Button icon styling
+    .button-icon {
+      height: 28px;
+      width: 15.8px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    // Button text styling
+    .button-text {
+      flex: 1;
+      position: relative;
+      font-size: 18px;
+      letter-spacing: var(--ls--0_5);
+      line-height: 22px;
+      font-weight: 600;
+      font-family: var(--font-inter);
+      color: var(--color-white);
+      text-align: left;
+      display: inline-block;
+      max-width: 206.1px;
+      margin-left: 12px;
+    }
+
+    // Inner button styling
+    ::part(button) {
+      cursor: pointer;
+      border: none;
+      padding: var(--padding-12) var(--padding-20) var(--padding-12) 30.6px;
+      background-color: var(--color-royalblue);
+      flex: 1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28.5px;
+      flex-shrink: 0;
+    }
+  }
+
+  // Actual button element (replacing nested button structure)
+  button.create-issue-button {
+    padding: var(--padding-12) var(--padding-20) var(--padding-12) 30.6px;
+    background-color: var(--color-royalblue);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28.5px;
+    color: var(--color-white);
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  // Help section styling
+  .help-section {
+    width: 100%;
+    background-color: var(--color-gray-200);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--padding-1) var(--padding-0) var(--padding-0);
+    box-sizing: border-box;
+    isolation: isolate;
+    max-width: 199.8px;
+
+    // Help text
+    .help-text {
+      align-self: stretch;
+      position: relative;
+      letter-spacing: var(--ls--0_5);
+      line-height: 20px;
+      color: var(--color-slategray);
+    }
+
+    // Help link button
+    .help-link {
+      align-self: stretch;
+      background-color: var(--color-gray-200);
+      border: none;
+      cursor: pointer;
+      padding: var(--padding-1) var(--padding-0) 2px;
+      margin-top: -1px;
+      position: relative;
+      color: var(--color-royalblue);
+      font-family: var(--font-inter);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: #1d4ed8; // Darker blue on hover
+        text-decoration: underline;
+      }
+
+      &:focus {
+        outline: 2px solid var(--color-royalblue);
+        outline-offset: 2px;
+      }
+
+      span {
+        position: relative;
+        letter-spacing: var(--ls--0_5);
+        line-height: 17px;
+      }
+    }
+  }
+}

@@ -79,11 +79,13 @@
                 </div>
               </div>
 
-              <app-project-view-subtabs
-                [activeView]="activeView()"
-                [issueCount]="totalIssues()"
-                (viewChanged)="onViewChange($event)"
-              ></app-project-view-subtabs>
+              @if (issueRows().length > 0 || isLoading()) {
+                <app-project-view-subtabs
+                  [activeView]="activeView()"
+                  [issueCount]="totalIssues()"
+                  (viewChanged)="onViewChange($event)"
+                ></app-project-view-subtabs>
+              }
 
               <!-- Issues List Content -->
               <div class="main2" [class.kanban-active]="activeView() === 'kanban'">

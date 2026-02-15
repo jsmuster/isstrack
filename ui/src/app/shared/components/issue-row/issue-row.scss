@@ -1,10 +1,15 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .issue-row {
   align-self: stretch;
   background-color: var(--color-gray-400);
   border-bottom: var(--border-11);
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: minmax(320px, 1.6fr) minmax(140px, 0.9fr) minmax(110px, 0.8fr) 197px minmax(140px, 1fr);
+  grid-template-columns: var(--issue-grid, minmax(300px, 2.2fr) minmax(110px, 0.7fr) minmax(100px, 0.6fr) minmax(140px, 0.9fr) minmax(120px, 0.8fr));
   align-items: center;
   padding: var(--padding-16) var(--padding-23_9);
   min-width: var(--min-w-858_8);
@@ -48,6 +53,7 @@
             position: relative;
             letter-spacing: var(--ls--0_5);
             line-height: var(--lh-15);
+            color: #6B7280;
           }
         }
       }
@@ -70,7 +76,8 @@
             position: relative;
             letter-spacing: var(--ls--0_5);
             line-height: var(--lh-15);
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
             color: #2f3442;
           }
         }

@@ -171,10 +171,10 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
       return '#DBEAFE'
     }
     if (normalized === 'in progress') {
-      return '#FFEDD5'
+      return '#FEF3C7'
     }
     if (normalized === 'closed') {
-      return '#D1FAE5'
+      return '#F3F4F6'
     }
     return '#F3F4F6'
   }
@@ -185,10 +185,10 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
       return '#1E40AF'
     }
     if (normalized === 'in progress') {
-      return '#9A3412'
+      return '#92400E'
     }
     if (normalized === 'closed') {
-      return '#16A34A'
+      return '#475569'
     }
     return '#475569'
   }
@@ -196,21 +196,21 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
   priorityBadgeBgColor(priority: string): string {
     const normalized = this.normalizeLabel(priority)
     if (normalized === 'high' || normalized === 'critical') {
-      return '#F3D5D8'
+      return '#FEE2E2'
     }
     if (normalized === 'medium') {
-      return '#F6E1B4'
+      return '#FEF3C7'
     }
-    return '#E5E7EB'
+    return '#F3F4F6'
   }
 
   priorityBadgeTextColor(priority: string): string {
     const normalized = this.normalizeLabel(priority)
     if (normalized === 'high' || normalized === 'critical') {
-      return '#8C5A5F'
+      return '#991B1B'
     }
     if (normalized === 'medium') {
-      return '#8F6B2E'
+      return '#92400E'
     }
     return '#6B7280'
   }

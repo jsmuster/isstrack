@@ -763,7 +763,7 @@
 
       .main2 {
         align-self: stretch;
-        background-color: var(--color-whitesmoke-100);
+        background-color: #f3f4f6;
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -864,7 +864,7 @@
   border-bottom: var(--border-11);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: var(--padding-16) var(--padding-30) var(--padding-15);
 
   .div34 {
@@ -878,11 +878,9 @@
     max-width: 100%;
 
     .div35 {
-      flex: 1;
       background-color: var(--color-gray-400);
       display: flex;
       align-items: center;
-      justify-content: flex-end;
       min-width: 117px;
 
       .i-icon8 {
@@ -1046,21 +1044,25 @@
   gap: var(--gap-24);
   font-size: var(--fs-12);
   color: var(--color-dimgray);
-  --issue-grid: minmax(320px, 1.6fr) minmax(140px, 0.9fr) minmax(110px, 0.8fr) 197px minmax(140px, 1fr);
+  --issue-grid: minmax(300px, 2.2fr) minmax(110px, 0.7fr) minmax(100px, 0.6fr) minmax(140px, 0.9fr) minmax(120px, 0.8fr);
 
   .div38 {
     align-self: stretch;
     border-radius: var(--br-8);
     background-color: var(--color-white);
     border: 1px solid var(--color-gainsboro);
-    overflow-x: auto;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+
+    .issue-row-wrapper {
+      align-self: stretch;
+    }
 
     .div39 {
       align-self: stretch;
-      background-color: var(--color-whitesmoke-100);
+      background-color: #f9fafb;
       border-bottom: var(--border-11);
       box-sizing: border-box;
       display: grid;
@@ -1068,7 +1070,6 @@
       align-items: center;
       padding: var(--padding-12) var(--padding-23_9);
       min-width: var(--min-w-858_8);
-      z-index: 0;
 
       > .frame5,
       > .frame6,
@@ -1077,39 +1078,18 @@
       > .frame9 {
         width: 100%;
         min-width: 0;
-      }
-
-      .frame5 {
         display: flex;
-        align-items: flex-start;
-        z-index: 2;
+        align-items: center;
       }
 
       .frame6 {
-        display: flex;
-        align-items: flex-start;
         padding: var(--padding-0) var(--padding-16);
         box-sizing: border-box;
-        z-index: 3;
-      }
-
-      .frame7 {
-        display: flex;
-        align-items: flex-start;
-        z-index: 4;
       }
 
       .frame8 {
-        display: flex;
-        align-items: flex-start;
         padding: var(--padding-0) var(--padding-16);
         box-sizing: border-box;
-        z-index: 1;
-      }
-
-      .frame9 {
-        display: flex;
-        align-items: flex-start;
       }
     }
   }

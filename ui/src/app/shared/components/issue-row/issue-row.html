@@ -4,7 +4,7 @@
     <div class="issue-content">
       <div class="issue-id-cell">
         <div class="issue-id-wrapper" [style.padding]="padding()">
-          <span class="issue-id">{{ issueId() }}</span>
+          <span class="issue-id">#{{ issueId() }}</span>
         </div>
       </div>
       <div class="issue-title-cell">
@@ -82,7 +82,7 @@
   <div class="updated-cell">
     <div class="updated-time">
       <span class="time-label" [style.flex]="timelineFlex()">
-        {{ updatedTime() }}
+        {{ relativeTime() }}
       </span>
     </div>
   </div>

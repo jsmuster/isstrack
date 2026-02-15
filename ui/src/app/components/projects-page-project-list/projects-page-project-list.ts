@@ -30,6 +30,7 @@ export class ProjectsPageProjectList implements OnInit {
   sortBy = signal<'recently-updated' | 'oldest-first'>('recently-updated')
   searchQuery = signal('')
   allProjects = signal<ProjectDto[]>([])
+  openIssueCounts = signal<Record<number, number>>({})
   isLoading = signal(false)
   errorMessage = signal('')
   showNotifications = signal(false)
@@ -165,6 +166,29 @@ export class ProjectsPageProjectList implements OnInit {
     this.router.navigate(['/app/projects', project.id, 'issues'])
   }
 
+  getOpenIssueCount(projectId: number): number {
+    return this.openIssueCounts()[projectId] ?? 0
+  }
+
+  getOpenIssuesLabel(projectId: number): string {
+    const count = this.getOpenIssueCount(projectId)
+    return count === 1 ? '1 Open Issue' : `${count} Open Issues`
+  }
+
+  getIssuesBgColor(projectId: number): string {
+    const count = this.getOpenIssueCount(projectId)
+    if (count === 0) return '#dcfce7'
+    if (count <= 5) return '#fef9c3'
+    return '#ffe4e6'
+  }
+
+  getIssuesTextColor(projectId: number): string {
+    const count = this.getOpenIssueCount(projectId)
+    if (count === 0) return '#16a34a'
+    if (count <= 5) return '#a16207'
+    return '#be123c'
+  }
+
   private loadProjects() {
     this.isLoading.set(true)
     this.errorMessage.set('')
@@ -172,12 +196,23 @@ export class ProjectsPageProjectList implements OnInit {
       next: (page) => {
         this.allProjects.set(page.items)
         this.isLoading.set(false)
+        this.loadOpenIssueCounts(page.items)
       },
       error: () => {
         this.errorMessage.set('Unable to load projects.')
         this.isLoading.set(false)
       }
     })
+  }
+
+  private loadOpenIssueCounts(projects: ProjectDto[]) {
+    for (const project of projects) {
+      this.issuesApi.listIssues(project.id, { status: 'OPEN', page: 0, size: 1 }).subscribe({
+        next: (page) => {
+          this.openIssueCounts.update(counts => ({ ...counts, [project.id]: page.totalElements }))
+        }
+      })
+    }
   }
 
   onOpenProject(project: ProjectDto): void {

@@ -59,10 +59,11 @@
       transition: all 0.2s ease;
 
       .view-icon {
-        height: 17px;
-        width: 14px;
+        height: 16px;
+        width: 16px;
         position: relative;
         flex-shrink: 0;
+        filter: brightness(0) saturate(100%) invert(32%) sepia(10%) saturate(683%) hue-rotate(176deg) brightness(95%) contrast(90%);
       }
 
       .view-text {
@@ -82,6 +83,10 @@
 
       &.view-active {
         background-color: var(--color-royalblue-100);
+
+        .view-icon {
+          filter: brightness(0) invert(1);
+        }
 
         .view-text {
           color: var(--color-white);
