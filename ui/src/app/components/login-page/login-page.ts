@@ -17,6 +17,7 @@ export class LoginPage {
   password = ''
   errorMessage = ''
   isSubmitting = false
+  showPassword = false
 
   constructor(private readonly authService: AuthService, private readonly router: Router) {}
 
@@ -38,6 +39,10 @@ export class LoginPage {
         this.isSubmitting = false
       }
     })
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword
   }
 
   onGoogleSignIn() {

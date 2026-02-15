@@ -1,31 +1,27 @@
 .create-account-page {
   width: 100%;
+  min-height: 100vh;
   position: relative;
-  border-radius: var(--br-8);
   background-color: var(--color-white);
-  border: 2px solid var(--color-lightgray-200);
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  max-height: 1214px;
 
   .body {
     align-self: stretch;
-    background-color: var(--color-whitesmoke-100);
+    flex: 1;
+    background-color: var(--color-whitesmoke);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 75px 30px;
-    flex-shrink: 0;
     text-align: center;
     font-size: 30px;
     color: var(--color-gray-100);
     font-family: var(--font-inter);
 
     .page-container {
-      flex: 1;
       box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.25);
       border-radius: 16px;
       background-color: var(--color-white);
@@ -38,6 +34,7 @@
       padding: 32px var(--padding-20);
       gap: 32px;
       max-width: 448px;
+      width: 100%;
     }
   }
 }
@@ -52,7 +49,6 @@
 
 .card-header {
   width: 100%;
-  background-color: var(--color-gray-300);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,7 +108,6 @@
 
 .signup-form {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -120,7 +115,6 @@
 
   .form-group {
     align-self: stretch;
-    background-color: var(--color-gray-300);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -128,9 +122,18 @@
   }
 }
 
+.form-error {
+  align-self: stretch;
+  padding: 12px;
+  border-radius: var(--br-8);
+  background-color: var(--color-mistyrose);
+  color: var(--color-crimson, #ef4444);
+  font-size: var(--fs-14);
+  line-height: var(--lh-20);
+}
+
 .form-label {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
   align-items: flex-start;
   padding: var(--padding-1) var(--padding-0) var(--padding-2);
@@ -148,29 +151,39 @@
 
 .input-wrapper {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
   align-items: center;
-  gap: var(--gap-8);
-  position: relative;
 
   .input-icon {
-    height: var(--height-50);
-    width: auto;
+    height: 50px;
+    width: 26px;
     position: relative;
     object-fit: cover;
+    margin: 0 6px;
     flex-shrink: 0;
   }
 
+  .input-field {
+    flex: 1;
+    border-radius: var(--br-8);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-lightgray-100);
+    display: flex;
+    align-items: center;
+    padding: 12px;
+  }
+
   .visibility-icon {
-    height: var(--height-50);
+    height: 50px;
     width: 30px;
     position: relative;
     object-fit: cover;
+    cursor: pointer;
   }
 }
 
 .form-input {
+  width: 100%;
   flex: 1;
   border: none;
   outline: none;
@@ -184,20 +197,14 @@
   text-align: left;
   display: flex;
   align-items: center;
-  padding: 10px 0;
 
   &::placeholder {
     color: var(--color-gray-200);
-  }
-
-  &:focus {
-    color: var(--color-gray-100);
   }
 }
 
 .name-fields {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -206,13 +213,12 @@
 
   .form-group {
     flex: 1;
-    min-width: 179px;
+    min-width: 150px;
   }
 }
 
 .password-field {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -221,10 +227,9 @@
 
 .password-requirements {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: var(--gap-4);
   flex-shrink: 0;
   font-size: var(--fs-12);
@@ -241,10 +246,9 @@
 
   .requirements-list {
     width: 100%;
-    background-color: var(--color-gray-300);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--gap-4);
     max-width: 374px;
     list-style: none;
@@ -255,9 +259,8 @@
 
 .requirement-item {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--gap-8);
   color: var(--color-slategray);
   transition: color 0.2s ease;
@@ -267,8 +270,8 @@
   }
 
   .requirement-icon {
-    height: var(--height-16);
-    width: var(--width-12);
+    height: 16px;
+    width: 12px;
     position: relative;
     flex-shrink: 0;
   }
@@ -290,7 +293,7 @@
 
   .terms-checkbox {
     margin: 0;
-    height: var(--height-16);
+    height: 16px;
     width: 16px;
     position: relative;
     border-radius: 1px;
@@ -360,7 +363,6 @@
 
 .divider-section {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
   align-items: center;
   gap: var(--gap-12);
@@ -368,12 +370,10 @@
   color: var(--color-slategray);
 
   .divider-line {
-    height: var(--height-1);
+    height: 1px;
     flex: 1;
     position: relative;
-    background-color: var(--color-gray-300);
-    border-top: var(--border-1);
-    box-sizing: border-box;
+    background-color: var(--color-lightgray-100);
   }
 
   .divider-text {
@@ -387,7 +387,6 @@
 
 .social-buttons {
   align-self: stretch;
-  background-color: var(--color-gray-300);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -396,34 +395,29 @@
 
 .social-button {
   cursor: pointer;
-  border: var(--border-1);
+  border: 1px solid var(--color-lightgray-100);
   padding: var(--padding-12) var(--padding-20);
   background-color: var(--color-white);
   align-self: stretch;
   border-radius: var(--br-8);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 19.9px;
+  justify-content: center;
+  gap: var(--gap-12);
   transition: background-color 0.2s ease;
 
-  &.github {
-    gap: 20.3px;
-  }
-
   &:hover {
-    background-color: var(--color-whitesmoke-100);
+    background-color: var(--color-whitesmoke);
   }
 
   .social-icon {
-    height: var(--height-28);
-    width: auto;
+    height: var(--height-24);
+    width: 15.3px;
     position: relative;
     flex-shrink: 0;
   }
 
   .social-text {
-    flex: 1;
     position: relative;
     font-size: var(--fs-14);
     letter-spacing: var(--ls--0_5);
@@ -431,44 +425,35 @@
     font-weight: 500;
     font-family: var(--font-inter);
     color: var(--color-darkslategray);
-    text-align: left;
-    display: inline-block;
-    flex-shrink: 0;
+    text-align: center;
   }
 }
 
 .signin-section {
   align-self: stretch;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  padding: var(--padding-1) var(--padding-0) var(--padding-0);
+  justify-content: center;
+  gap: var(--gap-4);
   color: var(--color-dimgray);
-  gap: var(--gap-8);
 
   .signin-text {
-    align-self: stretch;
     position: relative;
     letter-spacing: var(--ls--0_5);
     line-height: var(--lh-20);
   }
 
   .signin-button {
-    align-self: stretch;
-    background-color: var(--color-gray-300);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--padding-2) var(--padding-20);
-    font-size: var(--fs-16);
-    color: var(--color-royalblue);
+    background: none;
     border: none;
     cursor: pointer;
-    text-decoration: none;
+    font-size: var(--fs-16);
+    color: var(--color-royalblue);
     font-weight: 500;
     letter-spacing: var(--ls--0_5);
     line-height: var(--lh-20);
-    transition: text-decoration 0.2s ease;
+    padding: 0;
 
     &:hover {
       text-decoration: underline;

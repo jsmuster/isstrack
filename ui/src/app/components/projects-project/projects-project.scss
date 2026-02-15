@@ -1,23 +1,20 @@
 .projects-project {
   width: 100%;
+  min-height: 100vh;
   position: relative;
-  border-radius: var(--br-8);
   background-color: var(--color-white);
-  border: 2px solid var(--color-lightgray-200);
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-height: 1024px;
 
   .body {
     align-self: stretch;
-    height: 1024px;
+    flex: 1;
     background-color: var(--color-whitesmoke-100);
     display: flex;
-    align-items: flex-start;
-    flex-shrink: 0;
+    align-items: stretch;
   }
 }
 
@@ -174,7 +171,6 @@
   display: flex;
   align-items: flex-start;
   flex: 1;
-  padding: var(--padding-0) var(--padding-0) 126px;
 }
 
 .content-container {
@@ -186,7 +182,6 @@
   padding: var(--padding-32) var(--padding-0) var(--padding-0);
   box-sizing: border-box;
   gap: var(--gap-24);
-  max-height: 834px;
 }
 
 .project-header {

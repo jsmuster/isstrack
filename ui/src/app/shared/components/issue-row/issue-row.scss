@@ -21,7 +21,7 @@
   .issue-cell {
     flex: 1;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     min-width: var(--min-w-347);
     z-index: 2;
 
@@ -72,6 +72,7 @@
             letter-spacing: var(--ls--0_5);
             line-height: var(--lh-15);
             font-weight: 500;
+            color: var(--color-gray-100);
           }
         }
 
@@ -79,7 +80,7 @@
           background-color: var(--color-gray-400);
           display: flex;
           align-items: flex-start;
-          padding: var(--padding-2) 212.6px var(--padding-2) var(--padding-0);
+          padding: 2px 0;
           gap: var(--gap-8);
 
           .badge {
@@ -105,7 +106,7 @@
   .status-cell {
     flex: 0.8376;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     padding: var(--padding-0) var(--padding-16);
     box-sizing: border-box;
     min-width: var(--min-w-127);
@@ -140,7 +141,7 @@
   .priority-cell {
     flex: 1;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     min-width: var(--min-w-65);
     max-width: var(--max-w-74_5);
     z-index: 4;
@@ -173,7 +174,7 @@
   .assignee-cell {
     width: var(--width-197);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     padding: var(--padding-0) var(--padding-16);
     box-sizing: border-box;
     z-index: 1;
@@ -218,7 +219,7 @@
   .updated-cell {
     flex: 1;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     min-width: var(--min-w-73);
     max-width: var(--max-w-165);
     font-size: var(--fs-14);

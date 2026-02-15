@@ -24,6 +24,7 @@
 
     .div {
       flex: 1;
+      width: 100%;
       background-color: var(--color-gray-300);
       overflow: hidden;
       display: flex;
@@ -398,7 +399,7 @@
         box-sizing: border-box;
         display: flex;
         align-items: flex-start;
-        padding: var(--padding-0) 8.9px var(--padding-15);
+        padding: 8px 12px;
         max-width: 294px;
         width: calc(100% - 31.8px);
         outline: none;
@@ -564,20 +565,12 @@
     .invite-button {
       cursor: pointer;
       border: none;
-      padding: var(--padding-0) var(--padding-0) 1.9px;
-      background-color: transparent;
+      padding: 10px 20px 10px 16px;
+      background-color: var(--color-royalblue-100);
+      border-radius: var(--br-8);
       display: flex;
-      align-items: flex-start;
-
-      div {
-        border-radius: var(--br-8);
-        background-color: var(--color-royalblue-100);
-        display: flex;
-        align-items: flex-start;
-        padding: var(--padding-10) 21.2px var(--padding-10) var(--padding-16);
-        gap: 13.2px;
-        flex-shrink: 0;
-      }
+      align-items: center;
+      gap: 8px;
 
       span {
         position: relative;
@@ -651,7 +644,7 @@
           box-sizing: border-box;
           display: flex;
           align-items: flex-start;
-          padding: var(--padding-0) 10.9px 17px;
+          padding: 8px 12px;
           max-width: 420px;
           width: calc(100% - 37.8px);
           outline: none;
@@ -691,7 +684,7 @@
           border: var(--border-2);
           display: flex;
           align-items: center;
-          padding: var(--padding-0) 17px 21px var(--padding-11);
+          padding: 8px 12px;
           position: relative;
           font-size: var(--fs-16);
           letter-spacing: var(--ls--0_5);
@@ -761,7 +754,7 @@
           border: var(--border-2);
           display: flex;
           align-items: flex-start;
-          padding: var(--padding-0) 14.9px 17px;
+          padding: 8px 12px;
           width: 100%;
           outline: none;
           font-family: var(--font-inter);
@@ -797,7 +790,7 @@
           box-sizing: border-box;
           display: flex;
           align-items: center;
-          padding: var(--padding-0) 10.9px 21px;
+          padding: 8px 12px;
           max-width: 89px;
           position: relative;
           font-size: var(--fs-16);
@@ -887,95 +880,57 @@
 
 // Members Table
 .members-table {
-  flex: 1;
-  background-color: var(--color-gray-300);
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
+  background-color: var(--color-gray-300);
 
   .table-head {
-    align-self: stretch;
     background-color: var(--color-whitesmoke);
-    display: flex;
-    align-items: flex-start;
-    min-width: 1072px;
 
     .table-row {
-      flex: 1;
       background-color: var(--color-gray-300);
-      display: flex;
-      align-items: center;
 
       .header-cell {
         background-color: var(--color-whitesmoke);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--padding-12) var(--padding-30) var(--padding-13);
+        text-align: left;
+        padding: 12px 24px;
         box-sizing: border-box;
-
-        .status {
-          position: relative;
-          font-size: var(--fs-12);
-          letter-spacing: var(--ls-0_1);
-          line-height: var(--lh-15);
-          font-weight: 500;
-          font-family: var(--font-inter);
-          color: var(--color-slategray);
-          text-align: center;
-        }
+        font-size: var(--fs-12);
+        letter-spacing: var(--ls-0_1);
+        line-height: var(--lh-15);
+        font-weight: 500;
+        font-family: var(--font-inter);
+        color: var(--color-slategray);
       }
 
       .user-column {
-        flex: 0.8533;
-        min-width: 409px;
+        width: 35%;
       }
 
       .role-column {
-        flex: 0.6691;
-        min-width: 179px;
-        max-width: 181.3px;
-        margin-left: -0.1px;
-        position: relative;
+        width: 15%;
       }
 
       .status-column {
-        flex: 1;
-        min-width: 110px;
-        max-width: 163.2px;
-        margin-left: -0.1px;
-        position: relative;
+        width: 15%;
       }
 
       .date-column {
-        flex: 0.7176;
-        min-width: 210px;
-        margin-left: -0.1px;
-        position: relative;
+        width: 20%;
       }
 
       .actions-column {
-        flex: 0.6394;
-        min-width: 164px;
-        max-width: 166.4px;
-        margin-left: -0.1px;
-        position: relative;
+        width: 15%;
       }
     }
   }
 
   .table-body {
-    align-self: stretch;
     background-color: var(--color-white);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    min-width: 1072px;
 
     .table-row {
-      align-self: stretch;
       background-color: var(--color-gray-300);
-      display: flex;
-      align-items: center;
 
       &:not(:last-child) {
         border-bottom: var(--border-1);
@@ -983,17 +938,13 @@
 
       .table-cell {
         background-color: var(--color-gray-300);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--padding-16) var(--padding-0) 16.5px;
+        text-align: left;
+        padding: 16px 24px;
+        vertical-align: middle;
         box-sizing: border-box;
       }
 
       .user-cell {
-        flex: 1;
-        min-width: 409px;
-
         .member-info {
           display: flex;
           align-items: center;
@@ -1046,29 +997,15 @@
       }
 
       .role-cell {
-        flex: 0.7363;
-        min-width: 179px;
-        max-width: 181.3px;
-        margin-left: -0.1px;
-        position: relative;
-        padding: var(--padding-28) var(--padding-23_9) 24.5px;
+        padding: 16px 24px;
       }
 
       .status-cell {
-        flex: 0.7071;
-        min-width: 110px;
-        max-width: 163.2px;
-        margin-left: -0.1px;
-        position: relative;
-        padding: var(--padding-28) var(--padding-23_9) 24.5px;
+        padding: 16px 24px;
       }
 
       .date-cell {
-        flex: 1;
-        min-width: 210px;
-        margin-left: -0.1px;
-        position: relative;
-        padding: 27px var(--padding-0) var(--padding-28_5);
+        padding: 16px 24px;
         font-size: var(--fs-14);
         letter-spacing: var(--ls--0_5);
         line-height: var(--lh-20);
@@ -1076,19 +1013,13 @@
       }
 
       .actions-cell {
-        height: 72.5px;
-        flex: 1;
         position: relative;
         background-color: var(--color-gray-300);
-        min-width: 164px;
-        max-width: 166.4px;
-        margin-left: -0.1px;
 
         .action-menu {
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 100%;
 
           .action-button {
             cursor: pointer;

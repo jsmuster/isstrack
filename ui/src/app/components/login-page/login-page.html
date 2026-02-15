@@ -42,13 +42,15 @@
                   <input
                     class="input-element"
                     placeholder="Enter your password"
-                    type="password"
+                    [type]="showPassword ? 'text' : 'password'"
                     [(ngModel)]="password"
                     name="password"
                     required
                   />
                 </div>
-                <img class="visibility-icon" alt="" src="assets/button@2x.png" />
+                <button class="visibility-button" type="button" (click)="togglePasswordVisibility()">
+                  <img class="visibility-icon" alt="Toggle password visibility" src="assets/button@2x.png" />
+                </button>
               </div>
             </div>
             <div class="forgot-section">

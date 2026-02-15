@@ -22,14 +22,16 @@
               </label>
               <div class="input-wrapper">
                 <img class="input-icon" alt="" src="assets/div1@2x.png" />
-                <input
-                  class="form-input"
-                  type="email"
-                  placeholder="Enter your email"
-                  [(ngModel)]="email"
-                  name="email"
-                  required
-                />
+                <div class="input-field">
+                  <input
+                    class="form-input"
+                    type="email"
+                    placeholder="Enter your email"
+                    [(ngModel)]="email"
+                    name="email"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
@@ -40,14 +42,16 @@
               </label>
               <div class="input-wrapper">
                 <img class="input-icon" alt="" src="assets/div2@2x.png" />
-                <input
-                  class="form-input"
-                  type="text"
-                  placeholder="Choose a username"
-                  [(ngModel)]="username"
-                  name="username"
-                  required
-                />
+                <div class="input-field">
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="Choose a username"
+                    [(ngModel)]="username"
+                    name="username"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
@@ -59,14 +63,16 @@
                 </label>
                 <div class="input-wrapper">
                   <img class="input-icon" alt="" src="assets/div3@2x.png" />
-                  <input
-                    class="form-input"
-                    type="text"
-                    placeholder="First name"
-                    [(ngModel)]="firstName"
-                    name="firstName"
-                    required
-                  />
+                  <div class="input-field">
+                    <input
+                      class="form-input"
+                      type="text"
+                      placeholder="First name"
+                      [(ngModel)]="firstName"
+                      name="firstName"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -76,14 +82,16 @@
                 </label>
                 <div class="input-wrapper">
                   <img class="input-icon" alt="" src="assets/div3@2x.png" />
-                  <input
-                    class="form-input"
-                    type="text"
-                    placeholder="Last name"
-                    [(ngModel)]="lastName"
-                    name="lastName"
-                    required
-                  />
+                  <div class="input-field">
+                    <input
+                      class="form-input"
+                      type="text"
+                      placeholder="Last name"
+                      [(ngModel)]="lastName"
+                      name="lastName"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -95,15 +103,17 @@
               </label>
               <div class="input-wrapper">
                 <img class="input-icon" alt="" src="assets/div4@2x.png" />
-                <input
-                  class="form-input"
-                  type="password"
-                  placeholder="Create a password"
-                  (input)="onPasswordChange($event.target.value)"
-                  [value]="password"
-                  name="password"
-                  required
-                />
+                <div class="input-field">
+                  <input
+                    class="form-input"
+                    type="password"
+                    placeholder="Create a password"
+                    (input)="onPasswordChange($event.target.value)"
+                    [value]="password"
+                    name="password"
+                    required
+                  />
+                </div>
                 <img class="visibility-icon" alt="Show password" src="assets/button@2x.png" />
               </div>
 
