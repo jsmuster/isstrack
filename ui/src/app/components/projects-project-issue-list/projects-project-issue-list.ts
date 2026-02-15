@@ -13,6 +13,7 @@ import { KanbanBoardComponent } from '../kanban-board/kanban-board.component'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { WebSocketService } from '../../core/realtime/websocket.service'
+import { LocalCacheService } from '../../core/state/local-cache.service'
 import { IssueDto, MembershipDto, PageResponse, ProjectDto } from '../../models/api.models'
 
 /**
@@ -102,13 +103,15 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
     private readonly issuesApi: IssuesApi,
     private readonly projectsApi: ProjectsApi,
     private readonly router: Router,
-    private readonly websocketService: WebSocketService
+    private readonly websocketService: WebSocketService,
+    private readonly localCache: LocalCacheService
   ) {}
 
   ngOnInit(): void {
     const projectId = Number(this.route.snapshot.paramMap.get('projectId'))
     if (!Number.isNaN(projectId)) {
       this.projectId.set(projectId)
+      this.restoreViewPreference(projectId)
       this.loadProject(projectId)
       this.loadAssignees(projectId)
       this.loadIssuesPage(0)
@@ -188,6 +191,7 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
 
   onViewChange(view: ViewType): void {
     this.activeView.set(view)
+    this.persistViewPreference(view)
     if (view === 'kanban' && this.statusFilter) {
       this.statusFilter = ''
       this.loadIssuesPage(0)
@@ -273,6 +277,25 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
           error: () => this.errorMessage.set('Realtime updates unavailable.')
         })
     )
+  }
+
+  private restoreViewPreference(projectId: number): void {
+    const cached = this.localCache.get<ViewType>(this.viewPreferenceKey(projectId))
+    if (cached === 'kanban' || cached === 'table') {
+      this.activeView.set(cached)
+    }
+  }
+
+  private persistViewPreference(view: ViewType): void {
+    const projectId = this.projectId()
+    if (projectId === null) {
+      return
+    }
+    this.localCache.set(this.viewPreferenceKey(projectId), view)
+  }
+
+  private viewPreferenceKey(projectId: number): string {
+    return this.localCache.key('projects', projectId, 'issues', 'view')
   }
 
   private mergeIssueUpdate(issue: IssueDto): void {

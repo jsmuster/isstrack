@@ -60,7 +60,8 @@ export class KanbanBoardComponent {
   columnIds = signal<string[]>([])
   errorMessage = signal('')
 
-  private readonly defaultStatuses = ['Open', 'In Progress', 'Review', 'Resolved', 'Closed']
+  private readonly defaultStatuses = ['Open', 'In Progress', 'Closed']
+  private readonly allowedStatuses = ['Open', 'In Progress', 'Closed']
   private issuesSource: IssueDto[] = []
   private assigneeOptions: AssigneeOption[] = []
   private assigneeLookup = new Map<number, string>()
@@ -182,7 +183,11 @@ export class KanbanBoardComponent {
   }
 
   private normalizeStatus(status: string): string {
-    return (status || '').trim().toLowerCase()
+    return (status || '')
+      .trim()
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\s+/g, ' ')
   }
 
   private slugifyStatus(status: string): string {
@@ -190,10 +195,20 @@ export class KanbanBoardComponent {
   }
 
   private updateIssueStatus(issue: IssueDto, nextStatus: string, previousStatus: string): void {
-    const updatedIssue = { ...issue, status: nextStatus }
+    const resolvedStatus = this.resolveStatus(nextStatus)
+    if (!resolvedStatus) {
+      this.errorMessage.set('Status change not supported for this column.')
+      this.moveIssueToStatus(issue, previousStatus)
+      return
+    }
+    if (this.normalizeStatus(issue.status) === this.normalizeStatus(resolvedStatus)) {
+      this.errorMessage.set('')
+      return
+    }
+    const updatedIssue = { ...issue, status: resolvedStatus }
     this.replaceIssue(updatedIssue)
     this.errorMessage.set('')
-    this.issuesApi.patchIssue(issue.id, { status: nextStatus }).subscribe({
+    this.issuesApi.patchIssue(issue.id, { status: resolvedStatus }).subscribe({
       next: (response) => {
         this.replaceIssue(response)
         this.issueUpdated.emit(response)
@@ -203,6 +218,16 @@ export class KanbanBoardComponent {
         this.moveIssueToStatus(issue, previousStatus)
       }
     })
+  }
+
+  private resolveStatus(status: string): string | null {
+    const normalized = this.normalizeStatus(status)
+    for (const allowed of this.allowedStatuses) {
+      if (this.normalizeStatus(allowed) === normalized) {
+        return allowed
+      }
+    }
+    return null
   }
 
   private replaceIssue(updated: IssueDto): void {
