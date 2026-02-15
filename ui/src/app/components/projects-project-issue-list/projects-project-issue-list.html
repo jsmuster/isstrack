@@ -100,19 +100,12 @@
                     <!-- Filter Bar -->
                     <div class="div33">
                       <div class="div34">
-                        <div class="div35">
-                          <img class="i-icon8" alt="Filter icon" src="/assets/images/i7.svg" />
-                          <div class="input2">
-                            <input
-                              class="filter-by-title"
-                              placeholder="Filter by title..."
-                              type="text"
-                              aria-label="Filter issues by title"
-                              [(ngModel)]="searchQuery"
-                              (ngModelChange)="onSearchChange()"
-                            />
-                          </div>
-                        </div>
+                        <app-search-input
+                          placeholder="Filter by title..."
+                          ariaLabel="Filter issues by title"
+                          [value]="searchQuery"
+                          (valueChange)="searchQuery = $event; onSearchChange()"
+                        ></app-search-input>
                         <app-dropdown
                           [options]="statusDropdownOptions"
                           ariaLabel="Filter by status"
@@ -269,17 +262,13 @@
                   } @else {
                     <div class="kanban-view">
                       <div class="kanban-toolbar">
-                        <div class="kanban-filter">
-                          <img class="i-icon8" alt="Filter icon" src="/assets/images/i7.svg" />
-                          <input
-                            class="filter-by-title"
-                            placeholder="Search kanban cards"
-                            type="text"
-                            aria-label="Filter issues by title"
-                            [(ngModel)]="searchQuery"
-                            (ngModelChange)="onSearchChange()"
-                          />
-                        </div>
+                        <app-search-input
+                          class="kanban-search"
+                          placeholder="Search kanban cards"
+                          ariaLabel="Search kanban cards"
+                          [value]="searchQuery"
+                          (valueChange)="searchQuery = $event; onSearchChange()"
+                        ></app-search-input>
                         <app-dropdown
                           [options]="priorityDropdownOptions"
                           ariaLabel="Filter by priority"

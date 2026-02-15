@@ -1,0 +1,11 @@
+<div class="search-input-container">
+  <img class="search-icon" alt="" src="/assets/images/i7.svg" aria-hidden="true" />
+  <input
+    class="search-field"
+    type="text"
+    [placeholder]="placeholder()"
+    [attr.aria-label]="ariaLabel()"
+    [ngModel]="value()"
+    (ngModelChange)="onInput($event)"
+  />
+</div>

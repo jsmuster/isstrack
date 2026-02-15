@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
 import { IssueRowComponent } from '../../shared/components/issue-row/issue-row'
+import { SearchInputComponent } from '../../shared/components/search-input/search-input'
 import { CreateIssueModal } from '../create-issue-modal/create-issue-modal'
 import { NoIssuesYetComponent } from '../no-issues-yet/no-issues-yet.component'
 import { ProjectViewSubtabsComponent, ViewType } from '../project-view-subtabs/project-view-subtabs.component'
@@ -30,6 +31,7 @@ import { IssueDto, MembershipDto, PageResponse, ProjectDto } from '../../models/
     RouterLink,
     SidebarComponent,
     IssueRowComponent,
+    SearchInputComponent,
     CreateIssueModal,
     NoIssuesYetComponent,
     DropdownComponent,
