@@ -4,7 +4,7 @@
     <div class="issue-content">
       <div class="issue-id-cell">
         <div class="issue-id-wrapper" [style.padding]="padding()">
-          <span class="issue-id">#{{ issueId() }}</span>
+          <span class="issue-id">{{ issueId() }}</span>
         </div>
       </div>
       <div class="issue-title-cell">
@@ -70,7 +70,11 @@
   <div class="assignee-cell">
     <div class="assignee-content">
       <div class="assignee-info" [style.overflow]="assigneeOverflow()">
-        <img class="assignee-avatar" [src]="assigneeAvatar()" [alt]="assigneeName()" />
+        @if (assigneeName() === 'Unassigned') {
+          <span class="assignee-avatar-placeholder"></span>
+        } @else {
+          <img class="assignee-avatar" [src]="assigneeAvatar()" [alt]="assigneeName()" />
+        }
         <span class="assignee-name" [style.color]="assigneeColor()">
           {{ assigneeName() }}
         </span>

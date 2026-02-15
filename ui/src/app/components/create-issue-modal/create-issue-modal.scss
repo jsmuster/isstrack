@@ -133,8 +133,18 @@
   background-color: var(--color-gray-300);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 7px;
+
+  app-dropdown {
+    display: block;
+    width: 100%;
+
+    ::ng-deep .dropdown-wrapper {
+      display: flex;
+      width: 100%;
+    }
+  }
 
   &.tags-group {
     gap: 4px;

@@ -98,6 +98,8 @@ public class IssueService {
       issue.setAssignee(userRepository.findById(request.assigneeUserId())
           .orElseThrow(() -> new BadRequestException("Assignee user does not exist")));
     }
+    int nextNumber = issueRepository.countByProjectId(projectId) + 1;
+    issue.setIssueNumber(nextNumber);
     var saved = issueRepository.save(issue);
     var tags = tagService.normalizeAndSave(request.tags());
     saveIssueTags(saved, tags);

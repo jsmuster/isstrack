@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectsApi } from '../../features/projects/data/projects.api';
 import { ProjectDto } from '../../models/api.models';
+import { AuthStore } from '../../core/state/auth.store';
 
 /**
  * CreateNewProjectModal Component
@@ -38,26 +39,25 @@ export class CreateNewProjectModalComponent implements OnInit {
   selectedMembers = signal<string[]>([]);
 
   // Available members to invite
-  availableMembers = signal([
-    { id: '1', name: 'Sarah Wilson', avatar: '/assets/images/img.svg' },
-    { id: '2', name: 'Mike Johnson', avatar: '/assets/images/img.svg' }
-  ]);
+  availableMembers = signal<{id: string, name: string, avatar: string}[]>([]);
 
   // Search filter for members
   memberSearchTerm = signal('');
 
   // Current user (project owner)
-  currentUser = {
-    name: 'John Smith (You)',
-    avatar: '/assets/images/img.svg'
-  };
+  get currentUser() {
+    const user = this.authStore.currentUser();
+    const name = user ? [user.firstName, user.lastName].filter(Boolean).join(' ') || user.username || user.email : 'You';
+    return { name: name + ' (You)', avatar: '/assets/images/img.svg' };
+  }
 
   @Output() closed = new EventEmitter<void>();
   @Output() created = new EventEmitter<ProjectDto>();
 
-  constructor(private fb: FormBuilder, private readonly projectsApi: ProjectsApi) {
+  constructor(private fb: FormBuilder, private readonly projectsApi: ProjectsApi, private readonly authStore: AuthStore) {
     this.projectForm = this.fb.group({
       projectName: ['', [Validators.required, Validators.minLength(1)]],
+      projectPrefix: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10), Validators.pattern(/^[A-Z][A-Z0-9]*$/)]],
       description: [''],
       visibility: ['private'], // 'private' or 'public'
       advancedSettings: [false]
@@ -127,7 +127,8 @@ export class CreateNewProjectModalComponent implements OnInit {
 
     this.isSubmitting.set(true);
     this.errorMessage.set('');
-    this.projectsApi.createProject({ name: projectName }).subscribe({
+    const prefix = (this.projectForm.get('projectPrefix')?.value || '').trim().toUpperCase();
+    this.projectsApi.createProject({ name: projectName, prefix }).subscribe({
       next: (project) => {
         this.isSubmitting.set(false);
         this.created.emit(project);
@@ -155,6 +156,12 @@ export class CreateNewProjectModalComponent implements OnInit {
   /**
    * Handle advanced settings click
    */
+  onPrefixInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const upper = input.value.toUpperCase();
+    this.projectForm.get('projectPrefix')?.setValue(upper, { emitEvent: true });
+  }
+
   onAdvancedSettings(): void {
     // TODO: Navigate to advanced settings or open submenu
     console.log('Advanced settings clicked');

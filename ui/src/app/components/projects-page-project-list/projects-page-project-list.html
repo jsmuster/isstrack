@@ -67,7 +67,7 @@
                 <p class="section-description">Your workspaces and issue tracking environments.</p>
               </div>
               <button class="new-project-button" type="button" (click)="onNewProject()">
-                <img class="button-icon" alt="Add" src="assets/i7.svg" />
+                <img class="button-icon" alt="Add" src="/assets/images/i8.svg" />
                 <span class="button-text">New Project</span>
               </button>
             </div>
@@ -81,7 +81,7 @@
                   [class.active]="viewMode() === 'grid'"
                   (click)="toggleViewMode('grid')"
                 >
-                  <img class="button-icon" alt="Grid view" src="assets/i8.svg" />
+                  <img class="button-icon" alt="Grid view" src="assets/icon-grid-view.svg" />
                   <span class="view-label">Grid</span>
                 </button>
                 <button
@@ -90,7 +90,7 @@
                   [class.active]="viewMode() === 'table'"
                   (click)="toggleViewMode('table')"
                 >
-                  <img class="button-icon" alt="Table view" src="assets/i9.svg" />
+                  <img class="button-icon" alt="Table view" src="assets/icon-list-view.svg" />
                   <span class="view-label">Table</span>
                 </button>
               </div>
@@ -131,7 +131,7 @@
               <app-project-card
                 *ngFor="let project of projects; trackBy: trackProject"
                 [projectIcon]="'assets/div2.svg'"
-                [projectName]="project.name"
+                [projectName]="(project.prefix ? '[' + project.prefix + '] ' : '') + project.name"
                 [projectRole]="role"
                 [ownerEmail]="project.ownerEmail"
                 [createdDate]="'Created on ' + (project.createdAt | date: 'MMM d, yyyy')"

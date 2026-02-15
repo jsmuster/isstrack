@@ -15,6 +15,7 @@ export interface AuthResponse {
 export interface ProjectDto {
   id: number
   name: string
+  prefix: string | null
   ownerUserId: number
   ownerEmail: string
   createdAt: string
@@ -34,6 +35,8 @@ export interface MembershipDto {
 export interface IssueDto {
   id: number
   projectId: number
+  issueNumber: number | null
+  issueKey: string | null
   title: string
   status: string
   priority: string
@@ -96,6 +99,7 @@ export interface LoginRequest {
 
 export interface CreateProjectRequest {
   name: string
+  prefix: string
 }
 
 export interface InviteMemberRequest {

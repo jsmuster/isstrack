@@ -46,7 +46,7 @@
                <button class="back-button" type="button" (click)="onGoBack()" aria-label="Go back to issues">
                  <img class="issue-icon" alt="Back" src="/assets/images/Vector.svg" />
                </button>
-               <h3 class="issue-number">Issue #{{ issueData().id }}</h3>
+               <h3 class="issue-number">{{ issueData().issueKey || 'Issue #' + issueData().id }}</h3>
              </div>
            </div>
 

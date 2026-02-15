@@ -203,6 +203,14 @@
           flex-shrink: 0;
         }
 
+        .assignee-avatar-placeholder {
+          height: var(--height-24);
+          width: var(--width-24);
+          border-radius: var(--br-9999);
+          background-color: #d1d5db;
+          flex-shrink: 0;
+        }
+
         .assignee-name {
           position: relative;
           letter-spacing: var(--ls--0_5);

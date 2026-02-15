@@ -23,6 +23,9 @@ public class ProjectEntity {
   @Column(nullable = false)
   private String name;
 
+  @Column(length = 10)
+  private String prefix;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "owner_user_id", nullable = false)
   private UserEntity owner;
@@ -60,6 +63,9 @@ public class ProjectEntity {
   public void setName(String name) {
     this.name = name;
   }
+
+  public String getPrefix() { return prefix; }
+  public void setPrefix(String prefix) { this.prefix = prefix; }
 
   public UserEntity getOwner() {
     return owner;

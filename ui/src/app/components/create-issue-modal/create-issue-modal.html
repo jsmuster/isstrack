@@ -1,9 +1,9 @@
 <!-- Create Issue Modal Component -->
 <div class="modal-overlay" role="presentation" aria-hidden="true">
-  <form class="create-issue-modal" [formGroup]="issueForm" (ngSubmit)="onCreateIssue()" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <form class="create-issue-modal" [formGroup]="issueForm" (ngSubmit)="onCreateIssue()" role="dialog" aria-modal="true" aria-labelledby="modal-title" autocomplete="off">
     <!-- Modal Header -->
     <div class="modal-header">
-      <h2 class="modal-title" id="modal-title">Create New Issue</h2>
+      <h2 class="modal-title" id="modal-title">Create New Issue{{ nextIssueKey() ? ' - ' + nextIssueKey() : '' }}</h2>
       <button
         type="button"
         class="close-button"

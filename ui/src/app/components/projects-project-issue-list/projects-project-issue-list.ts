@@ -371,6 +371,12 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
     return typeof payload === 'object' && payload !== null
   }
 
+  formatLabel(value: string): string {
+    return value
+      .replace(/_/g, ' ')
+      .replace(/\w\S*/g, word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+  }
+
   private normalizeLabel(value: string): string {
     return (value || '')
       .trim()

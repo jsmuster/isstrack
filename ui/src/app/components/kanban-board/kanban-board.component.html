@@ -31,7 +31,7 @@
           (keydown.enter)="onIssueClick(issue)"
         >
           <div class="card-header">
-            <span class="issue-id">#{{ issue.id }}</span>
+            <span class="issue-id">{{ issue.issueKey || '#' + issue.id }}</span>
           </div>
           <div class="card-body">
             <p class="issue-title">{{ issue.title }}</p>

@@ -33,6 +33,7 @@ public final class EntityMapper {
     return new ProjectDto(
         entity.getId(),
         entity.getName(),
+        entity.getPrefix(),
         entity.getOwner().getId(),
         entity.getOwner().getEmail(),
         entity.getCreatedAt(),
@@ -53,9 +54,15 @@ public final class EntityMapper {
   }
 
   public static IssueDto toIssueDto(IssueEntity entity, List<String> tags) {
+    String issueKey = null;
+    if (entity.getIssueNumber() != null && entity.getProject().getPrefix() != null) {
+        issueKey = entity.getProject().getPrefix() + "-" + String.format("%03d", entity.getIssueNumber());
+    }
     return new IssueDto(
         entity.getId(),
         entity.getProject().getId(),
+        entity.getIssueNumber(),
+        issueKey,
         entity.getTitle(),
         entity.getStatus().getName(),
         entity.getPriority().getName(),

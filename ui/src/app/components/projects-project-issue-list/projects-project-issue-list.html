@@ -52,7 +52,7 @@
                    <button class="back-button" type="button" (click)="onGoBack()" aria-label="Go back to projects">
                      <img class="vector-icon" alt="Back" src="/assets/images/Vector.svg" />
                    </button>
-                   <h3 class="e-commerce-platform">{{ project()?.name || 'Project' }}</h3>
+                   <h3 class="e-commerce-platform">{{ project()?.prefix ? '[' + project()!.prefix + '] ' : '' }}{{ project()?.name || 'Project' }}</h3>
                  </div>
                 <div class="main-e-commerce-application-wi-wrapper">
                   <div class="main-e-commerce-application">
@@ -195,12 +195,12 @@
                           tabindex="0"
                         >
                           <app-issue-row
-                            [issueId]="item.id.toString()"
+                            [issueId]="item.issueKey || item.id.toString()"
                             [issueTitle]="item.title"
                             [category]="''"
                             [type]="''"
-                            [statusLabel]="item.status"
-                            [priorityLabel]="item.priority"
+                            [statusLabel]="formatLabel(item.status)"
+                            [priorityLabel]="formatLabel(item.priority)"
                             [assigneeAvatar]="'/assets/images/img.svg'"
                             [assigneeName]="toAssigneeLabel(item.assigneeUserId)"
                             [updatedTime]="item.updatedAt"

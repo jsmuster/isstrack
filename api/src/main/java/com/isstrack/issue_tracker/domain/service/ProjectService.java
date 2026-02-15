@@ -48,11 +48,12 @@ public class ProjectService {
   }
 
   @Transactional
-  public ProjectDto createProject(long ownerId, String name) {
+  public ProjectDto createProject(long ownerId, String name, String prefix) {
     var owner = userRepository.findById(ownerId)
         .orElseThrow(() -> new NotFoundException("User not found"));
     var project = new ProjectEntity();
     project.setName(name.trim());
+    project.setPrefix(prefix.trim().toUpperCase());
     project.setOwner(owner);
     var saved = projectRepository.save(project);
 

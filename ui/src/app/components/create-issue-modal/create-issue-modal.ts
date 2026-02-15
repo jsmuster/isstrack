@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { ActivatedRoute } from '@angular/router'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
-import { IssueDto, MembershipDto } from '../../models/api.models'
+import { IssueDto, MembershipDto, ProjectDto } from '../../models/api.models'
 import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
 import { QuillModule, QuillEditorComponent } from 'ngx-quill'
 
@@ -88,6 +88,14 @@ export class CreateIssueModal implements OnInit, AfterViewInit {
     return options
   })
   errorMessage = signal('')
+  project = signal<ProjectDto | null>(null)
+  nextIssueNumber = signal<number | null>(null)
+  nextIssueKey = computed(() => {
+    const proj = this.project()
+    const num = this.nextIssueNumber()
+    if (!proj?.prefix || num === null) return null
+    return `${proj.prefix}-${String(num).padStart(3, '0')}`
+  })
 
   @Input() projectId: number | null = null
   @Output() closed = new EventEmitter<void>()
@@ -120,6 +128,8 @@ export class CreateIssueModal implements OnInit, AfterViewInit {
     }
     if (this.projectId) {
       this.loadAssignees(this.projectId)
+      this.loadProject(this.projectId)
+      this.loadNextIssueNumber(this.projectId)
     }
   }
 
@@ -279,6 +289,20 @@ export class CreateIssueModal implements OnInit, AfterViewInit {
       return 'Issue title must be at least 3 characters'
     }
     return ''
+  }
+
+  private loadProject(projectId: number): void {
+    this.projectsApi.getProject(projectId).subscribe({
+      next: (proj) => this.project.set(proj),
+      error: () => {}
+    })
+  }
+
+  private loadNextIssueNumber(projectId: number): void {
+    this.issuesApi.listIssues(projectId, { size: 1 }).subscribe({
+      next: (page) => this.nextIssueNumber.set(page.totalElements + 1),
+      error: () => {}
+    })
   }
 
   private loadAssignees(projectId: number): void {

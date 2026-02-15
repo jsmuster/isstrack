@@ -25,6 +25,7 @@ import { AuthStore } from '../../core/state/auth.store'
  */
 interface IssueViewModel {
   id: number | null
+  issueKey: string | null
   title: string
   status: string
   priority: string
@@ -113,6 +114,7 @@ export class IssueDetails implements OnInit, OnDestroy {
     const description = this.description()
     return {
       id: issue?.id ?? null,
+      issueKey: issue?.issueKey ?? null,
       title: issue?.title ?? 'Issue details',
       status: issue?.status ?? 'OPEN',
       priority: issue?.priority ?? 'MEDIUM',

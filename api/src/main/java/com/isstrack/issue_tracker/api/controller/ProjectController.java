@@ -31,7 +31,7 @@ public class ProjectController {
   @PostMapping
   public ProjectDto createProject(@Valid @RequestBody CreateProjectRequest request) {
     long userId = CurrentUser.requireUserId();
-    return projectService.createProject(userId, request.name());
+    return projectService.createProject(userId, request.name(), request.prefix());
   }
 
   @GetMapping

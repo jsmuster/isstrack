@@ -28,6 +28,9 @@ public class IssueEntity {
   @JoinColumn(name = "project_id", nullable = false)
   private ProjectEntity project;
 
+  @Column(name = "issue_number")
+  private Integer issueNumber;
+
   @Column(nullable = false)
   private String title;
 
@@ -93,6 +96,9 @@ public class IssueEntity {
   public void setProject(ProjectEntity project) {
     this.project = project;
   }
+
+  public Integer getIssueNumber() { return issueNumber; }
+  public void setIssueNumber(Integer issueNumber) { this.issueNumber = issueNumber; }
 
   public String getTitle() {
     return title;

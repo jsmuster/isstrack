@@ -19,4 +19,6 @@ public interface IssueRepository extends JpaRepository<IssueEntity, Long>, JpaSp
       where issue.id = :issueId
       """)
   Optional<IssueEntity> findIssueDetailById(@Param("issueId") Long issueId);
+
+  int countByProjectId(long projectId);
 }
