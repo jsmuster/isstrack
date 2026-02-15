@@ -1,17 +1,17 @@
 .projects-page-project-list {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   position: relative;
   background-color: var(--color-white);
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 
   .body {
     align-self: stretch;
     flex: 1;
+    min-height: 0;
     background-color: var(--color-whitesmoke-100);
     display: flex;
     align-items: stretch;
@@ -266,10 +266,11 @@
 .main-wrapper {
   align-self: stretch;
   background-color: var(--color-gray-300);
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   align-items: flex-start;
   flex: 1;
+  min-height: 0;
 }
 
 .content-form {
@@ -279,7 +280,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
   padding: 32px;
   gap: var(--gap-24);
 }
