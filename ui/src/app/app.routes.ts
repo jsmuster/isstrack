@@ -7,9 +7,9 @@ import { ProjectsPageProjectList } from './components/projects-page-project-list
 import { ProjectsProject } from './components/projects-project/projects-project'
 import { ProjectsProjectIssueList } from './components/projects-project-issue-list/projects-project-issue-list'
 import { IssueDetails } from './components/issue-details/issue-details'
-import { Members } from './components/members/members'
 import { InviteMembers } from './components/invite-members/invite-members'
 import { InvitationPage } from './components/invitation-page/invitation-page'
+import { ProjectsProjectMembers } from './components/projects-project-members/projects-project-members'
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -25,7 +25,7 @@ export const routes: Routes = [
       { path: 'projects/:projectId', component: ProjectsProject },
       { path: 'projects/:projectId/issues', component: ProjectsProjectIssueList },
       { path: 'projects/:projectId/issues/:issueId', component: IssueDetails },
-      { path: 'projects/:projectId/members', component: Members },
+      { path: 'projects/:projectId/members', component: ProjectsProjectMembers },
       { path: 'projects/:projectId/members/invite', component: InviteMembers }
     ]
   }

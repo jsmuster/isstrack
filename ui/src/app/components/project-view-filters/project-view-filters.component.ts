@@ -29,35 +29,35 @@ export class ProjectViewFiltersComponent {
   /**
    * Handle search input change
    */
-  onSearchChange(searchValue: string): void {
+  onSearchChange(_event: Event): void {
     // TODO: Implement search filter
   }
 
   /**
    * Handle status filter change
    */
-  onStatusChange(status: string): void {
+  onStatusChange(_event: Event): void {
     // TODO: Implement status filter
   }
 
   /**
    * Handle priority filter change
    */
-  onPriorityChange(priority: string): void {
+  onPriorityChange(_event: Event): void {
     // TODO: Implement priority filter
   }
 
   /**
    * Handle assignee filter change
    */
-  onAssigneeChange(assignee: string): void {
+  onAssigneeChange(_event: Event): void {
     // TODO: Implement assignee filter
   }
 
   /**
    * Handle sort change
    */
-  onSortChange(sortBy: string): void {
+  onSortChange(_event: Event): void {
     // TODO: Implement sort functionality
   }
 

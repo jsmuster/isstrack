@@ -1,0 +1,64 @@
+<div class="projects-project-members">
+  <main class="body">
+    <section class="page-shell">
+      <app-sidebar></app-sidebar>
+
+      <main class="main-content">
+        <header class="content-header">
+          <div class="header-left">
+            <h2 class="page-title">Project Workspace</h2>
+            <div class="owner-badge">OWNER</div>
+          </div>
+          <div class="header-right">
+            <div class="search-wrapper">
+              <img class="search-icon" alt="" src="/assets/images/i6.svg" />
+              <input
+                class="search-input"
+                type="search"
+                placeholder="Search issues..."
+                aria-label="Search issues"
+              />
+            </div>
+            <button class="notification-button" type="button" (click)="toggleNotifications()">
+              <img class="header-icon" alt="" src="/assets/images/div1.svg" />
+            </button>
+            <img class="header-button-icon" alt="" src="/assets/images/button.svg" />
+            <div class="notification-panel" *ngIf="showNotifications()">
+              <div class="notification-header">Notifications</div>
+              <div class="notification-item" *ngFor="let item of notifications">
+                <div class="notification-message">{{ item.message }}</div>
+                <div class="notification-time">{{ item.time }}</div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="content-area">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-title-section">
+                <button class="back-button" type="button" (click)="onGoBack()" aria-label="Go back to projects">
+                  <img class="back-icon" alt="Back" src="/assets/images/Vector.svg" />
+                </button>
+                <h3 class="project-name">{{ project()?.name || 'Project' }}</h3>
+              </div>
+              <p class="project-description">
+                {{ project()?.name ? '' : 'Loading project details...' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="tabs-section">
+            <div class="tabs">
+              <a class="tab" [routerLink]="['/app/projects', projectId(), 'issues']">Issues</a>
+              <button class="tab active" type="button" aria-current="page">Members</button>
+              <button class="tab" type="button" disabled>Settings</button>
+            </div>
+          </div>
+
+          <app-project-member-list></app-project-member-list>
+        </div>
+      </main>
+    </section>
+  </main>
+</div>

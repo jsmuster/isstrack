@@ -4,10 +4,15 @@
   <div class="member-list-header">
     <div class="header-content">
       <p class="header-description">Manage project access and collaboration</p>
-      <button class="btn-invite-members" (click)="onInviteMembers()" type="button" aria-label="Invite members">
+      <a
+        class="btn-invite-members"
+        [routerLink]="projectId ? ['/app/projects', projectId, 'members', 'invite'] : null"
+        role="button"
+        aria-label="Invite members"
+      >
         <img class="icon-invite" alt="Invite icon" src="/assets/images/i7.svg" />
         <span class="btn-text">Invite Members</span>
-      </button>
+      </a>
     </div>
   </div>
 
@@ -32,7 +37,7 @@
       <!-- Role Filter -->
       <div class="filter-item">
         <div class="select-wrapper">
-          <div class="select-label">All Roles</div>
+          <div class="select-label">{{ roleFilter() }}</div>
           <img class="icon-dropdown" alt="Dropdown icon" src="/assets/images/i9.svg" />
         </div>
       </div>
@@ -40,7 +45,7 @@
       <!-- Status Filter -->
       <div class="filter-item">
         <div class="select-wrapper">
-          <div class="select-label">All Status</div>
+          <div class="select-label">{{ statusFilter() }}</div>
           <img class="icon-dropdown" alt="Dropdown icon" src="/assets/images/i9.svg" />
         </div>
       </div>
@@ -66,66 +71,27 @@
         </thead>
 
         <tbody class="table-body">
-          <!-- Sarah Chen - Owner -->
-          <tr class="table-row">
+          <tr class="table-row" *ngFor="let member of filteredActiveMembers()">
             <td class="cell-user">
               <div class="user-info">
-                <img class="avatar" alt="Sarah Chen avatar" src="/assets/images/img1.svg" />
+                <img class="avatar" [alt]="member.name" [src]="member.avatar || '/assets/images/img.svg'" />
                 <div class="user-details">
-                  <div class="user-name">Sarah Chen</div>
-                  <div class="user-email">sarah@company.com</div>
+                  <div class="user-name">{{ member.name }}</div>
+                  <div class="user-email">{{ member.email }}</div>
                 </div>
               </div>
             </td>
             <td class="cell-role">
-              <span class="badge badge-owner">Owner</span>
+              <span class="badge" [class.badge-owner]="member.role === 'Owner'" [class.badge-member]="member.role !== 'Owner'">
+                {{ member.role }}
+              </span>
             </td>
             <td class="cell-status">
-              <span class="badge badge-active">Active</span>
+              <span class="badge" [class.badge-active]="member.status === 'Active'" [class.badge-invited]="member.status !== 'Active'">
+                {{ member.status }}
+              </span>
             </td>
-            <td class="cell-date">Jan 15, 2024</td>
-            <td class="cell-actions"></td>
-          </tr>
-
-          <!-- Michael Rodriguez - Member -->
-          <tr class="table-row">
-            <td class="cell-user">
-              <div class="user-info">
-                <img class="avatar" alt="Michael Rodriguez avatar" src="/assets/images/img2.svg" />
-                <div class="user-details">
-                  <div class="user-name">Michael Rodriguez</div>
-                  <div class="user-email">michael@company.com</div>
-                </div>
-              </div>
-            </td>
-            <td class="cell-role">
-              <span class="badge badge-member">Member</span>
-            </td>
-            <td class="cell-status">
-              <span class="badge badge-active">Active</span>
-            </td>
-            <td class="cell-date">Jan 18, 2024</td>
-            <td class="cell-actions"></td>
-          </tr>
-
-          <!-- Emma Thompson - Member -->
-          <tr class="table-row">
-            <td class="cell-user">
-              <div class="user-info">
-                <img class="avatar" alt="Emma Thompson avatar" src="/assets/images/img3.svg" />
-                <div class="user-details">
-                  <div class="user-name">Emma Thompson</div>
-                  <div class="user-email">emma@company.com</div>
-                </div>
-              </div>
-            </td>
-            <td class="cell-role">
-              <span class="badge badge-member">Member</span>
-            </td>
-            <td class="cell-status">
-              <span class="badge badge-active">Active</span>
-            </td>
-            <td class="cell-date">Jan 20, 2024</td>
+            <td class="cell-date">{{ member.dateAdded }}</td>
             <td class="cell-actions"></td>
           </tr>
         </tbody>
@@ -152,24 +118,23 @@
         </thead>
 
         <tbody class="table-body">
-          <!-- Alex - Invited User -->
-          <tr class="table-row">
+          <tr class="table-row" *ngFor="let user of filteredInvitedUsers()">
             <td class="cell-user">
               <div class="user-info">
-                <img class="avatar" alt="Pending user avatar" src="/assets/images/div2.svg" />
+                <img class="avatar" alt="Pending user avatar" [src]="user.avatar || '/assets/images/div2.svg'" />
                 <div class="user-details">
-                  <div class="user-email">alex@company.com</div>
+                  <div class="user-email">{{ user.email }}</div>
                   <div class="user-status-note">Invitation pending</div>
                 </div>
               </div>
             </td>
             <td class="cell-role">
-              <span class="badge badge-member">Member</span>
+              <span class="badge badge-member">{{ user.role }}</span>
             </td>
             <td class="cell-status">
-              <span class="badge badge-invited">Invited</span>
+              <span class="badge badge-invited">{{ user.status }}</span>
             </td>
-            <td class="cell-date">2 days ago</td>
+            <td class="cell-date">{{ user.dateAdded }}</td>
             <td class="cell-actions"></td>
           </tr>
         </tbody>
@@ -181,11 +146,11 @@
   <div class="pagination-section">
     <div class="pagination-info">
       <span class="showing-text">Showing</span>
-      <span class="showing-number">1</span>
+      <span class="showing-number">{{ showingStart() }}</span>
       <span class="showing-text">to</span>
-      <span class="showing-number">4</span>
+      <span class="showing-number">{{ showingEnd() }}</span>
       <span class="showing-text">of</span>
-      <span class="showing-number">4</span>
+      <span class="showing-number">{{ totalItems() }}</span>
       <span class="showing-text">members</span>
     </div>
 
