@@ -1,0 +1,191 @@
+.side-menu-collapsed {
+  width: 64px;
+  background-color: var(--color-white);
+  border-right: 1px solid var(--color-gainsboro);
+  border-bottom: 1px solid var(--color-gainsboro);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 0px 507px;
+  text-align: left;
+  font-size: var(--fs-12);
+  color: var(--color-royalblue);
+  font-family: var(--font-inter);
+
+  // Main navigation container
+  .nav-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    // Toggle button at top of sidebar
+    .collapse-toggle {
+      cursor: pointer;
+      border: none;
+      padding: 6px;
+      background-color: transparent;
+      width: 36px;
+      height: 36px;
+      position: relative;
+      object-fit: contain;
+      border-radius: var(--br-8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease;
+      color: var(--color-gray-100);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .toggle-icon {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+      }
+    }
+
+    // Navigation content wrapper
+    .nav-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+
+      // Navigation icons list
+      .nav-icons {
+        background-color: var(--color-gray);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--gap-4);
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        // Individual navigation icon button
+        .nav-icon-btn {
+          cursor: pointer;
+          border: none;
+          padding: var(--padding-0);
+          background-color: transparent;
+          width: var(--width-36);
+          height: var(--height-36);
+          position: relative;
+          border-radius: var(--br-8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background-color 0.2s ease;
+
+          .icon {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+          }
+
+          &:active {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+
+      // Horizontal divider separator
+      .divider {
+        width: var(--width-24);
+        height: 1px;
+        position: relative;
+        background-color: var(--color-darkgray);
+      }
+
+      // Recent projects badges container
+      .projects-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--gap-4);
+
+        // Project badge styling
+        .project-badge {
+          width: var(--width-36);
+          height: var(--height-36);
+          border-radius: var(--br-8);
+          background-color: var(--color-gray);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: transform 0.2s ease;
+
+          &:hover {
+            transform: scale(1.05);
+          }
+
+          // Badge inner container
+          .badge-inner {
+            height: var(--height-24);
+            width: var(--width-24);
+            border-radius: var(--br-4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            // Badge text
+            .badge-text {
+              position: relative;
+              letter-spacing: -0.5px;
+              line-height: var(--lh-15);
+              font-weight: 600;
+              font-size: 10px;
+            }
+          }
+
+          // Blue badge variant (Web Application)
+          &.project-badge--blue .badge-inner {
+            background-color: var(--color-lavender-200);
+
+            .badge-text {
+              color: var(--color-royalblue-100);
+            }
+          }
+
+          // Green badge variant (Mobile App)
+          &.project-badge--green {
+            color: var(--color-seagreen);
+
+            .badge-inner {
+              background-color: var(--color-honeydew);
+
+              .badge-text {
+                color: var(--color-seagreen);
+              }
+            }
+          }
+
+          // Purple badge variant (Design System)
+          &.project-badge--purple {
+            color: var(--color-blueviolet);
+
+            .badge-inner {
+              background-color: var(--color-lavender-100);
+
+              .badge-text {
+                color: var(--color-blueviolet);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

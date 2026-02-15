@@ -84,15 +84,15 @@ export class IssueDetails implements OnInit, OnDestroy {
   }
 
   statusOptions: DropdownOption[] = [
-    { value: 'Open', label: 'Open' },
-    { value: 'In Progress', label: 'In Progress' },
-    { value: 'Closed', label: 'Closed' },
+    { value: 'OPEN', label: 'Open' },
+    { value: 'IN_PROGRESS', label: 'In Progress' },
+    { value: 'CLOSED', label: 'Closed' },
   ]
 
   priorityOptions: DropdownOption[] = [
-    { value: 'Low', label: 'Low' },
-    { value: 'Medium', label: 'Medium' },
-    { value: 'High', label: 'High' },
+    { value: 'LOW', label: 'Low' },
+    { value: 'MEDIUM', label: 'Medium' },
+    { value: 'HIGH', label: 'High' },
   ]
 
   private readonly realtimeSubscriptions = new Subscription()
@@ -114,8 +114,8 @@ export class IssueDetails implements OnInit, OnDestroy {
     return {
       id: issue?.id ?? null,
       title: issue?.title ?? 'Issue details',
-      status: issue?.status ?? 'Open',
-      priority: issue?.priority ?? 'Medium',
+      status: issue?.status ?? 'OPEN',
+      priority: issue?.priority ?? 'MEDIUM',
       assigneeLabel: this.toAssigneeLabel(issue?.assigneeUserId ?? null),
       tags: issue?.tags ?? [],
       description: description || 'No description available.',

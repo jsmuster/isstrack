@@ -26,6 +26,7 @@
           *ngFor="let issue of column.issues"
           cdkDrag
           [cdkDragData]="issue"
+          (cdkDragStarted)="onDragStarted()"
           (click)="onIssueClick(issue)"
           (keydown.enter)="onIssueClick(issue)"
         >

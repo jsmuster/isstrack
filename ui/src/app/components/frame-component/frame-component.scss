@@ -1,0 +1,185 @@
+.frame-parent {
+  width: 223px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-4);
+  text-align: left;
+  font-size: var(--fs-12);
+  color: var(--color-darkgray);
+  font-family: var(--font-inter);
+
+  // Separator image
+  .separator {
+    align-self: stretch;
+    height: var(--height-24);
+    max-width: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+
+  // Main navigation content wrapper
+  .nav-content {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-16);
+  }
+}
+
+// Navigation list styling
+.nav-list {
+  align-self: stretch;
+  height: 196px;
+  position: relative;
+  background-color: var(--color-gray-200);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-4);
+  padding: var(--padding-01);
+  box-sizing: border-box;
+  width: 223px;
+
+  // Individual navigation item
+  .nav-item {
+    cursor: pointer;
+    border: none;
+    padding: var(--padding-01);
+    background-color: var(--color-gray-200);
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    // Navigation item content
+    .nav-item-content {
+      align-self: stretch;
+      height: var(--height-36);
+      position: relative;
+      border-radius: var(--br-8);
+      background-color: var(--color-gray-200);
+
+      .nav-icon {
+        position: absolute;
+        top: 8px;
+        left: 12px;
+        width: var(--width-20);
+        height: var(--height-20);
+      }
+
+      .nav-label {
+        position: absolute;
+        top: 9px;
+        left: 44px;
+        font-size: var(--fs-14);
+        letter-spacing: var(--ls--0_5);
+        line-height: var(--lh-17);
+        font-weight: 500;
+        font-family: var(--font-inter);
+        color: var(--color-dimgray);
+        text-align: left;
+      }
+    }
+
+    // Active state for navigation item
+    &.nav-item--active .nav-item-content {
+      background-color: var(--color-aliceblue);
+
+      .nav-label {
+        color: var(--color-royalblue-100);
+      }
+    }
+  }
+}
+
+// Recent projects section
+.recent-projects-section {
+  align-self: stretch;
+  background-color: var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-8);
+
+  // Section title
+  .section-title {
+    position: relative;
+    letter-spacing: 0.1px;
+    line-height: var(--lh-15);
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-gray-200);
+    display: flex;
+    align-items: center;
+  }
+
+  // Project list container
+  .project-list {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    // Individual project item
+    .project-item {
+      align-self: stretch;
+      border-radius: var(--br-8);
+      background-color: var(--color-gray-200);
+      display: flex;
+      align-items: center;
+      padding: var(--padding-8) var(--padding-12);
+      gap: var(--gap-12);
+
+      // Project badge styling
+      .project-badge {
+        height: var(--height-24);
+        width: var(--width-24);
+        position: relative;
+        border-radius: var(--br-4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fs-12);
+        letter-spacing: var(--ls--0_5);
+        line-height: var(--lh-15);
+        font-weight: 600;
+        color: white;
+        flex-shrink: 0;
+
+        // Blue badge variant (Web Application)
+        &.project-badge--blue {
+          background-color: var(--color-lavender-200);
+          color: var(--color-royalblue-100);
+        }
+
+        // Green badge variant (Mobile App)
+        &.project-badge--green {
+          background-color: var(--color-honeydew);
+          color: var(--color-seagreen);
+        }
+
+        // Purple badge variant (Design System)
+        &.project-badge--purple {
+          background-color: var(--color-lavender-100);
+          color: var(--color-blueviolet);
+        }
+      }
+
+      // Project name text
+      .project-name {
+        position: relative;
+        font-size: var(--fs-14);
+        letter-spacing: var(--ls--0_5);
+        line-height: var(--lh-20);
+        color: var(--color-darkslategray);
+      }
+    }
+  }
+}

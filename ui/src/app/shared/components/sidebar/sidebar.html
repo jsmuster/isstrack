@@ -1,52 +1,98 @@
-<aside class="sidebar">
-  <!-- Logo Section -->
-  <div class="logo-section">
-    <div class="logo-container">
-      <img class="logo-icon" alt="IssueTracker logo" src="assets/div.svg" />
-      <h3 class="app-name">IssueTracker</h3>
+<aside [class.sidebar-expanded]="sidebarStore.isExpanded()" [class.sidebar-collapsed]="!sidebarStore.isExpanded()" class="sidebar">
+  <!-- EXPANDED STATE -->
+  <div *ngIf="sidebarStore.isExpanded()" class="sidebar-content sidebar-content--expanded">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo-container">
+        <img class="logo-icon" alt="IssueTracker logo" src="assets/div.svg" />
+        <h3 class="app-name">IssueTracker</h3>
+      </div>
+      <button class="toggle-btn" (click)="toggleSidebar()" aria-label="Collapse sidebar" type="button" title="Collapse">
+        <svg class="burger-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="2.5" width="14" height="1.5" rx="0.75" fill="currentColor"/>
+          <rect x="1" y="7.25" width="14" height="1.5" rx="0.75" fill="currentColor"/>
+          <rect x="1" y="12" width="14" height="1.5" rx="0.75" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation Section -->
+    <nav class="navigation">
+      <div class="nav-wrapper">
+        <!-- Main Navigation -->
+        <ul class="nav-list">
+          <li *ngFor="let item of navItems" class="nav-item" [routerLinkActive]="'active'" [routerLink]="item.route">
+            <div class="nav-link">
+              <img class="nav-icon" [alt]="item.label + ' icon'" [src]="item.icon" />
+              <span class="nav-label">{{ item.label }}</span>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Recent Projects Section -->
+        <div class="recent-projects-section">
+          <div class="recent-projects-header">
+            <h4 class="recent-projects-title">Recent Projects</h4>
+          </div>
+
+          <div class="projects-list">
+            <div *ngFor="let project of recentProjects" class="project-item">
+              <div class="project-badge" [style.background-color]="project.color">
+                <span class="project-initials">{{ project.initials }}</span>
+              </div>
+              <span class="project-name">{{ project.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- User Section -->
+    <div class="user-section">
+      <div class="user-profile">
+        <img class="user-avatar" [alt]="userInfo.name" [src]="userInfo.avatar" />
+        <div class="user-info">
+          <div class="user-name">{{ userInfo.name }}</div>
+          <div class="user-email">{{ userInfo.email }}</div>
+        </div>
+        <button class="logout-button" type="button" (click)="onLogout()">Logout</button>
+      </div>
     </div>
   </div>
 
-  <!-- Navigation Section -->
-  <nav class="navigation">
-    <div class="nav-wrapper">
-      <!-- Main Navigation -->
-      <ul class="nav-list">
-        <li *ngFor="let item of navItems" class="nav-item" [routerLinkActive]="'active'" [routerLink]="item.route">
-          <div class="nav-link">
-            <img class="nav-icon" [alt]="item.label + ' icon'" [src]="item.icon" />
-            <span class="nav-label">{{ item.label }}</span>
-          </div>
+  <!-- COLLAPSED STATE -->
+  <div *ngIf="!sidebarStore.isExpanded()" class="sidebar-content sidebar-content--collapsed">
+    <!-- Toggle Button -->
+    <button class="toggle-btn toggle-btn--collapsed" (click)="toggleSidebar()" aria-label="Expand sidebar" type="button" title="Expand">
+      <svg class="burger-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="2.5" width="14" height="1.5" rx="0.75" fill="currentColor"/>
+        <rect x="1" y="7.25" width="14" height="1.5" rx="0.75" fill="currentColor"/>
+        <rect x="1" y="12" width="14" height="1.5" rx="0.75" fill="currentColor"/>
+      </svg>
+    </button>
+
+    <!-- Navigation Icons -->
+    <nav class="navigation--collapsed">
+      <ul class="nav-icons-list">
+        <li *ngFor="let item of navItems" class="nav-icon-item" [routerLinkActive]="'active'" [routerLink]="item.route">
+          <img class="icon" [alt]="item.label + ' icon'" [src]="item.icon" title="{{ item.label }}" />
         </li>
       </ul>
+    </nav>
 
-      <!-- Recent Projects Section -->
-      <div class="recent-projects-section">
-        <div class="recent-projects-header">
-          <h4 class="recent-projects-title">Recent Projects</h4>
-        </div>
+    <!-- Divider -->
+    <div class="divider"></div>
 
-        <div class="projects-list">
-          <div *ngFor="let project of recentProjects" class="project-item">
-            <div class="project-badge" [style.background-color]="project.color">
-              <span class="project-initials">{{ project.initials }}</span>
-            </div>
-            <span class="project-name">{{ project.name }}</span>
-          </div>
-        </div>
+    <!-- Recent Projects Badges -->
+    <div class="projects-badges">
+      <div *ngFor="let project of recentProjects" class="project-badge-collapsed" [style.background-color]="project.color" [title]="project.name">
+        <span class="badge-text">{{ project.initials }}</span>
       </div>
     </div>
-  </nav>
 
-  <!-- User Section -->
-  <div class="user-section">
-    <div class="user-profile">
-      <img class="user-avatar" [alt]="userInfo.name" [src]="userInfo.avatar" />
-      <div class="user-info">
-        <div class="user-name">{{ userInfo.name }}</div>
-        <div class="user-email">{{ userInfo.email }}</div>
-      </div>
-      <button class="logout-button" type="button" (click)="onLogout()">Logout</button>
+    <!-- User Avatar (Collapsed) -->
+    <div class="user-section--collapsed">
+      <img class="user-avatar--collapsed" [alt]="userInfo.name" [src]="userInfo.avatar" [title]="userInfo.name" />
     </div>
   </div>
 </aside>

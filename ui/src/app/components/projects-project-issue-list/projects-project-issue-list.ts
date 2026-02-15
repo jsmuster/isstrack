@@ -66,15 +66,15 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
 
   statusDropdownOptions: DropdownOption[] = [
     { value: '', label: 'All Status' },
-    { value: 'Open', label: 'Open' },
-    { value: 'In Progress', label: 'In Progress' },
-    { value: 'Closed', label: 'Closed' },
+    { value: 'OPEN', label: 'Open' },
+    { value: 'IN_PROGRESS', label: 'In Progress' },
+    { value: 'CLOSED', label: 'Closed' },
   ]
   priorityDropdownOptions: DropdownOption[] = [
     { value: '', label: 'All Priority' },
-    { value: 'Low', label: 'Low' },
-    { value: 'Medium', label: 'Medium' },
-    { value: 'High', label: 'High' },
+    { value: 'LOW', label: 'Low' },
+    { value: 'MEDIUM', label: 'Medium' },
+    { value: 'HIGH', label: 'High' },
   ]
   sortDropdownOptions: DropdownOption[] = [
     { value: '', label: 'Sort: Updated' },

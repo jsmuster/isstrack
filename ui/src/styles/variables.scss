@@ -23,8 +23,15 @@
   --color-lightgray-200: #ced4da;
   --color-slateblue: #1e40af;
   --color-slategray: #6b7280;
+  --color-slategray-light: #94a3b8;
+  --color-slate-600: #64748b;
+  --color-blue-600: #2563eb;
+  --color-blue-50: #eff6ff;
+  --color-navy: #0f172a;
   --color-white: #fff;
   --color-whitesmoke: #f9fafb;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
 
   /* ============================================
      Border Radius
@@ -83,6 +90,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+img,
+svg {
+  border: none;
+  outline: none;
 }
 
 html,

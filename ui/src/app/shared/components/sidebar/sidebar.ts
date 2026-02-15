@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { AuthStore } from '../../../core/state/auth.store'
 import { AuthService } from '../../../core/auth/auth.service'
+import { SidebarStore } from '../../../core/state/sidebar.store'
 
 interface NavItem {
   label: string
@@ -40,7 +41,8 @@ export class SidebarComponent {
   constructor(
     private readonly authStore: AuthStore,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    readonly sidebarStore: SidebarStore
   ) {
     const user = this.authStore.currentUser()
     if (user) {
@@ -59,5 +61,9 @@ export class SidebarComponent {
   onLogout(): void {
     this.authService.logout()
     this.router.navigate(['/login'])
+  }
+
+  toggleSidebar(): void {
+    this.sidebarStore.toggleSidebar()
   }
 }

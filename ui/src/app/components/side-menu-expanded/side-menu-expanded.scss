@@ -1,0 +1,138 @@
+.side-menu-expanded {
+  width: 280px;
+  background-color: var(--color-white);
+  border-right: 1px solid var(--color-slate-200, #e2e8f0);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  font-size: 18px;
+  color: var(--color-gray-100);
+  font-family: var(--font-inter);
+
+  // Header section with logo
+  .header {
+    align-self: stretch;
+    background-color: var(--color-gray-200);
+    border-bottom: 1px solid var(--color-gainsboro);
+    display: flex;
+    align-items: center;
+    padding: 15.5px 23.9px;
+
+    .logo-container {
+      flex: 1;
+      background-color: var(--color-gray-200);
+      display: flex;
+      align-items: center;
+      gap: var(--gap-8);
+      max-width: 151.3px;
+
+      .logo-icon {
+        height: var(--height-32);
+        width: var(--width-32);
+        position: relative;
+        border-radius: var(--br-8);
+      }
+
+      .app-title {
+        flex: 1;
+        position: relative;
+        letter-spacing: var(--ls--0_5);
+        line-height: 28px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Navigation menu section
+  .nav-menu {
+    align-self: stretch;
+    background-color: var(--color-gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px var(--padding-0) 477px;
+  }
+
+  // User profile section
+  .user-profile-section {
+    align-self: stretch;
+    background-color: var(--color-gray-200);
+    border-top: 1px solid var(--color-gainsboro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px var(--padding-0);
+    font-size: var(--fs-14);
+
+    .user-profile {
+      flex: 1;
+      border-radius: var(--br-8);
+      background-color: var(--color-gray-200);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--padding-8) var(--padding-12);
+      box-sizing: border-box;
+      gap: var(--gap-12);
+      max-width: 223px;
+
+      .user-avatar {
+        height: var(--height-32);
+        width: var(--width-32);
+        position: relative;
+        border-radius: 9999px;
+      }
+
+      .user-info {
+        flex: 1;
+        background-color: var(--color-gray-200);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .menu-icon {
+        height: var(--height-20);
+        width: 3.5px;
+        position: relative;
+      }
+    }
+  }
+
+  // User name container
+  .user-name-container {
+    align-self: stretch;
+    background-color: var(--color-gray-200);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    padding: var(--padding-1) var(--padding-0) 2px;
+
+    .user-name {
+      position: relative;
+      letter-spacing: var(--ls--0_5);
+      line-height: var(--lh-17);
+      font-weight: 500;
+    }
+  }
+
+  // User email container
+  .user-email-container {
+    align-self: stretch;
+    background-color: var(--color-gray-200);
+    display: flex;
+    align-items: flex-start;
+    padding: var(--padding-0) var(--padding-0) var(--padding-1);
+    font-size: var(--fs-12);
+    color: var(--color-slategray);
+
+    .user-email {
+      position: relative;
+      letter-spacing: var(--ls--0_5);
+      line-height: var(--lh-15);
+    }
+  }
+}

@@ -40,6 +40,10 @@ export class KanbanBoardComponent {
       return
     }
     this.issuesSource = next
+    if (this.dragging) {
+      this.pendingRebuild = true
+      return
+    }
     this.rebuildColumns()
   }
   @Input() set assignees(value: AssigneeOption[]) {
@@ -69,6 +73,8 @@ export class KanbanBoardComponent {
   private issuesSource: IssueDto[] = []
   private assigneeOptions: AssigneeOption[] = []
   private assigneeLookup = new Map<number, string>()
+  private dragging = false
+  private pendingRebuild = false
 
   constructor(private readonly issuesApi: IssuesApi) {}
 
@@ -106,7 +112,17 @@ export class KanbanBoardComponent {
     }
   }
 
+  onDragStarted(): void {
+    this.dragging = true
+  }
+
   onCardDrop(event: CdkDragDrop<IssueDto[]>, column: KanbanColumn): void {
+    this.dragging = false
+    if (this.pendingRebuild) {
+      this.pendingRebuild = false
+      this.rebuildColumns()
+      return
+    }
     if (event.previousContainer === event.container) {
       moveItemInArray(column.issues, event.previousIndex, event.currentIndex)
       this.columns.set([...this.columns()])

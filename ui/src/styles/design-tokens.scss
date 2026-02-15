@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Color Palette */
+  --color-aliceblue: #eff6ff;
+  --color-blueviolet: #7e22ce;
+  --color-darkgray: #9ca3af;
+  --color-darkslategray: #374151;
+  --color-dimgray: #4b5563;
+  --color-gainsboro: #e5e7eb;
+  --color-gray: rgba(0, 0, 0, 0);
+  --color-gray-100: #111827;
+  --color-gray-200: rgba(0, 0, 0, 0);
+  --color-honeydew: #dcfce7;
+  --color-lavender-100: #f3e8ff;
+  --color-lavender-200: #dbeafe;
+  --color-royalblue: #1d4ed8;
+  --color-royalblue-100: #2563eb;
+  --color-royalblue-200: #1d4ed8;
+  --color-seagreen: #15803d;
+  --color-slategray: #6b7280;
+  --color-white: #fff;
+
+  /* Spacing */
+  --gap-4: 4px;
+  --gap-8: 8px;
+  --gap-12: 12px;
+  --gap-16: 16px;
+
+  --padding-0: 0px;
+  --padding-01: 0;
+  --padding-1: 1px;
+  --padding-8: 8px;
+  --padding-12: 12px;
+
+  /* Border Radius */
+  --br-4: 4px;
+  --br-8: 8px;
+
+  /* Typography */
+  --font-inter: Inter, sans-serif;
+
+  --fs-12: 12px;
+  --fs-14: 14px;
+
+  --lh-15: 15px;
+  --lh-17: 17px;
+  --lh-20: 20px;
+
+  --ls--0_5: -0.5px;
+
+  /* Dimensions */
+  --height-20: 20px;
+  --height-24: 24px;
+  --height-32: 32px;
+  --height-36: 36px;
+
+  --width-20: 20px;
+  --width-24: 24px;
+  --width-32: 32px;
+}
