@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
+import { QuillModule } from 'ngx-quill'
 import { ActivityItem } from './activity-item/activity-item'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
@@ -43,7 +44,7 @@ interface AssigneeOption {
 @Component({
   selector: 'issue-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, ActivityItem, SidebarComponent, DropdownComponent],
+  imports: [CommonModule, FormsModule, QuillModule, ActivityItem, SidebarComponent, DropdownComponent],
   templateUrl: './issue-details.html',
   styleUrls: ['./issue-details.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -62,6 +63,17 @@ export class IssueDetails implements OnInit, OnDestroy {
     { id: 'notif-1', message: 'New comment added', time: 'Just now' },
     { id: 'notif-2', message: 'Issue status updated', time: '20m ago' },
   ]
+
+  isEditingDescription = signal(false)
+  isSavingDescription = signal(false)
+  descriptionDraft = signal('')
+  quillModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link', 'clean']
+    ]
+  }
 
   statusOptions: DropdownOption[] = [
     { value: 'Open', label: 'Open' },
@@ -218,19 +230,37 @@ export class IssueDetails implements OnInit, OnDestroy {
   }
 
   /**
-   * Edits the issue description
+   * Opens the inline editor for the description
    */
   onEditDescription(): void {
     if (!this.issueId) {
       return
     }
-    const updated = window.prompt('Update description', this.description())
-    if (updated === null) {
+    this.descriptionDraft.set(this.description())
+    this.isEditingDescription.set(true)
+  }
+
+  onCancelDescriptionEdit(): void {
+    this.descriptionDraft.set(this.description())
+    this.isEditingDescription.set(false)
+  }
+
+  onSaveDescription(): void {
+    if (!this.issueId || this.isSavingDescription()) {
       return
     }
+    const updated = this.descriptionDraft()
+    this.isSavingDescription.set(true)
     this.issuesApi.patchIssue(this.issueId, { description: updated }).subscribe({
-      next: () => this.description.set(updated),
-      error: () => this.errorMessage.set('Unable to update description.')
+      next: () => {
+        this.description.set(updated)
+        this.isEditingDescription.set(false)
+        this.isSavingDescription.set(false)
+      },
+      error: () => {
+        this.errorMessage.set('Unable to update description.')
+        this.isSavingDescription.set(false)
+      }
     })
   }
 

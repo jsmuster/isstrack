@@ -6,6 +6,7 @@ import { IssuesApi } from '../../features/issues/data/issues.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { IssueDto, MembershipDto } from '../../models/api.models'
 import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
+import { QuillModule } from 'ngx-quill'
 
 /**
  * Priority option interface
@@ -38,7 +39,7 @@ interface AssigneeOption {
 @Component({
   selector: 'create-issue-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DropdownComponent],
+  imports: [CommonModule, ReactiveFormsModule, QuillModule, DropdownComponent],
   templateUrl: './create-issue-modal.html',
   styleUrls: ['./create-issue-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -53,6 +54,13 @@ export class CreateIssueModal implements OnInit {
   selectedPriority = signal<'Low' | 'Medium' | 'High' | 'Critical'>('Medium')
   selectedAssignee = signal('')
   isSubmitting = signal(false)
+  quillModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link', 'clean']
+    ]
+  }
 
   // Priority options
   priorityOptions: PriorityOption[] = [

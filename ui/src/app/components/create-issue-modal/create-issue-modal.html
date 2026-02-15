@@ -54,13 +54,15 @@
             <label for="issue-description" class="label-text">Description</label>
           </div>
           <div class="form-textarea-wrapper">
-            <textarea
+            <quill-editor
               id="issue-description"
-              class="form-textarea"
+              class="form-quill"
               placeholder="Describe the issue in detail..."
               formControlName="description"
+              [modules]="quillModules"
+              theme="snow"
               aria-label="Issue description"
-            ></textarea>
+            ></quill-editor>
           </div>
         </div>
 

@@ -119,14 +119,41 @@
                     class="edit-button"
                     type="button"
                     (click)="onEditDescription()"
+                    [disabled]="isEditingDescription()"
                     aria-label="Edit description"
                   >
                     <img class="edit-icon" alt="" src="/assets/images/i8.svg" />
                     <span>Edit</span>
                   </button>
                 </div>
-                <div class="description-content">
-                  <p class="description-text">{{ issueData().description }}</p>
+                <div class="description-content" *ngIf="!isEditingDescription()">
+                  <div class="description-text" [innerHTML]="issueData().description"></div>
+                </div>
+                <div class="description-editor" *ngIf="isEditingDescription()">
+                  <quill-editor
+                    class="description-quill"
+                    [ngModel]="descriptionDraft()"
+                    (ngModelChange)="descriptionDraft.set($event)"
+                    [modules]="quillModules"
+                    theme="snow"
+                  ></quill-editor>
+                  <div class="description-actions">
+                    <button
+                      class="description-button cancel"
+                      type="button"
+                      (click)="onCancelDescriptionEdit()"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="description-button save"
+                      type="button"
+                      (click)="onSaveDescription()"
+                      [disabled]="isSavingDescription()"
+                    >
+                      Save
+                    </button>
+                  </div>
                 </div>
               </section>
 

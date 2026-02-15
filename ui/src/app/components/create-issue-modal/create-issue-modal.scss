@@ -105,7 +105,7 @@
   flex: 1;
   background-color: var(--color-gray-300);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: var(--padding-24) var(--padding-0);
   min-height: 0;
@@ -115,7 +115,7 @@
     background-color: var(--color-gray-300);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 23px;
     max-width: 608px;
     width: 100%;
@@ -263,6 +263,25 @@
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+}
+
+.form-quill {
+  display: block;
+
+  .ql-toolbar {
+    border-radius: var(--br-8) var(--br-8) 0 0;
+  }
+
+  .ql-container {
+    border-radius: 0 0 var(--br-8) var(--br-8);
+    min-height: 350px;
+  }
+
+  .ql-editor {
+    font-family: var(--font-inter);
+    font-size: var(--fs-16);
+    line-height: var(--lh-24);
   }
 }
 
