@@ -32,6 +32,7 @@
               class="form-input"
               type="text"
               placeholder="Enter issue title..."
+              #issueTitleInput
               formControlName="title"
               aria-required="true"
               [attr.aria-invalid]="issueForm.get('title')?.invalid && issueForm.get('title')?.touched"

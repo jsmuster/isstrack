@@ -119,7 +119,7 @@
                     class="edit-button"
                     type="button"
                     (click)="onEditDescription()"
-                    [disabled]="isEditingDescription()"
+                    *ngIf="!isEditingDescription()"
                     aria-label="Edit description"
                   >
                     <img class="edit-icon" alt="" src="/assets/images/i8.svg" />
@@ -127,7 +127,12 @@
                   </button>
                 </div>
                 <div class="description-content" *ngIf="!isEditingDescription()">
-                  <div class="description-text" [innerHTML]="issueData().description"></div>
+                  <quill-view-html
+                    class="description-view"
+                    [content]="issueData().description"
+                    theme="snow"
+                    [sanitize]="true"
+                  ></quill-view-html>
                 </div>
                 <div class="description-editor" *ngIf="isEditingDescription()">
                   <quill-editor
@@ -160,7 +165,7 @@
               <!-- Comments Section -->
               <section class="comments-section" role="region" aria-label="Comments">
                 <div class="section-header">
-                  <h3 class="section-title">Comments ({{ totalComments() }})</h3>
+                  <h3 class="section-title">{{ commentsSummaryLabel() }}</h3>
                 </div>
 
                 <!-- Add Comment Form -->
@@ -205,6 +210,7 @@
 
                 <!-- Load More Comments -->
                 <button
+                  *ngIf="canLoadMoreComments()"
                   class="load-more-button"
                   type="button"
                   (click)="onLoadMoreComments()"

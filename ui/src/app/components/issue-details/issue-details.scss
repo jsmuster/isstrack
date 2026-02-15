@@ -504,13 +504,39 @@
     font-size: var(--fs-16);
     color: var(--color-darkslategray);
 
-    .description-text {
-      flex: 1;
-      position: relative;
-      letter-spacing: var(--ls--0_5);
+    .description-view {
+      width: 100%;
+    }
+
+    .description-view ::ng-deep .ql-container {
+      border: 0;
+      background-color: transparent;
+      font-family: var(--font-inter);
+      color: var(--color-darkslategray);
+    }
+
+    .description-view ::ng-deep .ql-editor {
+      padding: 0;
+      font-size: var(--fs-16);
       line-height: var(--lh-24);
-      max-width: 958px;
-      margin: 0 0 8px 0;
+    }
+
+    .description-view ::ng-deep .ql-editor ol,
+    .description-view ::ng-deep .ql-editor ul {
+      padding-left: 0.6em;
+      margin-left: 0;
+    }
+
+    .description-view ::ng-deep .ql-editor li {
+      list-style-position: inside;
+    }
+
+    .description-view ::ng-deep .ql-editor ul li {
+      list-style-type: disc !important;
+    }
+
+    .description-view ::ng-deep .ql-editor ol li {
+      list-style-type: decimal !important;
     }
 
     .reproduction-heading {
@@ -577,6 +603,11 @@
       .ql-container {
         border-radius: 0 0 var(--br-6) var(--br-6);
         min-height: 160px;
+      }
+
+      .ql-editor {
+        font-size: var(--fs-16);
+        line-height: var(--lh-24);
       }
     }
 
@@ -673,7 +704,7 @@
           overflow: hidden;
           display: flex;
           align-items: flex-start;
-          padding: var(--padding-0) 10.9px 73px;
+          padding: var(--padding-12) 10.9px 73px;
           outline: none;
           font-family: var(--font-inter);
           font-size: var(--fs-16);
@@ -705,25 +736,23 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.2s ease;
+            font-size: var(--fs-14);
+            letter-spacing: var(--ls--0_5);
+            line-height: var(--lh-17);
+            font-weight: 500;
+            font-family: var(--font-inter);
+            color: var(--color-white);
+            text-align: center;
 
             &:hover:not(:disabled) {
               background-color: var(--color-royalblue-200);
             }
 
             &:disabled {
-              opacity: 0.5;
-              cursor: not-allowed;
-            }
-
-            span {
-              position: relative;
-              font-size: var(--fs-14);
-              letter-spacing: var(--ls--0_5);
-              line-height: var(--lh-17);
-              font-weight: 500;
-              font-family: var(--font-inter);
+              background-color: var(--color-lightgray-100);
               color: var(--color-white);
-              text-align: center;
+              opacity: 1;
+              cursor: not-allowed;
             }
           }
         }

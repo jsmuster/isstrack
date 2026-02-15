@@ -118,6 +118,19 @@ export class IssueDetails implements OnInit, OnDestroy {
     }
   })
 
+  canLoadMoreComments = computed(() => this.comments().length < this.totalComments())
+  commentsSummaryLabel = computed(() => {
+    const visible = this.comments().length
+    const total = this.totalComments()
+    if (total > this.pageSize) {
+      return `Comments (${visible} out of ${total})`
+    }
+    if (total === 0) {
+      return 'Comments'
+    }
+    return `Comments (${total})`
+  })
+
   constructor(
      private readonly route: ActivatedRoute,
      private readonly router: Router,
@@ -278,8 +291,17 @@ export class IssueDetails implements OnInit, OnDestroy {
     this.isSubmitting.set(true)
     this.commentsApi.addComment(this.issueId, { body: content }).subscribe({
       next: (comment) => {
-        this.comments.update(items => [comment, ...items])
-        this.totalComments.update(total => total + 1)
+        let didAdd = false
+        this.comments.update((items) => {
+          if (items.some((item) => item.id === comment.id)) {
+            return items
+          }
+          didAdd = true
+          return [comment, ...items]
+        })
+        if (didAdd) {
+          this.totalComments.update((total) => total + 1)
+        }
         this.newComment = ''
         this.isSubmitting.set(false)
       },
@@ -300,10 +322,10 @@ export class IssueDetails implements OnInit, OnDestroy {
     if (this.comments().length >= this.totalComments()) {
       return
     }
-    const nextPage = this.commentsPageIndex() + 1
-    this.commentsApi.listComments(this.issueId, nextPage, this.pageSize).subscribe({
+    const total = this.totalComments()
+    this.commentsApi.listComments(this.issueId, 0, total).subscribe({
       next: (page) => {
-        this.comments.update(items => [...items, ...page.items])
+        this.comments.set(page.items)
         this.commentsPageIndex.set(page.page)
       },
       error: () => this.errorMessage.set('Unable to load more comments.')
@@ -408,17 +430,31 @@ export class IssueDetails implements OnInit, OnDestroy {
       next: (detail) => {
         this.issue.set(detail.issue)
         this.description.set(detail.description ?? '')
-        this.comments.set(detail.comments.items)
         this.activityItems.set(detail.activity.items)
         this.totalComments.set(detail.comments.totalElements)
         this.totalActivityItems.set(detail.activity.totalElements)
-        this.commentsPageIndex.set(detail.comments.page)
         this.activityPageIndex.set(detail.activity.page)
         this.isLoading.set(false)
+        this.loadInitialComments(issueId)
       },
       error: () => {
         this.errorMessage.set('Unable to load issue details.')
         this.isLoading.set(false)
+      }
+    })
+  }
+
+  private loadInitialComments(issueId: number): void {
+    this.commentsApi.listComments(issueId, 0, this.pageSize).subscribe({
+      next: (page) => {
+        this.comments.set(page.items)
+        if (page.totalElements > this.totalComments()) {
+          this.totalComments.set(page.totalElements)
+        }
+        this.commentsPageIndex.set(page.page)
+      },
+      error: () => {
+        this.errorMessage.set('Unable to load comments.')
       }
     })
   }
@@ -468,13 +504,17 @@ export class IssueDetails implements OnInit, OnDestroy {
     if (!comment?.id || comment.issueId !== this.issueId) {
       return
     }
+    let didAdd = false
     this.comments.update((items) => {
       if (items.some((item) => item.id === comment.id)) {
         return items
       }
+      didAdd = true
       return [comment, ...items]
     })
-    this.totalComments.update((total) => total + 1)
+    if (didAdd) {
+      this.totalComments.update((total) => total + 1)
+    }
   }
 
   private handleRealtimeActivity(activity: ActivityDto): void {

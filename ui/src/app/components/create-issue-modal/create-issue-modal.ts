@@ -1,4 +1,4 @@
-import { Component, signal, computed, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, signal, computed, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter, AfterViewInit, ElementRef, ViewChild } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
@@ -44,7 +44,7 @@ interface AssigneeOption {
   styleUrls: ['./create-issue-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateIssueModal implements OnInit {
+export class CreateIssueModal implements OnInit, AfterViewInit {
   // Form group
   issueForm: FormGroup
 
@@ -92,6 +92,7 @@ export class CreateIssueModal implements OnInit {
   @Input() projectId: number | null = null
   @Output() closed = new EventEmitter<void>()
   @Output() created = new EventEmitter<IssueDto>()
+  @ViewChild('issueTitleInput') issueTitleInput?: ElementRef<HTMLInputElement>
 
   constructor(
     private formBuilder: FormBuilder,
@@ -119,6 +120,10 @@ export class CreateIssueModal implements OnInit {
     if (this.projectId) {
       this.loadAssignees(this.projectId)
     }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.issueTitleInput?.nativeElement.focus(), 0)
   }
 
   /**
