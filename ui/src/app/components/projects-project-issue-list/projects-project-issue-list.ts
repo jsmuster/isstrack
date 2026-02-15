@@ -123,9 +123,7 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
     this.realtimeSubscriptions.unsubscribe()
   }
 
-  get issueRows(): IssueDto[] {
-    return this.issuesPage()?.items ?? []
-  }
+  issueRows = computed(() => this.issuesPage()?.items ?? [])
 
   get hasPrevPage(): boolean {
     return (this.issuesPage()?.page ?? 0) > 0
@@ -165,6 +163,56 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
       return
     }
     this.router.navigate(['/app/projects', projectId, 'issues', issueId])
+  }
+
+  statusBadgeBgColor(status: string): string {
+    const normalized = this.normalizeLabel(status)
+    if (normalized === 'open') {
+      return '#DBEAFE'
+    }
+    if (normalized === 'in progress') {
+      return '#FFEDD5'
+    }
+    if (normalized === 'closed') {
+      return '#D1FAE5'
+    }
+    return '#F3F4F6'
+  }
+
+  statusBadgeTextColor(status: string): string {
+    const normalized = this.normalizeLabel(status)
+    if (normalized === 'open') {
+      return '#1E40AF'
+    }
+    if (normalized === 'in progress') {
+      return '#9A3412'
+    }
+    if (normalized === 'closed') {
+      return '#16A34A'
+    }
+    return '#475569'
+  }
+
+  priorityBadgeBgColor(priority: string): string {
+    const normalized = this.normalizeLabel(priority)
+    if (normalized === 'high' || normalized === 'critical') {
+      return '#F3D5D8'
+    }
+    if (normalized === 'medium') {
+      return '#F6E1B4'
+    }
+    return '#E5E7EB'
+  }
+
+  priorityBadgeTextColor(priority: string): string {
+    const normalized = this.normalizeLabel(priority)
+    if (normalized === 'high' || normalized === 'critical') {
+      return '#8C5A5F'
+    }
+    if (normalized === 'medium') {
+      return '#8F6B2E'
+    }
+    return '#6B7280'
   }
 
   toggleNotifications(): void {
@@ -319,6 +367,14 @@ export class ProjectsProjectIssueList implements OnInit, OnDestroy {
 
   private isObject(payload: unknown): payload is Record<string, unknown> {
     return typeof payload === 'object' && payload !== null
+  }
+
+  private normalizeLabel(value: string): string {
+    return (value || '')
+      .trim()
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\s+/g, ' ')
   }
 }
 

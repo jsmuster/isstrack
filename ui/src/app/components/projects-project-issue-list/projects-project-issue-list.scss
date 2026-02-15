@@ -589,7 +589,7 @@
 }
 
 .main2.kanban-active {
-  background-color: var(--color-gray-400);
+  background-color: #f9fafb;
 }
 
 .kanban-view {
@@ -599,6 +599,7 @@
   padding: var(--padding-24) var(--padding-32) var(--padding-32);
   flex: 1;
   min-height: 0;
+  background-color: #f9fafb;
 }
 
 .kanban-toolbar {

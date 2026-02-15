@@ -7,7 +7,7 @@
     <section class="kanban-column">
       <div class="column-header">
         <div class="column-title-wrapper">
-          <h3 class="column-title">{{ column.status }}</h3>
+          <h3 class="column-title">{{ formatStatusLabel(column.status) }}</h3>
           <div class="issue-count">{{ column.issues.length }}</div>
         </div>
       </div>
@@ -31,7 +31,6 @@
         >
           <div class="card-header">
             <span class="issue-id">#{{ issue.id }}</span>
-            <span class="issue-status">{{ issue.status }}</span>
           </div>
           <div class="card-body">
             <p class="issue-title">{{ issue.title }}</p>
@@ -53,11 +52,14 @@
           <p class="empty-message">No issues in this status</p>
         </div>
 
+      </div>
+
+      <div class="column-actions">
         <button
           class="btn-add-issue"
           (click)="onAddIssue(column.status)"
           type="button"
-          aria-label="Add new issue to {{ column.status }} column"
+          aria-label="Add new issue to {{ formatStatusLabel(column.status) }} column"
         >
           <img class="icon-add" alt="Add icon" src="/assets/images/i12.svg" />
           <span class="btn-text">Add issue</span>

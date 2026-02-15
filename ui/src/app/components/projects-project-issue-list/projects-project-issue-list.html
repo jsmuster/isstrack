@@ -88,12 +88,12 @@
               <!-- Issues List Content -->
               <div class="main2" [class.kanban-active]="activeView() === 'kanban'">
                 <!-- Empty State: Show when no issues exist -->
-                @if (issueRows.length === 0 && !isLoading()) {
+                @if (issueRows().length === 0 && !isLoading()) {
                   <app-no-issues-yet (createIssueRequested)="onOpenCreateIssue()"></app-no-issues-yet>
                 }
 
                 <!-- Loaded Issues Content -->
-                @if (issueRows.length > 0) {
+                @if (issueRows().length > 0) {
                   @if (activeView() === 'table') {
                     <!-- Filter Bar -->
                     <div class="div33">
@@ -191,7 +191,7 @@
                         </div>
 
                         <!-- Table Rows -->
-                        @for (item of issueRows; track item.id) {
+                        @for (item of issueRows(); track item.id) {
                         <div
                           class="issue-row-wrapper"
                           (click)="onIssueSelected(item.id)"
@@ -220,12 +220,12 @@
                             [typeColor]="''"
                             [typeDisplay]="''"
                             [typeFlex]="''"
-                            [statusBgColor]="''"
-                            [statusPadding]="''"
-                            [statusColor]="''"
-                            [priorityBgColor]="''"
-                            [priorityPadding]="''"
-                            [priorityColor]="''"
+                            [statusBgColor]="statusBadgeBgColor(item.status)"
+                            [statusPadding]="'4px 14px 5px 14px'"
+                            [statusColor]="statusBadgeTextColor(item.status)"
+                            [priorityBgColor]="priorityBadgeBgColor(item.priority)"
+                            [priorityPadding]="'4px 12px 5px 12px'"
+                            [priorityColor]="priorityBadgeTextColor(item.priority)"
                             [assigneeOverflow]="''"
                             [assigneeColor]="''"
                             [timelineFlex]="''"
@@ -313,7 +313,7 @@
                       </div>
 
                       <app-kanban-board
-                        [issues]="issueRows"
+                        [issues]="issueRows()"
                         [projectId]="projectId()"
                         [assignees]="assigneeOptions()"
                         [paginationLabel]="paginationLabel()"

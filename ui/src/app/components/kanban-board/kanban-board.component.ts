@@ -35,7 +35,11 @@ export class KanbanBoardComponent {
   @Input() hasPrevPage = false
   @Input() hasNextPage = false
   @Input() set issues(value: IssueDto[]) {
-    this.issuesSource = value ?? []
+    const next = value ?? []
+    if (next === this.issuesSource) {
+      return
+    }
+    this.issuesSource = next
     this.rebuildColumns()
   }
   @Input() set assignees(value: AssigneeOption[]) {
@@ -60,8 +64,8 @@ export class KanbanBoardComponent {
   columnIds = signal<string[]>([])
   errorMessage = signal('')
 
-  private readonly defaultStatuses = ['Open', 'In Progress', 'Closed']
-  private readonly allowedStatuses = ['Open', 'In Progress', 'Closed']
+  private readonly defaultStatuses = ['OPEN', 'IN_PROGRESS', 'CLOSED']
+  private readonly allowedStatuses = ['OPEN', 'IN_PROGRESS', 'CLOSED']
   private issuesSource: IssueDto[] = []
   private assigneeOptions: AssigneeOption[] = []
   private assigneeLookup = new Map<number, string>()
@@ -126,6 +130,12 @@ export class KanbanBoardComponent {
     this.issueSelected.emit(issue.id)
   }
 
+  formatStatusLabel(status: string): string {
+    return status
+      .replace(/_/g, ' ')
+      .replace(/\w\S*/g, word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+  }
+
   formatTimestamp(dateValue: string): string {
     if (!dateValue) {
       return ''
@@ -139,6 +149,8 @@ export class KanbanBoardComponent {
     if (normalized === 'frontend') return 'tag-frontend'
     if (normalized === 'backend') return 'tag-backend'
     if (normalized === 'bug') return 'tag-bug'
+    if (normalized === 'documentation') return 'tag-docs'
+    if (normalized === 'design') return 'tag-design'
     if (normalized === 'feature') return 'tag-feature'
     if (normalized === 'performance') return 'tag-performance'
     if (normalized === 'responsive') return 'tag-responsive'

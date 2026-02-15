@@ -78,7 +78,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--color-gray-300);
+  background-color: #f9fafb;
   min-height: 100%;
   gap: var(--gap-16);
   padding: var(--padding-16) var(--padding-24);
@@ -117,7 +117,7 @@
 .kanban-column {
   flex: 0 0 304px;
   background-color: var(--color-white);
-  border: var(--border-1);
+  border: 1px solid #e6e8ec;
   border-radius: var(--br-8);
   box-shadow: var(--shadow-drop);
   display: flex;
@@ -125,7 +125,7 @@
   overflow: hidden;
 
   .column-header {
-    border-bottom: var(--border-1);
+    border-bottom: 1px solid #eef1f5;
     padding: var(--padding-16);
     background-color: var(--color-white);
 
@@ -140,7 +140,7 @@
         font-weight: 600;
         line-height: var(--lh-24);
         letter-spacing: var(--ls--0_5);
-        color: var(--color-gray-200);
+        color: #4b5563;
         margin: 0;
         font-family: var(--font-inter);
       }
@@ -149,9 +149,9 @@
         font-size: var(--fs-14);
         font-weight: 600;
         line-height: var(--lh-20);
-        color: var(--color-dimgray);
-        background-color: var(--color-gray-300);
-        padding: var(--padding-4) var(--padding-8);
+        color: #9ca3af;
+        background-color: #f3f4f6;
+        padding: 2px 8px;
         border-radius: var(--br-6);
         font-family: var(--font-inter);
         min-width: 28px;
@@ -164,8 +164,9 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: var(--padding-16);
+    padding: 12px;
     min-height: 320px;
+    gap: var(--gap-12);
   }
 }
 
@@ -184,7 +185,7 @@
 // Issue Card
 .issue-card {
   background-color: var(--color-white);
-  border: var(--border-1);
+  border: 1px solid #e6e8ec;
   border-radius: var(--br-8);
   padding: var(--padding-12);
   cursor: grab;
@@ -195,7 +196,7 @@
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    border-color: var(--color-dimgray);
+    border-color: #d1d5db;
   }
 
   &:active {
@@ -211,17 +212,9 @@
     .issue-id {
       font-size: var(--fs-12);
       font-weight: 600;
-      color: var(--color-royalblue-100);
+      color: #3964dd;
       font-family: var(--font-inter);
       letter-spacing: var(--ls--0_5);
-    }
-
-    .issue-status {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--color-slategray);
-      letter-spacing: var(--ls--0_5);
-      text-transform: uppercase;
     }
   }
 
@@ -234,7 +227,7 @@
       font-size: var(--fs-14);
       line-height: var(--lh-20);
       letter-spacing: var(--ls--0_5);
-      color: var(--color-gray-200);
+      color: #2f3442;
       margin: 0;
       font-family: var(--font-inter);
       font-weight: 500;
@@ -256,43 +249,53 @@
         letter-spacing: var(--ls--0_5);
 
         &.tag-frontend {
-          background-color: rgba(30, 64, 175, 0.1);
-          color: var(--color-tag-frontend);
+          background-color: #3964dd;
+          color: #f1f4fd;
         }
 
         &.tag-backend {
-          background-color: rgba(154, 52, 18, 0.1);
-          color: var(--color-tag-backend);
+          background-color: #6daf86;
+          color: #f0f7f3;
         }
 
         &.tag-bug {
-          background-color: rgba(153, 27, 27, 0.1);
-          color: var(--color-tag-bug);
+          background-color: #b7894d;
+          color: #fef9c3;
         }
 
         &.tag-feature {
-          background-color: rgba(22, 101, 52, 0.1);
-          color: var(--color-tag-feature);
+          background-color: #6daf86;
+          color: #f0f7f3;
         }
 
         &.tag-ui {
-          background-color: rgba(107, 33, 168, 0.1);
-          color: var(--color-tag-ui);
+          background-color: #c69ee9;
+          color: #f7e4f6;
+        }
+
+        &.tag-docs {
+          background-color: #b7894d;
+          color: #fef9c3;
+        }
+
+        &.tag-design {
+          background-color: #c69ee9;
+          color: #f7e4f6;
         }
 
         &.tag-performance {
-          background-color: rgba(133, 77, 14, 0.1);
-          color: var(--color-tag-performance);
+          background-color: #c69ee9;
+          color: #f7e4f6;
         }
 
         &.tag-responsive {
-          background-color: rgba(107, 33, 168, 0.1);
-          color: var(--color-tag-responsive);
+          background-color: #c69ee9;
+          color: #f7e4f6;
         }
 
         &.tag-default {
-          background-color: rgba(113, 128, 150, 0.12);
-          color: var(--color-slategray);
+          background-color: #e5e7eb;
+          color: #475569;
         }
       }
     }
@@ -303,7 +306,7 @@
     align-items: center;
     gap: var(--gap-8);
     padding-top: var(--padding-8);
-    border-top: var(--border-1);
+    border-top: 1px solid #f0f1f4;
 
     .priority-badge {
       font-size: 11px;
@@ -315,18 +318,18 @@
       letter-spacing: var(--ls--0_5);
 
       &.priority-high {
-        background-color: rgba(220, 38, 38, 0.1);
-        color: var(--color-priority-high);
+        background-color: #f3d5d8;
+        color: #8c5a5f;
       }
 
       &.priority-medium {
-        background-color: rgba(245, 158, 11, 0.1);
-        color: var(--color-priority-medium);
+        background-color: #f6e1b4;
+        color: #8f6b2e;
       }
 
       &.priority-low {
-        background-color: rgba(107, 114, 128, 0.1);
-        color: var(--color-priority-low);
+        background-color: #e5e7eb;
+        color: #6b7280;
       }
     }
 
@@ -336,8 +339,8 @@
       gap: var(--gap-4);
       padding: 2px 8px;
       border-radius: var(--br-9999);
-      background-color: rgba(30, 136, 229, 0.08);
-      color: var(--color-royalblue-100);
+      background-color: #c5d4f4;
+      color: #364a63;
       font-size: 11px;
       font-weight: 600;
     }
@@ -356,7 +359,7 @@
 
     .timestamp {
       font-size: 11px;
-      color: var(--color-slategray);
+      color: #6b7280;
       font-family: var(--font-inter);
       letter-spacing: var(--ls--0_5);
       margin-left: auto;
@@ -373,9 +376,14 @@
 }
 
 
+.column-actions {
+  padding: 0 12px 12px;
+}
+
 // Add Issue Button
 .btn-add-issue {
-  border: var(--border-3);
+  width: 100%;
+  border: 1px dashed #d1d5db;
   background-color: transparent;
   border-radius: var(--br-8);
   padding: var(--padding-12) var(--padding-16);
@@ -386,14 +394,14 @@
   gap: var(--gap-8);
   font-size: var(--fs-14);
   font-weight: 500;
-  color: var(--color-dimgray);
+  color: #6b7280;
   font-family: var(--font-inter);
   transition: all 0.2s ease;
   letter-spacing: var(--ls--0_5);
 
   &:hover {
-    background-color: var(--color-gray-300);
-    border-color: var(--color-lightgray-200);
+    background-color: #f3f4f6;
+    border-color: #cbd5f5;
   }
 
   &:active {
@@ -450,7 +458,7 @@
 // Pagination Footer
 .kanban-footer {
   background-color: var(--color-white);
-  border-top: var(--border-1);
+  border-top: 1px solid #eef1f5;
   padding: var(--padding-16) var(--padding-24);
   display: flex;
   align-items: center;
