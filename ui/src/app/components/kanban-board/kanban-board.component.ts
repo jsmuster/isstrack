@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { Component, ChangeDetectionStrategy, EventEmitter, Input, Output, signal } from '@angular/core'
-import { DxScrollViewModule, DxSortableModule } from 'devextreme-angular'
-import { DxSortableTypes } from 'devextreme-angular/ui/sortable'
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { IssueDto } from '../../models/api.models'
 
@@ -23,7 +22,7 @@ interface AssigneeOption {
 @Component({
   selector: 'app-kanban-board',
   standalone: true,
-  imports: [CommonModule, DxScrollViewModule, DxSortableModule],
+  imports: [CommonModule, DragDropModule],
   templateUrl: './kanban-board.component.html',
   styleUrls: ['./kanban-board.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,14 +57,13 @@ export class KanbanBoardComponent {
   @Output() nextPage = new EventEmitter<void>()
 
   columns = signal<KanbanColumn[]>([])
-  cardGroup = 'kanban-issues'
+  columnIds = signal<string[]>([])
   errorMessage = signal('')
 
   private readonly defaultStatuses = ['Open', 'In Progress', 'Review', 'Resolved', 'Closed']
   private issuesSource: IssueDto[] = []
   private assigneeOptions: AssigneeOption[] = []
   private assigneeLookup = new Map<number, string>()
-  private dragContext: { issue: IssueDto; fromStatus: string } | null = null
 
   constructor(private readonly issuesApi: IssuesApi) {}
 
@@ -103,32 +101,24 @@ export class KanbanBoardComponent {
     }
   }
 
-  onCardDragStart(event: DxSortableTypes.DragStartEvent): void {
-    const issue = event.fromData[event.fromIndex]
-    const fromStatus = this.findStatusForList(event.fromData) ?? issue?.status
-    if (!issue || !fromStatus) {
+  onCardDrop(event: CdkDragDrop<IssueDto[]>, column: KanbanColumn): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(column.issues, event.previousIndex, event.currentIndex)
+      this.columns.set([...this.columns()])
       return
     }
-    this.dragContext = { issue, fromStatus }
-    event.itemData = issue
-  }
-
-  onCardDrop(event: DxSortableTypes.AddEvent, column: KanbanColumn): void {
-    event.fromData.splice(event.fromIndex, 1)
-    event.toData.splice(event.toIndex, 0, event.itemData)
-    const issue = event.itemData as IssueDto
-    const fromStatus = this.dragContext?.fromStatus ?? issue.status
-    this.dragContext = null
-    if (fromStatus !== column.status) {
-      this.updateIssueStatus(issue, column.status, fromStatus)
+    const previousColumn = this.columns().find(item => item.issues === event.previousContainer.data)
+    if (!previousColumn) {
+      return
     }
-  }
-
-  onCardReorder(event: DxSortableTypes.ReorderEvent, column: KanbanColumn): void {
-    const list = column.issues
-    const [moved] = list.splice(event.fromIndex, 1)
-    list.splice(event.toIndex, 0, moved)
-    this.columns.set([...this.columns()])
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    )
+    const movedIssue = event.container.data[event.currentIndex]
+    this.updateIssueStatus(movedIssue, column.status, previousColumn.status)
   }
 
   onIssueClick(issue: IssueDto): void {
@@ -175,6 +165,7 @@ export class KanbanBoardComponent {
       issues: this.issuesSource.filter(issue => this.normalizeStatus(issue.status) === this.normalizeStatus(status))
     }))
     this.columns.set(columns)
+    this.columnIds.set(columns.map(column => this.slugifyStatus(column.status)))
   }
 
   private collectStatuses(): string[] {
@@ -194,9 +185,8 @@ export class KanbanBoardComponent {
     return (status || '').trim().toLowerCase()
   }
 
-  private findStatusForList(list: IssueDto[]): string | null {
-    const column = this.columns().find(item => item.issues === list)
-    return column?.status ?? null
+  private slugifyStatus(status: string): string {
+    return this.normalizeStatus(status).replace(/\s+/g, '-') || 'status'
   }
 
   private updateIssueStatus(issue: IssueDto, nextStatus: string, previousStatus: string): void {

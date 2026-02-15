@@ -113,11 +113,6 @@
   }
 }
 
-.scrollable-board {
-  width: 100%;
-  height: 100%;
-}
-
 // Kanban Column
 .kanban-column {
   flex: 0 0 304px;
@@ -174,25 +169,16 @@
   }
 }
 
-.sortable-cards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-12);
-  min-height: 260px;
+::ng-deep .cdk-drag-placeholder {
+  border-radius: var(--br-8);
+  border: 2px dashed var(--color-lightgray-200);
+  background-color: rgba(30, 136, 229, 0.08);
+  min-height: 120px;
 }
 
-::ng-deep .scrollable-list .dx-scrollable-container {
-  width: 100%;
-}
-
-::ng-deep .scrollable-list .dx-scrollable-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-12);
-}
-
-::ng-deep .scrollable-board .dx-scrollable-container {
-  width: 100%;
+::ng-deep .cdk-drag-preview {
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.2);
+  border-radius: var(--br-8);
 }
 
 // Issue Card
@@ -378,17 +364,10 @@
   }
 }
 
-::ng-deep .sortable-cards .dx-sortable-placeholder {
-  border-radius: var(--br-8);
-  border: 2px dashed var(--color-lightgray-200);
-  background-color: rgba(30, 136, 229, 0.08);
-  min-height: 120px;
+.scrollable-list.cdk-drop-list-dragging .issue-card {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-::ng-deep .sortable-cards .dx-sortable-ghost {
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.2);
-  border-radius: var(--br-8);
-}
 
 // Add Issue Button
 .btn-add-issue {

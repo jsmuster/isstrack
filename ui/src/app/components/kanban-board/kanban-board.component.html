@@ -2,75 +2,70 @@
 <div class="kanban-board-container">
   <div class="kanban-error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
 
-  <dx-scroll-view class="scrollable-board" direction="horizontal">
-    <div class="kanban-columns">
-      @for (column of columns(); track column.status) {
-      <section class="kanban-column">
-        <div class="column-header">
-          <div class="column-title-wrapper">
-            <h3 class="column-title">{{ column.status }}</h3>
-            <div class="issue-count">{{ column.issues.length }}</div>
+  <div class="kanban-columns" cdkDropListGroup>
+    @for (column of columns(); track column.status; let columnIndex = $index) {
+    <section class="kanban-column">
+      <div class="column-header">
+        <div class="column-title-wrapper">
+          <h3 class="column-title">{{ column.status }}</h3>
+          <div class="issue-count">{{ column.issues.length }}</div>
+        </div>
+      </div>
+
+      <div
+        class="scrollable-list"
+        cdkDropList
+        [id]="columnIds()[columnIndex]"
+        [cdkDropListData]="column.issues"
+        (cdkDropListDropped)="onCardDrop($event, column)"
+      >
+        <article
+          class="issue-card"
+          role="button"
+          tabindex="0"
+          *ngFor="let issue of column.issues"
+          cdkDrag
+          [cdkDragData]="issue"
+          (click)="onIssueClick(issue)"
+          (keydown.enter)="onIssueClick(issue)"
+        >
+          <div class="card-header">
+            <span class="issue-id">#{{ issue.id }}</span>
+            <span class="issue-status">{{ issue.status }}</span>
           </div>
+          <div class="card-body">
+            <p class="issue-title">{{ issue.title }}</p>
+            <div class="card-tags" *ngIf="issue.tags?.length">
+              <span class="tag" *ngFor="let tag of issue.tags" [class]="getTagClass(tag)">{{ tag }}</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="priority-badge" [class]="getPriorityClass(issue.priority)">{{ issue.priority }}</div>
+            <div class="assignee-pill">
+              <span class="assignee-label">{{ toAssigneeLabel(issue.assigneeUserId) }}</span>
+            </div>
+            <span class="timestamp">{{ formatTimestamp(issue.updatedAt) }}</span>
+          </div>
+        </article>
+
+        <div class="empty-state" *ngIf="column.issues.length === 0">
+          <img class="empty-icon" alt="No issues" src="/assets/images/i13.svg" />
+          <p class="empty-message">No issues in this status</p>
         </div>
 
-        <dx-scroll-view class="scrollable-list" direction="vertical">
-          <dx-sortable
-            class="sortable-cards"
-            [data]="column.issues"
-            [group]="cardGroup"
-            itemOrientation="vertical"
-            (onDragStart)="onCardDragStart($event)"
-            (onAdd)="onCardDrop($event, column)"
-            (onReorder)="onCardReorder($event, column)"
-          >
-            <ng-template dxTemplate="item" let-issue="itemData">
-              <article
-                class="issue-card"
-                role="button"
-                tabindex="0"
-                (click)="onIssueClick(issue)"
-                (keydown.enter)="onIssueClick(issue)"
-              >
-                <div class="card-header">
-                  <span class="issue-id">#{{ issue.id }}</span>
-                  <span class="issue-status">{{ issue.status }}</span>
-                </div>
-                <div class="card-body">
-                  <p class="issue-title">{{ issue.title }}</p>
-                  <div class="card-tags" *ngIf="issue.tags?.length">
-                    <span class="tag" *ngFor="let tag of issue.tags" [class]="getTagClass(tag)">{{ tag }}</span>
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="priority-badge" [class]="getPriorityClass(issue.priority)">{{ issue.priority }}</div>
-                  <div class="assignee-pill">
-                    <span class="assignee-label">{{ toAssigneeLabel(issue.assigneeUserId) }}</span>
-                  </div>
-                  <span class="timestamp">{{ formatTimestamp(issue.updatedAt) }}</span>
-                </div>
-              </article>
-            </ng-template>
-          </dx-sortable>
-
-          <div class="empty-state" *ngIf="column.issues.length === 0">
-            <img class="empty-icon" alt="No issues" src="/assets/images/i13.svg" />
-            <p class="empty-message">No issues in this status</p>
-          </div>
-
-          <button
-            class="btn-add-issue"
-            (click)="onAddIssue(column.status)"
-            type="button"
-            aria-label="Add new issue to {{ column.status }} column"
-          >
-            <img class="icon-add" alt="Add icon" src="/assets/images/i12.svg" />
-            <span class="btn-text">Add issue</span>
-          </button>
-        </dx-scroll-view>
-      </section>
-      }
-    </div>
-  </dx-scroll-view>
+        <button
+          class="btn-add-issue"
+          (click)="onAddIssue(column.status)"
+          type="button"
+          aria-label="Add new issue to {{ column.status }} column"
+        >
+          <img class="icon-add" alt="Add icon" src="/assets/images/i12.svg" />
+          <span class="btn-text">Add issue</span>
+        </button>
+      </div>
+    </section>
+    }
+  </div>
 
   <footer class="kanban-footer">
     <div class="pagination-info">
