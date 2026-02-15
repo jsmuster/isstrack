@@ -72,8 +72,8 @@
           <app-dropdown
             [options]="priorityDropdownOptions"
             ariaLabel="Select priority level"
-            [ngModel]="selectedPriority()"
-            (ngModelChange)="onPriorityChange($event)"
+            [value]="selectedPriority()"
+            (valueChange)="onPriorityChange($event)"
           ></app-dropdown>
         </div>
 
@@ -85,8 +85,8 @@
           <app-dropdown
             [options]="assigneeDropdownOptions()"
             ariaLabel="Select assignee"
-            [ngModel]="selectedAssignee()"
-            (ngModelChange)="onAssigneeChange($event)"
+            [value]="selectedAssignee()"
+            (valueChange)="onAssigneeChange($event)"
           ></app-dropdown>
         </div>
 

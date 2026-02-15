@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit, computed } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms'
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
@@ -22,7 +22,7 @@ interface MemberRow {
 @Component({
   selector: 'members',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SidebarComponent, DropdownComponent],
+  imports: [CommonModule, ReactiveFormsModule, SidebarComponent, DropdownComponent],
   templateUrl: './members.html',
   styleUrls: ['./members.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

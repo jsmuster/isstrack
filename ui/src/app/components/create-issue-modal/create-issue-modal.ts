@@ -1,6 +1,6 @@
 import { Component, signal, computed, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { IssuesApi } from '../../features/issues/data/issues.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
@@ -38,7 +38,7 @@ interface AssigneeOption {
 @Component({
   selector: 'create-issue-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, DropdownComponent],
+  imports: [CommonModule, ReactiveFormsModule, DropdownComponent],
   templateUrl: './create-issue-modal.html',
   styleUrls: ['./create-issue-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

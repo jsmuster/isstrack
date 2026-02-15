@@ -113,16 +113,16 @@
                 <app-dropdown
                   [options]="filterOptions"
                   ariaLabel="Filter projects"
-                  [ngModel]="filterBy()"
-                  (ngModelChange)="onFilterChange($event)"
+                  [value]="filterBy()"
+                  (valueChange)="onFilterChange($any($event))"
                 ></app-dropdown>
 
                 <!-- Sort Dropdown -->
                 <app-dropdown
                   [options]="sortOptions"
                   ariaLabel="Sort projects"
-                  [ngModel]="sortBy()"
-                  (ngModelChange)="onSortChange($event)"
+                  [value]="sortBy()"
+                  (valueChange)="onSortChange($any($event))"
                 ></app-dropdown>
               </div>
             </div>

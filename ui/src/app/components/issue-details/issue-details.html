@@ -64,11 +64,9 @@
                       <label class="property-label">Status</label>
                       <app-dropdown
                         [options]="statusOptions"
-                        variant="pill"
-                        [colorClass]="'status-' + issueData().status.toLowerCase().replace(' ', '-')"
                         ariaLabel="Issue status"
-                        [ngModel]="issueData().status"
-                        (ngModelChange)="onStatusChange($event)"
+                        [value]="issueData().status"
+                        (valueChange)="onStatusChange($event)"
                       ></app-dropdown>
                     </div>
 
@@ -76,11 +74,9 @@
                       <label class="property-label">Priority</label>
                       <app-dropdown
                         [options]="priorityOptions"
-                        variant="pill"
-                        [colorClass]="'priority-' + issueData().priority.toLowerCase()"
                         ariaLabel="Issue priority"
-                        [ngModel]="issueData().priority"
-                        (ngModelChange)="onPriorityChange($event)"
+                        [value]="issueData().priority"
+                        (valueChange)="onPriorityChange($event)"
                       ></app-dropdown>
                     </div>
 
@@ -88,11 +84,9 @@
                       <label class="property-label">Assignee</label>
                       <app-dropdown
                         [options]="assignees()"
-                        variant="pill"
-                        colorClass="neutral"
                         ariaLabel="Issue assignee"
-                        [ngModel]="'' + (issue()?.assigneeUserId ?? '')"
-                        (ngModelChange)="onAssigneeChange($event)"
+                        [value]="'' + (issue()?.assigneeUserId ?? '')"
+                        (valueChange)="onAssigneeChange($event)"
                       ></app-dropdown>
                     </div>
                   </div>

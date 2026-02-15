@@ -107,20 +107,20 @@
                       <app-dropdown
                         [options]="statusDropdownOptions"
                         ariaLabel="Filter by status"
-                        [(ngModel)]="statusFilter"
-                        (ngModelChange)="onFiltersChange()"
+                        [value]="statusFilter"
+                        (valueChange)="statusFilter = $event; onFiltersChange()"
                       ></app-dropdown>
                       <app-dropdown
                         [options]="priorityDropdownOptions"
                         ariaLabel="Filter by priority"
-                        [(ngModel)]="priorityFilter"
-                        (ngModelChange)="onFiltersChange()"
+                        [value]="priorityFilter"
+                        (valueChange)="priorityFilter = $event; onFiltersChange()"
                       ></app-dropdown>
                       <app-dropdown
                         [options]="assigneeOptions()"
                         ariaLabel="Filter by assignee"
-                        [(ngModel)]="assigneeFilter"
-                        (ngModelChange)="onFiltersChange()"
+                        [value]="assigneeFilter"
+                        (valueChange)="assigneeFilter = $event; onFiltersChange()"
                       ></app-dropdown>
                       <div class="select">
                         <input
@@ -135,8 +135,8 @@
                       <app-dropdown
                         [options]="sortDropdownOptions"
                         ariaLabel="Sort issues"
-                        [(ngModel)]="sortFilter"
-                        (ngModelChange)="onFiltersChange()"
+                        [value]="sortFilter"
+                        (valueChange)="sortFilter = $event; onFiltersChange()"
                       ></app-dropdown>
                       <div class="div36"></div>
                       <button

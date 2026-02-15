@@ -1,6 +1,6 @@
 import { Component, signal, ChangeDetectionStrategy, OnInit, OnDestroy, computed } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { ActivityItem } from './activity-item/activity-item'
@@ -43,7 +43,7 @@ interface AssigneeOption {
 @Component({
   selector: 'issue-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ActivityItem, SidebarComponent, DropdownComponent],
+  imports: [CommonModule, FormsModule, ActivityItem, SidebarComponent, DropdownComponent],
   templateUrl: './issue-details.html',
   styleUrls: ['./issue-details.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

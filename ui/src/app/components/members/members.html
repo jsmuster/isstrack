@@ -84,15 +84,15 @@
                   <app-dropdown
                     [options]="roleFilterOptions"
                     ariaLabel="Filter by role"
-                    formControlName="roleFilter"
-                    (ngModelChange)="onRoleFilterChange()"
+                    [value]="searchForm.get('roleFilter')?.value"
+                    (valueChange)="searchForm.get('roleFilter')?.setValue($event); onRoleFilterChange()"
                   ></app-dropdown>
 
                   <app-dropdown
                     [options]="statusFilterOptions"
                     ariaLabel="Filter by status"
-                    formControlName="statusFilter"
-                    (ngModelChange)="onStatusFilterChange()"
+                    [value]="searchForm.get('statusFilter')?.value"
+                    (valueChange)="searchForm.get('statusFilter')?.setValue($event); onStatusFilterChange()"
                   ></app-dropdown>
                 </div>
               </div>
@@ -115,7 +115,8 @@
                   <app-dropdown
                     [options]="roleOptions"
                     ariaLabel="Select role for new member"
-                    formControlName="role"
+                    [value]="inviteForm.get('role')?.value"
+                    (valueChange)="inviteForm.get('role')?.setValue($event)"
                   ></app-dropdown>
 
                   <button

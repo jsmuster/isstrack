@@ -1,6 +1,5 @@
-import { Component, input, signal, forwardRef, ChangeDetectionStrategy } from '@angular/core'
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 export interface DropdownOption {
   value: string
@@ -14,41 +13,18 @@ export interface DropdownOption {
   templateUrl: './dropdown.html',
   styleUrls: ['./dropdown.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DropdownComponent),
-      multi: true
-    }
-  ]
 })
-export class DropdownComponent implements ControlValueAccessor {
+export class DropdownComponent {
   options = input<DropdownOption[]>([])
+  value = input<string>('')
   placeholder = input<string>('')
   ariaLabel = input<string>('')
   variant = input<'default' | 'pill'>('default')
   colorClass = input<string>('')
 
-  value = signal<string>('')
-
-  private onChange: (value: string) => void = () => {}
-  private onTouched: () => void = () => {}
-
-  writeValue(val: string): void {
-    this.value.set(val ?? '')
-  }
-
-  registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn
-  }
+  valueChange = output<string>()
 
   onSelectChange(val: string): void {
-    this.value.set(val)
-    this.onChange(val)
-    this.onTouched()
+    this.valueChange.emit(val)
   }
 }
