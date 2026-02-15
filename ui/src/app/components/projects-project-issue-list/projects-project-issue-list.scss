@@ -933,6 +933,7 @@
   gap: var(--gap-24);
   font-size: var(--fs-12);
   color: var(--color-dimgray);
+  --issue-grid: minmax(320px, 1.6fr) minmax(140px, 0.9fr) minmax(110px, 0.8fr) 197px minmax(140px, 1fr);
 
   .div38 {
     align-self: stretch;
@@ -949,42 +950,43 @@
       background-color: var(--color-whitesmoke-100);
       border-bottom: var(--border-11);
       box-sizing: border-box;
-      display: flex;
+      display: grid;
+      grid-template-columns: var(--issue-grid);
       align-items: center;
       padding: var(--padding-12) var(--padding-23_9);
       min-width: var(--min-w-858_8);
       z-index: 0;
 
+      > .frame5,
+      > .frame6,
+      > .frame7,
+      > .frame8,
+      > .frame9 {
+        width: 100%;
+        min-width: 0;
+      }
+
       .frame5 {
-        flex: 1;
         display: flex;
         align-items: flex-start;
-        min-width: var(--min-w-347);
         z-index: 2;
       }
 
       .frame6 {
-        flex: 0.8376;
         display: flex;
         align-items: flex-start;
         padding: var(--padding-0) var(--padding-16);
         box-sizing: border-box;
-        min-width: var(--min-w-127);
-        max-width: var(--max-w-197);
         z-index: 3;
       }
 
       .frame7 {
-        flex: 1;
         display: flex;
         align-items: flex-start;
-        min-width: var(--min-w-65);
-        max-width: var(--max-w-74_5);
         z-index: 4;
       }
 
       .frame8 {
-        width: var(--width-197);
         display: flex;
         align-items: flex-start;
         padding: var(--padding-0) var(--padding-16);
@@ -993,11 +995,8 @@
       }
 
       .frame9 {
-        flex: 1;
         display: flex;
         align-items: flex-start;
-        min-width: var(--min-w-73);
-        max-width: var(--max-w-165);
       }
     }
   }

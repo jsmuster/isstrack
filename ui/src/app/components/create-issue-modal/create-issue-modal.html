@@ -100,9 +100,8 @@
           <div class="form-label">
             <label for="tags-input" class="label-text">Tags</label>
           </div>
-          <div class="tags-container">
-            <div class="tag-input-wrapper">
-              <div class="tag-divider"></div>
+            <div class="tags-container">
+              <div class="tag-input-wrapper">
               <input
                 id="tags-input"
                 class="form-input tags-input"
@@ -114,7 +113,6 @@
                 aria-label="Add tags, press Enter to add a tag"
               />
             </div>
-            <p class="tags-help-text">Press Enter to add a tag</p>
             <div class="tags-list" *ngIf="tags().length > 0" role="list">
               <span *ngFor="let tag of tags()" class="tag-badge" role="listitem">
                 {{ tag }}
