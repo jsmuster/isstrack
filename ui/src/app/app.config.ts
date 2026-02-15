@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
         toolbar: [
           ['bold', 'italic', 'underline'],
           [{ list: 'ordered' }, { list: 'bullet' }],
-          ['link', 'clean']
+          ['link', 'code-block', 'clean']
         ]
       }
     }),

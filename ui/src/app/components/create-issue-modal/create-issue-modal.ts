@@ -6,7 +6,7 @@ import { IssuesApi } from '../../features/issues/data/issues.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { IssueDto, MembershipDto } from '../../models/api.models'
 import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
-import { QuillModule } from 'ngx-quill'
+import { QuillModule, QuillEditorComponent } from 'ngx-quill'
 
 /**
  * Priority option interface
@@ -58,7 +58,7 @@ export class CreateIssueModal implements OnInit, AfterViewInit {
     toolbar: [
       ['bold', 'italic', 'underline'],
       [{ list: 'ordered' }, { list: 'bullet' }],
-      ['link', 'clean']
+      ['link', 'code-block', 'clean']
     ]
   }
 
@@ -93,6 +93,7 @@ export class CreateIssueModal implements OnInit, AfterViewInit {
   @Output() closed = new EventEmitter<void>()
   @Output() created = new EventEmitter<IssueDto>()
   @ViewChild('issueTitleInput') issueTitleInput?: ElementRef<HTMLInputElement>
+  @ViewChild('descriptionEditor') descriptionEditor?: QuillEditorComponent
 
   constructor(
     private formBuilder: FormBuilder,
@@ -124,6 +125,15 @@ export class CreateIssueModal implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => this.issueTitleInput?.nativeElement.focus(), 0)
+  }
+
+  onTitleTab(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent
+    if (keyboardEvent.shiftKey) {
+      return
+    }
+    keyboardEvent.preventDefault()
+    setTimeout(() => this.descriptionEditor?.quillEditor?.focus(), 0)
   }
 
   /**

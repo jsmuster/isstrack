@@ -704,7 +704,7 @@
           overflow: hidden;
           display: flex;
           align-items: flex-start;
-          padding: var(--padding-12) 10.9px 73px;
+          padding: var(--padding-12) 10.9px;
           outline: none;
           font-family: var(--font-inter);
           font-size: var(--fs-16);
@@ -712,7 +712,7 @@
           line-height: var(--lh-24);
           color: var(--color-gray-100);
           resize: none;
-          min-height: 100px;
+          min-height: 32px;
 
           &::placeholder {
             color: var(--color-gray-200);
@@ -796,9 +796,6 @@
         gap: var(--gap-8);
         border-radius: var(--br-8);
         background-color: var(--color-whitesmoke);
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
         justify-content: center;
         padding: var(--padding-16) var(--padding-16) var(--padding-14);
 
@@ -824,6 +821,60 @@
             line-height: var(--lh-20);
             color: var(--color-slategray);
           }
+
+          .comment-actions {
+            margin-left: auto;
+            display: flex;
+            gap: var(--gap-8);
+          }
+        }
+
+        .comment-action-button {
+          border: none;
+          background: transparent;
+          font-size: var(--fs-14);
+          letter-spacing: var(--ls--0_5);
+          line-height: var(--lh-20);
+          font-weight: 500;
+          color: var(--color-royalblue-100);
+          cursor: pointer;
+
+          &.danger {
+            color: #dc2626;
+          }
+
+          &.save {
+            color: var(--color-royalblue-100);
+          }
+        }
+
+        .comment-edit {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: var(--gap-8);
+        }
+
+        .comment-edit-textarea {
+          width: 100%;
+          border-radius: var(--br-8);
+          background-color: var(--color-white);
+          border: 1px solid var(--color-lightgray-100);
+          padding: var(--padding-12) 10.9px;
+          font-family: var(--font-inter);
+          font-size: var(--fs-16);
+          letter-spacing: var(--ls--0_5);
+          line-height: var(--lh-24);
+          color: var(--color-gray-100);
+          resize: none;
+          min-height: 32px;
+          overflow: hidden;
+        }
+
+        .comment-edit-actions {
+          display: flex;
+          justify-content: flex-end;
+          gap: var(--gap-8);
         }
 
         .comment-text {
@@ -835,6 +886,8 @@
           display: inline-block;
           max-width: 880px;
           margin: 0;
+          white-space: pre-wrap;
+          word-break: break-word;
         }
       }
     }

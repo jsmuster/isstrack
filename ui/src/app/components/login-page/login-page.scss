@@ -399,23 +399,25 @@
 .input-field {
   flex: 1;
   border-radius: var(--br-8);
-  background-color: var(--color-white);
+  background-color: #ffffff;
   border: 1px solid var(--color-lightgray-100);
   display: flex;
   align-items: center;
   padding: 12px;
+  font-size: var(--fs-16);
+  line-height: var(--lh-24);
 
   .input-element {
     width: 100%;
     border: none;
     outline: none;
     font-family: var(--font-inter);
-    font-size: var(--fs-16);
-    background-color: transparent;
+    font-size: var(--fs-16) !important;
+    background-color: #ffffff;
     flex: 1;
     position: relative;
     letter-spacing: var(--ls--0_5);
-    line-height: var(--lh-24);
+    line-height: var(--lh-24) !important;
     color: var(--color-gray-200);
     text-align: left;
     display: flex;
@@ -423,6 +425,21 @@
 
     &::placeholder {
       color: var(--color-gray-200);
+      font-size: var(--fs-16) !important;
+      line-height: var(--lh-24) !important;
+    }
+
+    &:focus {
+      background-color: #ffffff;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      box-shadow: 0 0 0 1000px #ffffff inset;
+      -webkit-text-fill-color: var(--color-gray-200);
+      caret-color: var(--color-gray-100);
     }
   }
 }

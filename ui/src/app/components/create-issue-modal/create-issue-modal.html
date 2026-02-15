@@ -33,6 +33,7 @@
               type="text"
               placeholder="Enter issue title..."
               #issueTitleInput
+              (keydown.tab)="onTitleTab($event)"
               formControlName="title"
               aria-required="true"
               [attr.aria-invalid]="issueForm.get('title')?.invalid && issueForm.get('title')?.touched"
@@ -63,6 +64,7 @@
               [modules]="quillModules"
               theme="snow"
               aria-label="Issue description"
+              #descriptionEditor
             ></quill-editor>
           </div>
         </div>

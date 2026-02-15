@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { apiUrl } from '../../../core/http/api.config'
-import { AddCommentRequest, CommentDto, PageResponse } from '../../../models/api.models'
+import { AddCommentRequest, CommentDto, PageResponse, UpdateCommentRequest } from '../../../models/api.models'
 
 @Injectable({ providedIn: 'root' })
 export class CommentsApi {
@@ -15,5 +15,13 @@ export class CommentsApi {
 
   addComment(issueId: number, request: AddCommentRequest): Observable<CommentDto> {
     return this.http.post<CommentDto>(apiUrl(`/api/issues/${issueId}/comments`), request)
+  }
+
+  updateComment(issueId: number, commentId: number, request: UpdateCommentRequest): Observable<CommentDto> {
+    return this.http.put<CommentDto>(apiUrl(`/api/issues/${issueId}/comments/${commentId}`), request)
+  }
+
+  deleteComment(issueId: number, commentId: number): Observable<void> {
+    return this.http.delete<void>(apiUrl(`/api/issues/${issueId}/comments/${commentId}`))
   }
 }

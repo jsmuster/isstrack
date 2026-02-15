@@ -2,10 +2,12 @@ package com.isstrack.issue_tracker.domain.service;
 
 import com.isstrack.issue_tracker.api.dto.CommentDto;
 import com.isstrack.issue_tracker.api.dto.PageResponse;
+import com.isstrack.issue_tracker.api.error.ForbiddenException;
 import com.isstrack.issue_tracker.api.error.NotFoundException;
 import com.isstrack.issue_tracker.domain.event.CommentAddedEvent;
 import com.isstrack.issue_tracker.domain.mapper.EntityMapper;
 import com.isstrack.issue_tracker.persistence.entity.IssueCommentEntity;
+import com.isstrack.issue_tracker.persistence.entity.IssueEntity;
 import com.isstrack.issue_tracker.persistence.repo.IssueCommentRepository;
 import com.isstrack.issue_tracker.persistence.repo.IssueRepository;
 import com.isstrack.issue_tracker.persistence.repo.UserRepository;
@@ -65,5 +67,53 @@ public class CommentService {
     var page = commentRepository.findByIssueIdOrderByCreatedAtDesc(issueId, pageable);
     var items = page.stream().map(EntityMapper::toCommentDto).toList();
     return new PageResponse<>(items, page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
+  }
+
+  @Transactional
+  public CommentDto updateComment(long userId, long issueId, long commentId, String body) {
+    var comment = commentRepository.findById(commentId)
+        .orElseThrow(() -> new NotFoundException("Comment not found"));
+    var issue = loadIssueForComment(issueId, comment);
+    accessService.requireActiveMember(userId, issue.getProject().getId());
+    if (!canManageComment(userId, issue, comment)) {
+      throw new ForbiddenException("Not allowed to edit this comment");
+    }
+    var actor = userRepository.findById(userId)
+        .orElseThrow(() -> new NotFoundException("User not found"));
+    comment.setBody(body.trim());
+    var saved = commentRepository.save(comment);
+    activityService.logActivity(issue, actor, "Comment edited");
+    return EntityMapper.toCommentDto(saved);
+  }
+
+  @Transactional
+  public void deleteComment(long userId, long issueId, long commentId) {
+    var comment = commentRepository.findById(commentId)
+        .orElseThrow(() -> new NotFoundException("Comment not found"));
+    var issue = loadIssueForComment(issueId, comment);
+    accessService.requireActiveMember(userId, issue.getProject().getId());
+    if (!canManageComment(userId, issue, comment)) {
+      throw new ForbiddenException("Not allowed to delete this comment");
+    }
+    var actor = userRepository.findById(userId)
+        .orElseThrow(() -> new NotFoundException("User not found"));
+    commentRepository.delete(comment);
+    activityService.logActivity(issue, actor, "Comment deleted");
+  }
+
+  private IssueEntity loadIssueForComment(long issueId, IssueCommentEntity comment) {
+    var issue = comment.getIssue();
+    if (issue == null || !issue.getId().equals(issueId)) {
+      throw new NotFoundException("Comment not found");
+    }
+    return issueRepository.findById(issueId)
+        .orElseThrow(() -> new NotFoundException("Issue not found"));
+  }
+
+  private boolean canManageComment(long userId, IssueEntity issue, IssueCommentEntity comment) {
+    if (comment.getAuthor().getId().equals(userId)) {
+      return true;
+    }
+    return issue.getOwner().getId().equals(userId);
   }
 }

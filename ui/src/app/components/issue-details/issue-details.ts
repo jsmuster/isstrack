@@ -13,6 +13,7 @@ import { ActivityApi } from '../../features/activity/data/activity.api'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
 import { WebSocketService } from '../../core/realtime/websocket.service'
 import { ActivityDto, CommentDto, IssueDto, MembershipDto } from '../../models/api.models'
+import { AuthStore } from '../../core/state/auth.store'
 
 /**
  * Issue Details Component
@@ -41,6 +42,12 @@ interface AssigneeOption {
   label: string
 }
 
+interface CommentEditState {
+  id: number
+  body: string
+  isSaving: boolean
+}
+
 @Component({
   selector: 'issue-details',
   standalone: true,
@@ -55,6 +62,7 @@ export class IssueDetails implements OnInit, OnDestroy {
   comments = signal<CommentDto[]>([])
   activityItems = signal<ActivityDto[]>([])
   assignees = signal<AssigneeOption[]>([])
+  editingComment = signal<CommentEditState | null>(null)
   errorMessage = signal('')
   isLoading = signal(false)
   isSubmitting = signal(false)
@@ -71,7 +79,7 @@ export class IssueDetails implements OnInit, OnDestroy {
     toolbar: [
       ['bold', 'italic', 'underline'],
       [{ list: 'ordered' }, { list: 'bullet' }],
-      ['link', 'clean']
+      ['link', 'code-block', 'clean']
     ]
   }
 
@@ -138,7 +146,8 @@ export class IssueDetails implements OnInit, OnDestroy {
      private readonly commentsApi: CommentsApi,
      private readonly activityApi: ActivityApi,
      private readonly projectsApi: ProjectsApi,
-     private readonly websocketService: WebSocketService
+     private readonly websocketService: WebSocketService,
+     private readonly authStore: AuthStore
    ) {}
 
   ngOnInit(): void {
@@ -303,6 +312,7 @@ export class IssueDetails implements OnInit, OnDestroy {
           this.totalComments.update((total) => total + 1)
         }
         this.newComment = ''
+        this.resetCommentHeight()
         this.isSubmitting.set(false)
       },
       error: () => {
@@ -310,6 +320,19 @@ export class IssueDetails implements OnInit, OnDestroy {
         this.isSubmitting.set(false)
       }
     })
+  }
+
+  adjustCommentHeight(textarea: HTMLTextAreaElement): void {
+    textarea.style.height = 'auto'
+    textarea.style.height = `${textarea.scrollHeight}px`
+  }
+
+  private resetCommentHeight(): void {
+    const textarea = document.querySelector<HTMLTextAreaElement>('.comment-textarea')
+    if (!textarea) {
+      return
+    }
+    textarea.style.height = ''
   }
 
   /**
@@ -370,15 +393,101 @@ export class IssueDetails implements OnInit, OnDestroy {
    /**
     * Deletes a comment
     */
-   onDeleteComment(commentId: string): void {
-    this.comments.update(comments => comments.filter(c => String(c.id) !== commentId))
+  onDeleteComment(commentId: number): void {
+    if (!this.issueId || !this.canManageComment(commentId)) {
+      return
+    }
+    this.commentsApi.deleteComment(this.issueId, commentId).subscribe({
+      next: () => {
+        this.comments.update(comments => comments.filter(c => c.id !== commentId))
+        this.totalComments.update(total => Math.max(total - 1, 0))
+      },
+      error: () => {
+        this.errorMessage.set('Unable to delete comment.')
+      }
+    })
   }
 
   /**
    * Edits a comment
    */
-  onEditComment(commentId: string): void {
-    console.log('Edit comment:', commentId)
+  onEditComment(comment: CommentDto): void {
+    if (!this.canManageComment(comment.id)) {
+      return
+    }
+    this.editingComment.set({ id: comment.id, body: comment.body, isSaving: false })
+    setTimeout(() => {
+      const textarea = document.querySelector<HTMLTextAreaElement>('.comment-edit-textarea')
+      if (textarea) {
+        this.adjustCommentHeight(textarea)
+        textarea.focus()
+      }
+    }, 0)
+  }
+
+  onCancelCommentEdit(): void {
+    this.editingComment.set(null)
+  }
+
+  onSaveCommentEdit(): void {
+    if (!this.issueId) {
+      return
+    }
+    const editing = this.editingComment()
+    if (!editing) {
+      return
+    }
+    const body = editing.body.trim()
+    if (!body) {
+      return
+    }
+    this.editingComment.set({ ...editing, isSaving: true, body })
+    this.commentsApi.updateComment(this.issueId, editing.id, { body }).subscribe({
+      next: (updated) => {
+        this.comments.update(items => items.map(item => item.id === updated.id ? updated : item))
+        this.editingComment.set(null)
+      },
+      error: () => {
+        this.errorMessage.set('Unable to update comment.')
+        this.editingComment.set({ ...editing, isSaving: false, body })
+      }
+    })
+  }
+
+  updateEditingCommentBody(value: string): void {
+    const editing = this.editingComment()
+    if (!editing) {
+      return
+    }
+    this.editingComment.set({ ...editing, body: value })
+  }
+
+  isEditingComment(commentId: number): boolean {
+    return this.editingComment()?.id === commentId
+  }
+
+  canManageComment(commentId: number): boolean {
+    const comment = this.comments().find(item => item.id === commentId)
+    if (!comment) {
+      return false
+    }
+    const currentUser = this.authStore.currentUser()
+    if (!currentUser) {
+      return false
+    }
+    if (comment.authorUserId === currentUser.id) {
+      return true
+    }
+    return this.issue()?.ownerUserId === currentUser.id
+  }
+
+  isCommentAuthor(comment: CommentDto): boolean {
+    const currentUser = this.authStore.currentUser()
+    return Boolean(currentUser?.id && comment.authorUserId === currentUser.id)
+  }
+
+  canManageComments(): boolean {
+    return this.authStore.currentUser() !== null
   }
 
   /**

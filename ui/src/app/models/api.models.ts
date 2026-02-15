@@ -127,3 +127,7 @@ export interface PatchIssueRequest {
 export interface AddCommentRequest {
   body: string
 }
+
+export interface UpdateCommentRequest {
+  body: string
+}

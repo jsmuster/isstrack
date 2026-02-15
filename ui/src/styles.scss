@@ -185,3 +185,10 @@ button {
   font-family: inherit;
   cursor: pointer;
 }
+
+.ql-snow .ql-editor pre,
+.ql-snow .ql-editor pre.ql-syntax {
+  background-color: #6b7280 !important;
+  color: #f8fafc !important;
+  padding: 8px 10px !important;
+}

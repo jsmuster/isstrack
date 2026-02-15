@@ -174,9 +174,11 @@
                     <img class="user-avatar-small" alt="Your avatar" src="/assets/images/img.svg" />
                     <div class="comment-input-group">
                       <textarea
+                        #commentTextarea
                         class="comment-textarea"
                         placeholder="Add a comment..."
                         [(ngModel)]="newComment"
+                        (input)="adjustCommentHeight(commentTextarea)"
                         aria-label="Add a comment"
                       ></textarea>
                       <div class="comment-actions">
@@ -202,8 +204,56 @@
                       <div class="comment-header">
                         <strong class="comment-author">User {{ comment.authorUserId }}</strong>
                         <span class="comment-timestamp">{{ formatTimestamp(comment.createdAt) }}</span>
+                        <div
+                          class="comment-actions"
+                          *ngIf="canManageComment(comment.id) && !isEditingComment(comment.id)"
+                        >
+                          <button
+                            class="comment-action-button"
+                            type="button"
+                            (click)="onEditComment(comment)"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            class="comment-action-button danger"
+                            type="button"
+                            (click)="onDeleteComment(comment.id)"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
-                      <p class="comment-text">{{ comment.body }}</p>
+                      <div class="comment-edit" *ngIf="isEditingComment(comment.id); else commentBody">
+                        <textarea
+                          #editCommentTextarea
+                          class="comment-edit-textarea"
+                          [ngModel]="editingComment()?.body"
+                          (ngModelChange)="updateEditingCommentBody($event)"
+                          (input)="adjustCommentHeight(editCommentTextarea)"
+                          aria-label="Edit comment"
+                        ></textarea>
+                        <div class="comment-edit-actions">
+                          <button
+                            class="comment-action-button"
+                            type="button"
+                            (click)="onCancelCommentEdit()"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            class="comment-action-button save"
+                            type="button"
+                            (click)="onSaveCommentEdit()"
+                            [disabled]="editingComment()?.isSaving"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                      <ng-template #commentBody>
+                        <p class="comment-text">{{ comment.body }}</p>
+                      </ng-template>
                     </div>
                   </div>
                 </div>
