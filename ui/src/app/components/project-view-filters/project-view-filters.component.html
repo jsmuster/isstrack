@@ -1,0 +1,72 @@
+<!-- Project View Filters -->
+<div class="project-view-filters">
+  <div class="filters-container">
+    <!-- Search Filter -->
+    <div class="search-filter">
+      <div class="search-input-group">
+        <img class="search-icon" alt="Search icon" src="/assets/images/i9.svg" />
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Filter by title..."
+          (input)="onSearchChange($event)"
+          aria-label="Filter issues by title"
+        />
+      </div>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="filter-dropdown">
+      <div class="dropdown-content">
+        <span class="dropdown-label">All Status</span>
+        <button class="dropdown-toggle" (click)="onStatusChange($event)" type="button" aria-label="Filter by status">
+          <img class="dropdown-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Priority Filter -->
+    <div class="filter-dropdown">
+      <div class="dropdown-content">
+        <span class="dropdown-label">All Priority</span>
+        <button class="dropdown-toggle" (click)="onPriorityChange($event)" type="button" aria-label="Filter by priority">
+          <img class="dropdown-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Assignee Filter -->
+    <div class="filter-dropdown">
+      <div class="dropdown-content">
+        <span class="dropdown-label">All Assignees</span>
+        <button class="dropdown-toggle" (click)="onAssigneeChange($event)" type="button" aria-label="Filter by assignee">
+          <img class="dropdown-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Sort Filter -->
+    <div class="filter-dropdown sort-dropdown">
+      <div class="dropdown-content">
+        <span class="dropdown-label">Sort: Updated</span>
+        <button class="dropdown-toggle" (click)="onSortChange($event)" type="button" aria-label="Change sort order">
+          <img class="dropdown-icon" alt="Dropdown" src="/assets/images/Frame.svg" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="filter-divider"></div>
+
+    <!-- New Issue Button -->
+    <button
+      class="btn-new-issue"
+      (click)="onNewIssueClick()"
+      type="button"
+      aria-label="Create new issue"
+    >
+      <img class="btn-icon" alt="Add icon" src="/assets/images/i10.svg" />
+      <span class="btn-text">New Issue</span>
+    </button>
+  </div>
+</div>

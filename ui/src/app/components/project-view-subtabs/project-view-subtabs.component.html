@@ -1,0 +1,32 @@
+<!-- Project View Subtabs - View Switcher -->
+<div class="project-view-subtabs">
+  <div class="view-switcher">
+    <!-- Table View Button -->
+    <button
+      class="view-button"
+      (click)="onViewChange('table')"
+      type="button"
+      aria-label="Switch to table view"
+    >
+      <img class="view-icon" alt="Table icon" src="/assets/images/i7.svg" />
+      <span class="view-text">Table</span>
+    </button>
+
+    <!-- Kanban View Button (Active) -->
+    <button
+      class="view-button view-active"
+      (click)="onViewChange('kanban')"
+      type="button"
+      aria-label="Switch to kanban view"
+    >
+      <img class="view-icon" alt="Kanban icon" src="/assets/images/i8.svg" />
+      <span class="view-text">Kanban</span>
+    </button>
+  </div>
+
+  <!-- Issue Count -->
+  <div class="issue-count-badge">
+    <span class="count-number">47</span>
+    <span class="count-label">issues</span>
+  </div>
+</div>

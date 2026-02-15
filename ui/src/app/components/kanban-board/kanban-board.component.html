@@ -1,0 +1,246 @@
+<!-- Kanban Board Container -->
+<div class="kanban-board-container">
+  <!-- Kanban Columns -->
+  <div class="kanban-columns">
+    <!-- Open Column -->
+    <section class="kanban-column">
+      <div class="column-header">
+        <div class="column-title-wrapper">
+          <h3 class="column-title">Open</h3>
+          <div class="issue-count">8</div>
+        </div>
+      </div>
+
+      <div class="column-content">
+        <!-- Issue Card #1247 -->
+        <div class="issue-card">
+          <div class="card-header">
+            <span class="issue-id">#1247</span>
+          </div>
+          <div class="card-body">
+            <p class="issue-title">Update navigation design for better user experience</p>
+            <div class="card-tags">
+              <span class="tag tag-frontend">frontend</span>
+              <span class="tag tag-bug">bug</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="priority-badge priority-high">High</div>
+            <img class="avatar" alt="Assignee" src="/assets/images/img1.svg" />
+            <span class="timestamp">2 hours ago</span>
+          </div>
+        </div>
+
+        <!-- Issue Card #1246 -->
+        <div class="issue-card">
+          <div class="card-header">
+            <span class="issue-id">#1246</span>
+          </div>
+          <div class="card-body">
+            <p class="issue-title">Add dark mode support to dashboard</p>
+            <div class="card-tags">
+              <span class="tag tag-feature">feature</span>
+              <span class="tag tag-ui">ui</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="priority-badge priority-medium">Medium</div>
+            <img class="avatar" alt="Assignee" src="/assets/images/img2.svg" />
+            <span class="timestamp">5 hours ago</span>
+          </div>
+        </div>
+
+        <!-- Add Issue Button -->
+        <button class="btn-add-issue" (click)="onAddIssue('open')" type="button" aria-label="Add new issue to Open column">
+          <img class="icon-add" alt="Add icon" src="/assets/images/i12.svg" />
+          <span class="btn-text">Add issue</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- In Progress Column -->
+    <section class="kanban-column">
+      <div class="column-header">
+        <div class="column-title-wrapper">
+          <h3 class="column-title">In Progress</h3>
+          <div class="issue-count">5</div>
+        </div>
+      </div>
+
+      <div class="column-content">
+        <!-- Issue Card #1245 -->
+        <div class="issue-card">
+          <div class="card-header">
+            <span class="issue-id">#1245</span>
+          </div>
+          <div class="card-body">
+            <p class="issue-title">Implement user authentication system</p>
+            <div class="card-tags">
+              <span class="tag tag-backend">backend</span>
+              <span class="tag tag-feature">feature</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="priority-badge priority-high">High</div>
+            <img class="avatar" alt="Assignee" src="/assets/images/img3.svg" />
+            <span class="timestamp">1 day ago</span>
+          </div>
+        </div>
+
+        <!-- Issue Card #1244 -->
+        <div class="issue-card">
+          <div class="card-header">
+            <span class="issue-id">#1244</span>
+          </div>
+          <div class="card-body">
+            <p class="issue-title">Optimize database queries for better performance</p>
+            <div class="card-tags">
+              <span class="tag tag-backend">backend</span>
+              <span class="tag tag-performance">performance</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="priority-badge priority-medium">Medium</div>
+            <img class="avatar" alt="Assignee" src="/assets/images/img4.svg" />
+            <span class="timestamp">2 days ago</span>
+          </div>
+        </div>
+
+        <!-- Add Issue Button -->
+        <button class="btn-add-issue" (click)="onAddIssue('in-progress')" type="button" aria-label="Add new issue to In Progress column">
+          <img class="icon-add" alt="Add icon" src="/assets/images/i12.svg" />
+          <span class="btn-text">Add issue</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Review Column -->
+    <section class="kanban-column">
+      <div class="column-header">
+        <div class="column-title-wrapper">
+          <h3 class="column-title">Review</h3>
+          <div class="issue-count">3</div>
+        </div>
+      </div>
+
+      <div class="column-content">
+        <!-- Issue Card #1243 -->
+        <div class="issue-card">
+          <div class="card-header">
+            <span class="issue-id">#1243</span>
+          </div>
+          <div class="card-body">
+            <p class="issue-title">Add responsive design for mobile devices</p>
+            <div class="card-tags">
+              <span class="tag tag-frontend">frontend</span>
+              <span class="tag tag-responsive">responsive</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="priority-badge priority-medium">Medium</div>
+            <img class="avatar" alt="Assignee" src="/assets/images/img5.svg" />
+            <span class="timestamp">3 days ago</span>
+          </div>
+        </div>
+
+        <!-- Add Issue Button -->
+        <button class="btn-add-issue" (click)="onAddIssue('review')" type="button" aria-label="Add new issue to Review column">
+          <img class="icon-add" alt="Add icon" src="/assets/images/i12.svg" />
+          <span class="btn-text">Add issue</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Resolved Column -->
+    <section class="kanban-column">
+      <div class="column-header">
+        <div class="column-title-wrapper">
+          <h3 class="column-title">Resolved</h3>
+          <div class="issue-count">4</div>
+        </div>
+      </div>
+
+      <div class="column-content">
+        <!-- Issue Card #1242 -->
+        <div class="issue-card">
+          <div class="card-header">
+            <span class="issue-id">#1242</span>
+          </div>
+          <div class="card-body">
+            <p class="issue-title">Fix login button styling issue</p>
+            <div class="card-tags">
+              <span class="tag tag-frontend">frontend</span>
+              <span class="tag tag-bug">bug</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="priority-badge priority-low">Low</div>
+            <img class="avatar" alt="Assignee" src="/assets/images/img6.svg" />
+            <span class="timestamp">1 week ago</span>
+          </div>
+        </div>
+
+        <!-- Add Issue Button -->
+        <button class="btn-add-issue" (click)="onAddIssue('resolved')" type="button" aria-label="Add new issue to Resolved column">
+          <img class="icon-add" alt="Add icon" src="/assets/images/i12.svg" />
+          <span class="btn-text">Add issue</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Closed Column -->
+    <section class="kanban-column">
+      <div class="column-header">
+        <div class="column-title-wrapper">
+          <h3 class="column-title">Closed</h3>
+          <div class="issue-count">12</div>
+        </div>
+      </div>
+
+      <div class="column-content">
+        <!-- Empty State -->
+        <div class="empty-state">
+          <img class="empty-icon" alt="No issues" src="/assets/images/i13.svg" />
+          <p class="empty-message">No issues in this status</p>
+        </div>
+
+        <!-- Add Issue Button -->
+        <button class="btn-add-issue" (click)="onAddIssue('closed')" type="button" aria-label="Add new issue to Closed column">
+          <img class="icon-add" alt="Add icon" src="/assets/images/i12.svg" />
+          <span class="btn-text">Add issue</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Pagination Footer -->
+  <footer class="kanban-footer">
+    <div class="pagination-info">
+      <span class="showing-text">Showing</span>
+      <span class="page-number">1</span>
+      <span class="showing-text">to</span>
+      <span class="page-number">6</span>
+      <span class="showing-text">of</span>
+      <span class="page-number">47</span>
+      <span class="showing-text">issues</span>
+    </div>
+
+    <div class="pagination-controls">
+      <button class="btn-pagination-prev" (click)="onPreviousPage()" type="button" aria-label="Previous page">
+        <img class="icon-nav" alt="Previous" src="/assets/images/button1.svg" />
+      </button>
+
+      <button class="btn-page-number active" (click)="onPageClick(1)" type="button" aria-label="Go to page 1">1</button>
+      <button class="btn-page-number" (click)="onPageClick(2)" type="button" aria-label="Go to page 2">2</button>
+      <button class="btn-page-number" (click)="onPageClick(3)" type="button" aria-label="Go to page 3">3</button>
+
+      <span class="pagination-ellipsis">...</span>
+
+      <button class="btn-page-number" (click)="onPageClick(8)" type="button" aria-label="Go to page 8">8</button>
+
+      <button class="btn-pagination-next" (click)="onNextPage()" type="button" aria-label="Next page">
+        <img class="icon-nav" alt="Next" src="/assets/images/button2.svg" />
+      </button>
+    </div>
+  </footer>
+</div>

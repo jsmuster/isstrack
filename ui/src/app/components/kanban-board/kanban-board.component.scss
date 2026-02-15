@@ -1,0 +1,561 @@
+// Kanban Board Component Styles
+// Manages layout and styling for Kanban board with columns and issue cards
+
+// CSS Variables (Design System)
+:root {
+  // Colors
+  --color-white: #ffffff;
+  --color-gray-200: #1a202c;
+  --color-gray-300: #f5f5f5;
+  --color-dimgray: #595959;
+  --color-darkslategray: #2d3748;
+  --color-slategray: #718096;
+  --color-royalblue-100: #1e88e5;
+  --color-lightgray-200: #d0d0d0;
+  --color-gainsboro: #e0e0e0;
+  --color-black: #000000;
+
+  // Priority colors
+  --color-priority-high: #dc2626;
+  --color-priority-medium: #f59e0b;
+  --color-priority-low: #6b7280;
+
+  // Tag colors
+  --color-tag-frontend: #1e40af;
+  --color-tag-backend: #9a3412;
+  --color-tag-bug: #991b1b;
+  --color-tag-feature: #166534;
+  --color-tag-ui: #6b21a8;
+  --color-tag-performance: #854d0e;
+  --color-tag-responsive: #6b21a8;
+
+  // Font
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fs-12: 12px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+  --lh-15: 15px;
+  --lh-17: 17px;
+  --lh-20: 20px;
+  --lh-24: 24px;
+  --ls--0_5: -0.5px;
+
+  // Spacing
+  --gap-4: 4px;
+  --gap-8: 8px;
+  --gap-12: 12px;
+  --gap-16: 16px;
+  --padding-0: 0;
+  --padding-4: 4px;
+  --padding-8: 8px;
+  --padding-12: 12px;
+  --padding-16: 16px;
+  --padding-20: 20px;
+  --padding-32: 32px;
+
+  // Borders
+  --br-6: 6px;
+  --br-8: 8px;
+  --br-9999: 9999px;
+  --border-1: 1px solid var(--color-gainsboro);
+  --border-3: 2px dashed var(--color-gray-300);
+
+  // Shadows
+  --shadow-drop: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  // Height and Width
+  --height-16: 16px;
+  --height-20: 20px;
+  --height-32: 32px;
+  --width-20: 20px;
+  --width-32: 32px;
+}
+
+// Main Container
+.kanban-board-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-gray-300);
+  min-height: 100vh;
+}
+
+// Kanban Columns Container
+.kanban-columns {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-16);
+  padding: var(--padding-16) var(--padding-32);
+  overflow-x: auto;
+  flex: 1;
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-gray-300);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-lightgray-200);
+    border-radius: var(--br-8);
+
+    &:hover {
+      background-color: var(--color-dimgray);
+    }
+  }
+}
+
+// Kanban Column
+.kanban-column {
+  flex: 0 0 304px;
+  background-color: var(--color-white);
+  border: var(--border-1);
+  border-radius: var(--br-8);
+  box-shadow: var(--shadow-drop);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .column-header {
+    border-bottom: var(--border-1);
+    padding: var(--padding-16);
+    background-color: var(--color-white);
+
+    .column-title-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--gap-8);
+
+      .column-title {
+        font-size: var(--fs-16);
+        font-weight: 600;
+        line-height: var(--lh-24);
+        letter-spacing: var(--ls--0_5);
+        color: var(--color-gray-200);
+        margin: 0;
+        font-family: var(--font-inter);
+      }
+
+      .issue-count {
+        font-size: var(--fs-14);
+        font-weight: 600;
+        line-height: var(--lh-20);
+        color: var(--color-dimgray);
+        background-color: var(--color-gray-300);
+        padding: var(--padding-4) var(--padding-8);
+        border-radius: var(--br-6);
+        font-family: var(--font-inter);
+        min-width: 28px;
+        text-align: center;
+      }
+    }
+  }
+
+  .column-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-12);
+    padding: var(--padding-16);
+    overflow-y: auto;
+    min-height: 300px;
+
+    // Custom scrollbar for column content
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-lightgray-200);
+      border-radius: var(--br-8);
+
+      &:hover {
+        background-color: var(--color-dimgray);
+      }
+    }
+  }
+}
+
+// Issue Card
+.issue-card {
+  background-color: var(--color-white);
+  border: var(--border-1);
+  border-radius: var(--br-8);
+  padding: var(--padding-12);
+  cursor: grab;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-8);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    border-color: var(--color-dimgray);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-8);
+
+    .issue-id {
+      font-size: var(--fs-12);
+      font-weight: 600;
+      color: var(--color-royalblue-100);
+      font-family: var(--font-inter);
+      letter-spacing: var(--ls--0_5);
+    }
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-8);
+
+    .issue-title {
+      font-size: var(--fs-14);
+      line-height: var(--lh-20);
+      letter-spacing: var(--ls--0_5);
+      color: var(--color-gray-200);
+      margin: 0;
+      font-family: var(--font-inter);
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap-4);
+
+      .tag {
+        font-size: 10px;
+        font-weight: 600;
+        padding: var(--padding-4) var(--padding-8);
+        border-radius: var(--br-6);
+        white-space: nowrap;
+        font-family: var(--font-inter);
+        letter-spacing: var(--ls--0_5);
+
+        &.tag-frontend {
+          background-color: rgba(30, 64, 175, 0.1);
+          color: var(--color-tag-frontend);
+        }
+
+        &.tag-backend {
+          background-color: rgba(154, 52, 18, 0.1);
+          color: var(--color-tag-backend);
+        }
+
+        &.tag-bug {
+          background-color: rgba(153, 27, 27, 0.1);
+          color: var(--color-tag-bug);
+        }
+
+        &.tag-feature {
+          background-color: rgba(22, 101, 52, 0.1);
+          color: var(--color-tag-feature);
+        }
+
+        &.tag-ui {
+          background-color: rgba(107, 33, 168, 0.1);
+          color: var(--color-tag-ui);
+        }
+
+        &.tag-performance {
+          background-color: rgba(133, 77, 14, 0.1);
+          color: var(--color-tag-performance);
+        }
+
+        &.tag-responsive {
+          background-color: rgba(107, 33, 168, 0.1);
+          color: var(--color-tag-responsive);
+        }
+      }
+    }
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-8);
+    padding-top: var(--padding-8);
+    border-top: var(--border-1);
+
+    .priority-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: var(--padding-4) var(--padding-8);
+      border-radius: var(--br-6);
+      white-space: nowrap;
+      font-family: var(--font-inter);
+      letter-spacing: var(--ls--0_5);
+
+      &.priority-high {
+        background-color: rgba(220, 38, 38, 0.1);
+        color: var(--color-priority-high);
+      }
+
+      &.priority-medium {
+        background-color: rgba(245, 158, 11, 0.1);
+        color: var(--color-priority-medium);
+      }
+
+      &.priority-low {
+        background-color: rgba(107, 114, 128, 0.1);
+        color: var(--color-priority-low);
+      }
+    }
+
+    .avatar {
+      width: var(--width-20);
+      height: var(--height-20);
+      border-radius: var(--br-9999);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .timestamp {
+      font-size: 11px;
+      color: var(--color-slategray);
+      font-family: var(--font-inter);
+      letter-spacing: var(--ls--0_5);
+      margin-left: auto;
+    }
+  }
+}
+
+// Add Issue Button
+.btn-add-issue {
+  border: var(--border-3);
+  background-color: transparent;
+  border-radius: var(--br-8);
+  padding: var(--padding-12) var(--padding-16);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-8);
+  font-size: var(--fs-14);
+  font-weight: 500;
+  color: var(--color-dimgray);
+  font-family: var(--font-inter);
+  transition: all 0.2s ease;
+  letter-spacing: var(--ls--0_5);
+
+  &:hover {
+    background-color: var(--color-gray-300);
+    border-color: var(--color-lightgray-200);
+  }
+
+  &:active {
+    background-color: var(--color-white);
+  }
+
+  .icon-add {
+    width: var(--width-20);
+    height: var(--height-20);
+    flex-shrink: 0;
+  }
+
+  .btn-text {
+    white-space: nowrap;
+  }
+}
+
+// Empty State
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-12);
+  padding: var(--padding-32) var(--padding-16);
+  min-height: 150px;
+  color: var(--color-slategray);
+
+  .empty-icon {
+    width: 40px;
+    height: 40px;
+    opacity: 0.5;
+  }
+
+  .empty-message {
+    font-size: var(--fs-14);
+    line-height: var(--lh-20);
+    margin: 0;
+    font-family: var(--font-inter);
+    letter-spacing: var(--ls--0_5);
+    text-align: center;
+  }
+}
+
+// Pagination Footer
+.kanban-footer {
+  background-color: var(--color-white);
+  border-top: var(--border-1);
+  padding: var(--padding-16) var(--padding-32);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--gap-16);
+
+  .pagination-info {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-4);
+    font-size: var(--fs-14);
+    font-family: var(--font-inter);
+    letter-spacing: var(--ls--0_5);
+
+    .showing-text {
+      color: var(--color-dimgray);
+    }
+
+    .page-number {
+      font-weight: 600;
+      color: var(--color-gray-200);
+      min-width: 20px;
+      text-align: center;
+    }
+  }
+
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-8);
+  }
+}
+
+// Pagination Navigation Buttons
+.btn-pagination-prev,
+.btn-pagination-next {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--padding-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  .icon-nav {
+    width: var(--width-20);
+    height: var(--height-20);
+  }
+}
+
+// Page Number Button
+.btn-page-number {
+  background-color: var(--color-white);
+  border: var(--border-1);
+  border-radius: var(--br-6);
+  padding: var(--padding-4) var(--padding-12);
+  cursor: pointer;
+  font-size: var(--fs-14);
+  font-weight: 500;
+  color: var(--color-dimgray);
+  font-family: var(--font-inter);
+  transition: all 0.2s ease;
+  min-width: 36px;
+  text-align: center;
+  letter-spacing: var(--ls--0_5);
+
+  &:hover {
+    border-color: var(--color-royalblue-100);
+    color: var(--color-royalblue-100);
+  }
+
+  &.active {
+    background-color: var(--color-royalblue-100);
+    color: var(--color-white);
+    border-color: var(--color-royalblue-100);
+  }
+}
+
+// Pagination Ellipsis
+.pagination-ellipsis {
+  font-size: var(--fs-14);
+  color: var(--color-dimgray);
+  font-family: var(--font-inter);
+  padding: 0 var(--gap-4);
+}
+
+// Responsive Design
+@media (max-width: 1440px) {
+  .kanban-columns {
+    gap: var(--gap-12);
+  }
+
+  .kanban-column {
+    flex: 0 0 280px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .kanban-columns {
+    padding: var(--padding-12) var(--padding-16);
+  }
+
+  .kanban-column {
+    flex: 0 0 260px;
+  }
+
+  .kanban-footer {
+    padding: var(--padding-12) var(--padding-16);
+  }
+}
+
+@media (max-width: 768px) {
+  .kanban-columns {
+    padding: var(--padding-8);
+    gap: var(--gap-8);
+  }
+
+  .kanban-column {
+    flex: 0 0 240px;
+
+    .column-header {
+      padding: var(--padding-12);
+    }
+
+    .column-content {
+      padding: var(--padding-12);
+      gap: var(--gap-8);
+    }
+  }
+
+  .issue-card {
+    padding: var(--padding-8);
+  }
+
+  .kanban-footer {
+    padding: var(--padding-8);
+    flex-direction: column;
+    align-items: flex-start;
+
+    .pagination-controls {
+      width: 100%;
+      flex-wrap: wrap;
+    }
+  }
+}

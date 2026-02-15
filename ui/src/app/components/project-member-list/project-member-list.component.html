@@ -1,0 +1,204 @@
+<!-- Member List Container -->
+<div class="member-list-container">
+  <!-- Header Section -->
+  <div class="member-list-header">
+    <div class="header-content">
+      <p class="header-description">Manage project access and collaboration</p>
+      <button class="btn-invite-members" (click)="onInviteMembers()" type="button" aria-label="Invite members">
+        <img class="icon-invite" alt="Invite icon" src="/assets/images/i7.svg" />
+        <span class="btn-text">Invite Members</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="search-filter-section">
+    <!-- Search Input -->
+    <div class="search-wrapper">
+      <div class="search-input-group">
+        <img class="icon-search" alt="Search icon" src="/assets/images/i8.svg" />
+        <input
+          class="input-search-members"
+          placeholder="Search members by name or email"
+          type="text"
+          (input)="onSearchMembers($event)"
+          aria-label="Search members"
+        />
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-group">
+      <!-- Role Filter -->
+      <div class="filter-item">
+        <div class="select-wrapper">
+          <div class="select-label">All Roles</div>
+          <img class="icon-dropdown" alt="Dropdown icon" src="/assets/images/i9.svg" />
+        </div>
+      </div>
+
+      <!-- Status Filter -->
+      <div class="filter-item">
+        <div class="select-wrapper">
+          <div class="select-label">All Status</div>
+          <img class="icon-dropdown" alt="Dropdown icon" src="/assets/images/i9.svg" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Members Section -->
+  <section class="members-section">
+    <div class="section-header">
+      <h3 class="section-title">Active Members</h3>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="members-table" role="table" aria-label="Active members table">
+        <thead class="table-header">
+          <tr class="header-row">
+            <th class="col-user" scope="col">User</th>
+            <th class="col-role" scope="col">Role</th>
+            <th class="col-status" scope="col">Status</th>
+            <th class="col-added" scope="col">Added</th>
+            <th class="col-actions" scope="col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody class="table-body">
+          <!-- Sarah Chen - Owner -->
+          <tr class="table-row">
+            <td class="cell-user">
+              <div class="user-info">
+                <img class="avatar" alt="Sarah Chen avatar" src="/assets/images/img1.svg" />
+                <div class="user-details">
+                  <div class="user-name">Sarah Chen</div>
+                  <div class="user-email">sarah@company.com</div>
+                </div>
+              </div>
+            </td>
+            <td class="cell-role">
+              <span class="badge badge-owner">Owner</span>
+            </td>
+            <td class="cell-status">
+              <span class="badge badge-active">Active</span>
+            </td>
+            <td class="cell-date">Jan 15, 2024</td>
+            <td class="cell-actions"></td>
+          </tr>
+
+          <!-- Michael Rodriguez - Member -->
+          <tr class="table-row">
+            <td class="cell-user">
+              <div class="user-info">
+                <img class="avatar" alt="Michael Rodriguez avatar" src="/assets/images/img2.svg" />
+                <div class="user-details">
+                  <div class="user-name">Michael Rodriguez</div>
+                  <div class="user-email">michael@company.com</div>
+                </div>
+              </div>
+            </td>
+            <td class="cell-role">
+              <span class="badge badge-member">Member</span>
+            </td>
+            <td class="cell-status">
+              <span class="badge badge-active">Active</span>
+            </td>
+            <td class="cell-date">Jan 18, 2024</td>
+            <td class="cell-actions"></td>
+          </tr>
+
+          <!-- Emma Thompson - Member -->
+          <tr class="table-row">
+            <td class="cell-user">
+              <div class="user-info">
+                <img class="avatar" alt="Emma Thompson avatar" src="/assets/images/img3.svg" />
+                <div class="user-details">
+                  <div class="user-name">Emma Thompson</div>
+                  <div class="user-email">emma@company.com</div>
+                </div>
+              </div>
+            </td>
+            <td class="cell-role">
+              <span class="badge badge-member">Member</span>
+            </td>
+            <td class="cell-status">
+              <span class="badge badge-active">Active</span>
+            </td>
+            <td class="cell-date">Jan 20, 2024</td>
+            <td class="cell-actions"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Invited Users Section -->
+  <section class="members-section">
+    <div class="section-header">
+      <h3 class="section-title">Invited Users</h3>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="members-table" role="table" aria-label="Invited users table">
+        <thead class="table-header">
+          <tr class="header-row">
+            <th class="col-user" scope="col">User</th>
+            <th class="col-role" scope="col">Role</th>
+            <th class="col-status" scope="col">Status</th>
+            <th class="col-invited" scope="col">Invited</th>
+            <th class="col-actions" scope="col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody class="table-body">
+          <!-- Alex - Invited User -->
+          <tr class="table-row">
+            <td class="cell-user">
+              <div class="user-info">
+                <img class="avatar" alt="Pending user avatar" src="/assets/images/div2.svg" />
+                <div class="user-details">
+                  <div class="user-email">alex@company.com</div>
+                  <div class="user-status-note">Invitation pending</div>
+                </div>
+              </div>
+            </td>
+            <td class="cell-role">
+              <span class="badge badge-member">Member</span>
+            </td>
+            <td class="cell-status">
+              <span class="badge badge-invited">Invited</span>
+            </td>
+            <td class="cell-date">2 days ago</td>
+            <td class="cell-actions"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Pagination Section -->
+  <div class="pagination-section">
+    <div class="pagination-info">
+      <span class="showing-text">Showing</span>
+      <span class="showing-number">1</span>
+      <span class="showing-text">to</span>
+      <span class="showing-number">4</span>
+      <span class="showing-text">of</span>
+      <span class="showing-number">4</span>
+      <span class="showing-text">members</span>
+    </div>
+
+    <div class="pagination-controls">
+      <button class="btn-pagination" (click)="onPreviousPage()" type="button" aria-label="Previous page">
+        <img class="icon-pagination" alt="Previous icon" src="/assets/images/i10.svg" />
+        <span class="btn-text">Previous</span>
+      </button>
+
+      <button class="btn-pagination" (click)="onNextPage()" type="button" aria-label="Next page">
+        <span class="btn-text">Next</span>
+        <img class="icon-pagination" alt="Next icon" src="/assets/images/i11.svg" />
+      </button>
+    </div>
+  </div>
+</div>

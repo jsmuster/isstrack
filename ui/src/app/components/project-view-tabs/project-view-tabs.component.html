@@ -1,0 +1,40 @@
+<!-- Project View Tabs Navigation -->
+<div class="project-view-tabs">
+  <div class="tabs-container">
+    <!-- Issues Tab (Active) -->
+    <button
+      class="tab-button tab-active"
+      (click)="onTabClick('issues')"
+      type="button"
+      role="tab"
+      aria-selected="true"
+      aria-controls="issues-panel"
+    >
+      <span class="tab-label">Issues</span>
+    </button>
+
+    <!-- Members Tab -->
+    <button
+      class="tab-button"
+      (click)="onTabClick('members')"
+      type="button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="members-panel"
+    >
+      <span class="tab-label">Members</span>
+    </button>
+
+    <!-- Settings Tab -->
+    <button
+      class="tab-button"
+      (click)="onTabClick('settings')"
+      type="button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="settings-panel"
+    >
+      <span class="tab-label">Settings</span>
+    </button>
+  </div>
+</div>
