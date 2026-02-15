@@ -1,23 +1,21 @@
 .projects-page-project-list {
   width: 100%;
+  min-height: 100vh;
   position: relative;
-  border-radius: var(--br-8);
   background-color: var(--color-white);
-  border: 2px solid var(--color-lightgray-200);
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-height: 1024px;
 
   .body {
     align-self: stretch;
-    height: 1024px;
+    flex: 1;
     background-color: var(--color-whitesmoke-100);
     display: flex;
-    align-items: flex-start;
-    flex-shrink: 0;
+    align-items: stretch;
+    overflow: hidden;
   }
 }
 
@@ -26,7 +24,7 @@
   background-color: var(--color-gray-300);
   overflow: hidden;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   width: 100%;
 }
 
@@ -39,7 +37,6 @@
   flex-direction: column;
   align-items: flex-start;
   min-width: var(--min-w-310);
-  min-height: 1024px;
 }
 
 .page-header {
