@@ -426,6 +426,11 @@
   font-size: var(--fs-14);
 }
 
+// Hide empty state when a card is being dragged into the column
+.scrollable-list:has(.cdk-drag-placeholder) .empty-state {
+  display: none;
+}
+
 // Empty State
 .empty-state {
   display: flex;

@@ -3,14 +3,14 @@
  * Proprietary software. Unauthorized copying, modification,
  * distribution, or commercial use is strictly prohibited.
  */
-import { Component, ChangeDetectionStrategy, OnInit, computed } from '@angular/core'
+import { Component, ChangeDetectionStrategy, OnInit, computed, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar'
 import { DropdownComponent, DropdownOption } from '../../shared/components/dropdown/dropdown'
 import { ProjectsApi } from '../../features/projects/data/projects.api'
-import { MembershipDto, PageResponse } from '../../models/api.models'
+import { MembershipDto, PageResponse, ProjectDto } from '../../models/api.models'
 import { AuthStore } from '../../core/state/auth.store'
 
 // Define member and invited user interfaces
@@ -60,6 +60,7 @@ export class Members implements OnInit {
   errorMessage = ''
   isLoading = false
   projectId: number | null = null
+  project = signal<ProjectDto | null>(null)
   showNotifications = false
   notifications = [
     { id: 'notif-1', message: 'New member invite sent', time: 'Just now' },
@@ -99,8 +100,15 @@ export class Members implements OnInit {
     const projectId = Number(this.route.snapshot.paramMap.get('projectId'))
     if (!Number.isNaN(projectId)) {
       this.projectId = projectId
+      this.loadProject(projectId)
       this.loadMembers(0)
     }
+  }
+
+  loadProject(projectId: number): void {
+    this.projectsApi.getProject(projectId).subscribe({
+      next: (project) => this.project.set(project)
+    })
   }
 
   /**

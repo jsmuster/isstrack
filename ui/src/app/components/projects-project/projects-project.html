@@ -18,7 +18,7 @@
                    <button class="back-button" type="button" (click)="onGoBack()" aria-label="Go back">
                      <img class="back-icon" alt="Back" src="assets/Vector.svg" />
                    </button>
-                   <h2 class="project-name">{{ project()?.name || 'Project' }}</h2>
+                   <h2 class="project-name">{{ project()?.prefix ? '[' + project()!.prefix + '] ' : '' }}{{ project()?.name || 'Project' }}</h2>
                  </div>
                 <p class="project-description">
                   {{ project()?.name ? '' : 'Loading project details...' }}

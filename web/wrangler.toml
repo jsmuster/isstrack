@@ -1,0 +1,12 @@
+name = "planclock-site"
+type = "webpack"
+main = "index.js"
+account_id = "1ceca876fed15a51c92cee8203737bfe"
+workers_dev = true
+compatibility_date = "2025-07-07"
+
+[site]
+bucket = "./dist"
+
+[vars]
+ALLOWED_ORIGIN = "https://planclock.com"

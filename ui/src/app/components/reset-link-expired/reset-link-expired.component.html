@@ -1,0 +1,88 @@
+<div class="reset-link-expired">
+  <main class="body">
+    <section class="div">
+      <!-- Modal Card Container -->
+      <div class="div2">
+        <!-- Main Content Section -->
+        <section class="modal-content">
+          <!-- Header: Icon and Title -->
+          <div class="content-header">
+            <!-- Warning/Expired Icon -->
+            <div class="icon-container">
+              <img 
+                class="div-icon" 
+                loading="lazy" 
+                alt="Reset link expired warning icon" 
+                src="/assets/images/div@2x.png" 
+                role="presentation"
+              />
+            </div>
+
+            <!-- Page Title -->
+            <div class="title-container">
+              <h3 class="reset-link-expired-title">Reset Link Expired</h3>
+            </div>
+
+            <!-- Error Message -->
+            <div class="message-container">
+              <div class="message-content">
+                <div class="security-message">
+                  For security, reset links expire after a short time.
+                </div>
+                <div class="action-prompt">
+                  <div class="request-new-prompt">Request a new link to continue.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <!-- Request New Link Button -->
+            <button 
+              class="button primary-button"
+              (click)="requestNewLink()"
+              aria-label="Request a new password reset link"
+            >
+              <div class="button-text">Request New Link</div>
+            </button>
+
+            <!-- Back to Sign In Link -->
+            <div class="back-link-container">
+              <div class="back-link-content">
+                <img 
+                  class="back-icon" 
+                  loading="lazy" 
+                  alt="Back arrow" 
+                  src="/assets/images/i.svg" 
+                  role="presentation"
+                />
+                <button 
+                  class="back-to-sign-button"
+                  (click)="backToSignIn()"
+                  aria-label="Return to sign in page"
+                >
+                  Back to Sign In
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer: Support Section -->
+        <div class="footer-section">
+          <div class="footer-label">Need help?</div>
+          <div class="footer-action">
+            <button 
+              class="contact-support-button"
+              (click)="contactSupport()"
+              aria-label="Contact support for assistance"
+            >
+              Contact Support
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

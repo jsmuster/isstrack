@@ -1,0 +1,333 @@
+/* Reset Link Expired Container */
+.reset-link-expired {
+  width: 100%;
+  position: relative;
+  border-radius: 8px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-lightgray);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 1024px;
+}
+
+/* Main Body Container */
+.body {
+  align-self: stretch;
+  height: 1024px;
+  background-color: var(--color-whitesmoke-100);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+/* Centered Content Section */
+.div {
+  align-self: stretch;
+  height: 1024px;
+  background-color: var(--color-gray-200);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-0) 30px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: var(--fs-14);
+  color: var(--color-slategray);
+  font-family: var(--font-inter);
+}
+
+/* Modal Card Container */
+.div2 {
+  flex: 1;
+  background-color: var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 448px;
+}
+
+/* Modal Content Section */
+.modal-content {
+  align-self: stretch;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1), 0px 20px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-whitesmoke-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px var(--padding-0);
+  text-align: center;
+  font-size: 24px;
+  color: var(--color-gray-100);
+  font-family: var(--font-inter);
+}
+
+/* Content Header */
+.content-header {
+  flex: 1;
+  background-color: var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  max-width: 382px;
+}
+
+/* Icon Container */
+.icon-container {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--padding-0) var(--padding-0) 13px;
+  flex-shrink: 0;
+}
+
+/* Warning Icon */
+.div-icon {
+  height: 80px;
+  width: 80px;
+  position: relative;
+  border-radius: 9999px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Title Container */
+.title-container {
+  width: 100%;
+  background-color: var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-1) var(--padding-0) var(--padding-0);
+  box-sizing: border-box;
+  max-width: 215.4px;
+  flex-shrink: 0;
+}
+
+/* Page Title */
+.reset-link-expired-title {
+  margin: 0;
+  flex: 1;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: var(--ls--0_5);
+  line-height: 32px;
+  font-weight: 700;
+  font-family: inherit;
+}
+
+/* Message Container */
+.message-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--padding-0) var(--padding-0) 18px;
+  box-sizing: border-box;
+  max-width: 364.1px;
+  flex-shrink: 0;
+  font-size: var(--fs-16);
+  color: var(--color-dimgray);
+}
+
+/* Message Content */
+.message-content {
+  flex: 1;
+  background-color: var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--padding-3) var(--padding-0) var(--padding-0);
+  gap: 9px;
+  flex-shrink: 0;
+}
+
+/* Security Message */
+.security-message {
+  align-self: stretch;
+  position: relative;
+  letter-spacing: var(--ls--0_5);
+  line-height: var(--lh-26);
+  color: var(--color-dimgray);
+}
+
+/* Action Prompt Section */
+.action-prompt {
+  align-self: stretch;
+  background-color: var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3) var(--padding-0) var(--padding-0);
+}
+
+/* Request New Prompt Text */
+.request-new-prompt {
+  flex: 1;
+  position: relative;
+  letter-spacing: var(--ls--0_5);
+  line-height: var(--lh-26);
+  color: var(--color-dimgray);
+}
+
+/* Action Buttons Container */
+.action-buttons {
+  align-self: stretch;
+  background-color: var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--padding-0) var(--padding-0) 7px;
+  gap: 25px;
+  flex-shrink: 0;
+  font-size: var(--fs-14);
+  color: var(--color-royalblue);
+}
+
+/* Base Button Styles */
+.button {
+  cursor: pointer;
+  border: none;
+  padding: 16px var(--padding-0);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-inter);
+  font-size: var(--fs-16);
+  font-weight: 600;
+  letter-spacing: var(--ls--0_5);
+  align-self: stretch;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Primary Button - Request New Link */
+.primary-button {
+  background-color: var(--color-royalblue);
+  box-shadow: 0px 4px 6px rgba(99, 102, 241, 0.2), 0px 10px 15px rgba(99, 102, 241, 0.2);
+}
+
+.primary-button:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0px 10px 15px rgba(99, 102, 241, 0.3), 0px 20px 25px rgba(99, 102, 241, 0.2);
+}
+
+.primary-button:active {
+  background-color: #1e40af;
+}
+
+/* Button Text */
+.button-text {
+  flex: 1;
+  position: relative;
+  color: var(--color-white);
+  text-align: center;
+}
+
+/* Back Link Container */
+.back-link-container {
+  align-self: stretch;
+  background-color: var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px var(--padding-0) var(--padding-0);
+}
+
+/* Back Link Content */
+.back-link-content {
+  background-color: var(--color-gray-200);
+  display: flex;
+  align-items: flex-start;
+  padding: var(--padding-1) var(--padding-0) var(--padding-2);
+  gap: 15.2px;
+}
+
+/* Back Arrow Icon */
+.back-icon {
+  height: 16px;
+  width: 10.5px;
+  position: relative;
+}
+
+/* Back to Sign In Button */
+.back-to-sign-button {
+  position: relative;
+  letter-spacing: var(--ls--0_5);
+  line-height: 17px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  color: var(--color-royalblue);
+  cursor: pointer;
+  font-family: var(--font-inter);
+  padding: 0;
+  transition: opacity 0.2s ease;
+}
+
+.back-to-sign-button:hover {
+  opacity: 0.8;
+}
+
+/* Footer Support Section */
+.footer-section {
+  align-self: stretch;
+  background-color: var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--padding-1) var(--padding-0) var(--padding-0);
+  isolation: isolate;
+  z-index: 0;
+}
+
+/* Footer Label */
+.footer-label {
+  align-self: stretch;
+  position: relative;
+  letter-spacing: var(--ls--0_5);
+  line-height: var(--lh-20);
+  z-index: 1;
+  color: var(--color-slategray);
+}
+
+/* Footer Action Container */
+.footer-action {
+  align-self: stretch;
+  background-color: var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-2) 20px;
+  z-index: 2;
+  margin-top: -1px;
+  position: relative;
+  font-size: var(--fs-16);
+}
+
+/* Contact Support Button */
+.contact-support-button {
+  flex: 1;
+  position: relative;
+  letter-spacing: var(--ls--0_5);
+  line-height: var(--lh-20);
+  font-weight: 500;
+  color: var(--color-mediumslateblue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-inter);
+  padding: 0;
+  transition: opacity 0.2s ease;
+}
+
+.contact-support-button:hover {
+  opacity: 0.8;
+}

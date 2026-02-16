@@ -1,0 +1,128 @@
+<div class="check-your-email">
+  <main class="body">
+    <section class="div">
+      <!-- Modal Card Container -->
+      <div class="div2">
+        <!-- Header Icon -->
+        <div class="div3">
+          <img 
+            class="div-icon" 
+            loading="lazy" 
+            alt="Email confirmation icon" 
+            src="/assets/images/div@2x.png" 
+            role="presentation"
+          />
+        </div>
+
+        <!-- Page Title -->
+        <div class="div4">
+          <div class="h1">
+            <h3 class="check-your-email2">Check your email</h3>
+          </div>
+        </div>
+
+        <!-- Confirmation Message -->
+        <div class="div5">
+          <div class="div6">
+            <div class="if-an-account-container">
+              <span>If an account exists for </span>
+              <span class="masked-email">{{ maskedEmail }}</span>
+              <span>,<br />we sent a password reset link.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="div7">
+          <div class="div8">
+            <!-- Open Email App Button -->
+            <button 
+              class="button primary-button"
+              (click)="openEmailApp()"
+              aria-label="Open email app to access password reset link"
+            >
+              <div class="button2">
+                <img 
+                  class="i-icon" 
+                  alt="Email icon" 
+                  src="/assets/images/i.svg" 
+                  role="presentation"
+                />
+                <div class="open-email-app">Open email app</div>
+              </div>
+            </button>
+
+            <!-- Resend Link Button -->
+            <button 
+              class="button secondary-button"
+              (click)="onResendClick()"
+              [disabled]="!canResend"
+              aria-label="Resend password reset link"
+            >
+              <div class="resend-button-text">{{ getResendButtonText() }}</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Back to Sign In Link -->
+        <div class="div9">
+          <div class="div10">
+            <div class="div11">
+              <div class="div12">
+                <img 
+                  class="i-icon2" 
+                  loading="lazy" 
+                  alt="Back arrow" 
+                  src="/assets/images/i1.svg" 
+                  role="presentation"
+                />
+                <button 
+                  class="back-to-sign-button"
+                  (click)="backToSignIn()"
+                  aria-label="Return to sign in page"
+                >
+                  Back to Sign In
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Helpful Information Section -->
+        <div class="div13">
+          <div class="frame-parent">
+            <!-- Help Item 1: Check Spam/Promotions -->
+            <div class="info-row">
+              <div class="info-bullet"></div>
+              <div class="info-content-row">
+                <span class="info-label">Didn't receive it?</span>
+                <a href="#" class="info-link" aria-label="Check spam or promotions folder">Check spam or promotions</a>
+              </div>
+            </div>
+
+            <!-- Help Item 2: Link Expiration -->
+            <div class="info-row-full">
+              <div class="info-bullet"></div>
+              <span class="info-expiration">Reset link expires in 30 minutes.</span>
+            </div>
+
+            <!-- Help Item 3: Support -->
+            <div class="info-row">
+              <div class="info-bullet"></div>
+              <div class="info-content-row">
+                <span class="info-label">Need help?</span>
+                <button 
+                  (click)="contactSupport()" 
+                  class="info-link"
+                  aria-label="Contact support for assistance"
+                >
+                  Contact support
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

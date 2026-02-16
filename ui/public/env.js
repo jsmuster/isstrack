@@ -1,4 +1,1 @@
-window.__env = {
-  "API_URL": "https://api.planclock.com",
-  "CLIENT_URL": "https://app.planclock.com"
-};
+window.__env = {"API_URL": "http://localhost:8080", "CLIENT_URL": "http://localhost:4200"};

@@ -1,0 +1,373 @@
+<!-- PlanClock Landing Page -->
+<div class="planclockcom-website-landing">
+  <main class="body">
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <!-- Sticky Header -->
+      <header class="header" role="banner">
+        <div class="header-container">
+          <div class="header-content">
+            <!-- Logo -->
+            <div class="logo-section">
+              <div class="logo-wrapper">
+                <img class="logo-icon" alt="PlanClock logo" src="./public/div.svg">
+                <h1 class="logo-text">PlanClock.com</h1>
+              </div>
+            </div>
+            <!-- Navigation -->
+            <nav class="nav-section" role="navigation">
+              <button class="nav-sign-in" (click)="navigateToSignIn()" aria-label="Sign in to PlanClock">
+                <span>Sign in</span>
+              </button>
+              <button class="nav-cta-button" (click)="navigateToGetStarted()" aria-label="Get started with PlanClock">
+                <span>Get started free</span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero Content -->
+      <div class="hero-content">
+        <div class="hero-main">
+          <!-- Hero Text -->
+          <section class="hero-text-section">
+            <div class="hero-text-wrapper">
+              <div class="tag">PLAN CLOCK</div>
+              <div class="hero-content-group">
+                <div class="hero-headline">
+                  <h2 class="headline">Simple project management for teams that just want to get work done</h2>
+                </div>
+                <div class="hero-description">
+                  <p class="description">
+                    Create tasks, assign teammates, set priorities, and move work forward. Track everything in a clean list or visual Kanban board. Keep context in comments, right where decisions happen.
+                  </p>
+                </div>
+              </div>
+              <div class="hero-actions">
+                <button class="cta-button primary" (click)="navigateToGetStarted()" aria-label="Get started with PlanClock free">
+                  Get started free
+                </button>
+                <button class="cta-button secondary" (click)="playVideoDemo()" aria-label="Watch demo video">
+                  See it in action
+                </button>
+              </div>
+              <p class="hero-footer">Free to start. No credit card needed.</p>
+            </div>
+          </section>
+
+          <!-- Hero Image/Features -->
+          <section class="hero-image-section">
+            <div class="hero-image-container">
+              <img class="hero-image" alt="PlanClock task management interface" src="./public/img@2x.png">
+              <div class="hero-features">
+                <button class="feature-button" disabled aria-label="Assign tasks feature">
+                  <img class="feature-icon" alt="Assign icon" src="./public/i.svg">
+                  <span class="feature-label">Assign</span>
+                </button>
+                <div class="feature-item">
+                  <img class="feature-icon" alt="Priority icon" src="./public/i1.svg">
+                  <span class="feature-label">Priority</span>
+                </div>
+              </div>
+              <div class="hero-features-secondary">
+                <div class="feature-item">
+                  <img class="feature-icon" alt="Comments icon" src="./public/i2.svg">
+                  <span class="feature-label">Comments</span>
+                </div>
+                <button class="feature-button" disabled aria-label="Kanban board feature">
+                  <img class="feature-icon" alt="Kanban icon" src="./public/i3.svg">
+                  <span class="feature-label">Kanban</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Trusted By Section -->
+        <section class="trusted-section">
+          <div class="trusted-headline">
+            <p class="trusted-text">Trusted by teams who value focus</p>
+          </div>
+          <div class="trusted-badges">
+            <button class="trusted-badge" disabled aria-label="Agencies use PlanClock">
+              <span>Agencies</span>
+            </button>
+            <button class="trusted-badge" disabled aria-label="Startups use PlanClock">
+              <span>Startups</span>
+            </button>
+            <button class="trusted-badge" disabled aria-label="Small teams use PlanClock">
+              <span>Small teams</span>
+            </button>
+            <button class="trusted-badge" disabled aria-label="Freelancers use PlanClock">
+              <span>Freelancers</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- APPROACH SECTION -->
+    <section class="approach-section">
+      <div class="section-container">
+        <section class="section-header">
+          <div class="section-tag">THE PLANCLOCK WAY</div>
+          <h2 class="section-title">Project management got complicated, we made it simple</h2>
+          <p class="section-subtitle">No endless configuration. No feature overload. Just the workflow you actually use.</p>
+        </section>
+
+        <div class="comparison-grid">
+          <!-- Old Way -->
+          <div class="comparison-card old-way">
+            <h3 class="comparison-title">The old way</h3>
+            <ul class="comparison-list">
+              <li class="comparison-item">
+                <img class="comparison-icon" alt="Negative indicator" src="./public/div1.svg">
+                <span>Too many features, too many clicks</span>
+              </li>
+              <li class="comparison-item">
+                <img class="comparison-icon" alt="Negative indicator" src="./public/div1.svg">
+                <span>Setup takes longer than the work</span>
+              </li>
+              <li class="comparison-item">
+                <img class="comparison-icon" alt="Negative indicator" src="./public/div1.svg">
+                <span>Messy views and noisy notifications</span>
+              </li>
+              <li class="comparison-item">
+                <img class="comparison-icon" alt="Negative indicator" src="./public/div1.svg">
+                <span>Tools that feel like a second job</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- PlanClock Way -->
+          <div class="comparison-card planclock-way">
+            <h3 class="comparison-title">The PlanClock way</h3>
+            <ul class="comparison-list">
+              <li class="comparison-item">
+                <img class="comparison-icon" alt="Positive indicator" src="./public/div2.svg">
+                <span>Create tasks in seconds</span>
+              </li>
+              <li class="comparison-item">
+                <img class="comparison-icon" alt="Positive indicator" src="./public/div2.svg">
+                <span>Assign teammates and set priority</span>
+              </li>
+              <li class="comparison-item">
+                <img class="comparison-icon" alt="Positive indicator" src="./public/div2.svg">
+                <span>Track work in List or Kanban</span>
+              </li>
+              <li class="comparison-item">
+                <img class="comparison-icon" alt="Positive indicator" src="./public/div2.svg">
+                <span>Discuss work where it happens, in comments</span>
+              </li>
+            </ul>
+            <button class="cta-button primary" (click)="navigateToGetStarted()" aria-label="Get started with PlanClock">
+              Get started free
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEWS SECTION -->
+    <section class="views-section">
+      <div class="section-container">
+        <section class="section-header">
+          <div class="section-tag">VIEWS</div>
+          <h2 class="section-title">Two views, zero confusion</h2>
+          <p class="section-subtitle">Use a clean task list for planning and a Kanban board for execution.</p>
+        </section>
+
+        <div class="views-grid">
+          <!-- List View Card -->
+          <article class="view-card">
+            <img class="view-image" loading="lazy" alt="Task list view" src="./public/Projects-Project-Issue-List-Kanban-1@2x.png">
+            <div class="view-content">
+              <div class="view-header">
+                <h3 class="view-title">Task List</h3>
+                <p class="view-description">Sort by priority, filter by assignee, and see what matters today.</p>
+              </div>
+              <ul class="view-features">
+                <li class="feature-item">
+                  <img class="feature-icon" alt="Assignees icon" src="./public/i4.svg">
+                  <span>Assignees</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" alt="Priorities icon" src="./public/i5.svg">
+                  <span>Priorities</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" alt="Due dates icon" src="./public/i6.svg">
+                  <span>Due dates</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Kanban View Card -->
+          <article class="view-card">
+            <img class="view-image" loading="lazy" alt="Kanban board view" src="./public/div3@2x.png">
+            <div class="view-content">
+              <div class="view-header">
+                <h3 class="view-title">Kanban Board</h3>
+                <p class="view-description">Move tasks across simple columns to keep momentum visible.</p>
+              </div>
+              <ul class="view-features">
+                <li class="feature-item">
+                  <img class="feature-icon" alt="Drag and drop icon" src="./public/i7.svg">
+                  <span>Drag and drop</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" alt="Status columns icon" src="./public/i8.svg">
+                  <span>Status columns</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" alt="Quick edits icon" src="./public/i9.svg">
+                  <span>Quick edits</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <p class="views-footer">Switch views instantly, no setup required.</p>
+      </div>
+    </section>
+
+    <!-- COLLABORATION SECTION -->
+    <section class="collaboration-section">
+      <div class="section-container">
+        <section class="section-header">
+          <div class="section-tag">COLLABORATION</div>
+          <h2 class="section-title">Just enough teamwork features</h2>
+          <p class="section-subtitle">Invite your team, assign tasks, and keep context in comments.</p>
+          <button class="cta-button primary" (click)="navigateToGetStarted()" aria-label="Get started with PlanClock">
+            Get started free
+          </button>
+        </section>
+
+        <div class="features-grid">
+          <!-- Invite Teammates -->
+          <article class="feature-card">
+            <div class="feature-card-icon">
+              <img class="feature-card-img" loading="lazy" alt="Invite teammates illustration" src="./public/div4.svg">
+            </div>
+            <div class="feature-card-content">
+              <h3 class="feature-card-title">Invite teammates</h3>
+              <p class="feature-card-description">Add people to your workspace in minutes.</p>
+            </div>
+          </article>
+
+          <!-- Assign and Prioritize -->
+          <article class="feature-card">
+            <div class="feature-card-icon">
+              <img class="feature-card-img" loading="lazy" alt="Assign and prioritize illustration" src="./public/div5.svg">
+            </div>
+            <div class="feature-card-content">
+              <h3 class="feature-card-title">Assign and prioritize</h3>
+              <p class="feature-card-description">Make ownership clear, keep focus on what's next.</p>
+            </div>
+          </article>
+
+          <!-- Comments on Tasks -->
+          <article class="feature-card">
+            <div class="feature-card-icon">
+              <img class="feature-card-img" loading="lazy" alt="Comments on tasks illustration" src="./public/div6.svg">
+            </div>
+            <div class="feature-card-content">
+              <h3 class="feature-card-title">Comments on tasks</h3>
+              <p class="feature-card-description">Discuss work in one thread, right where decisions happen.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonials-section">
+      <div class="section-container">
+        <section class="section-header">
+          <h2 class="section-title">Why teams choose PlanClock</h2>
+          <p class="section-subtitle">Because it feels calm, fast, and easy to adopt.</p>
+        </section>
+
+        <div class="testimonials-grid">
+          <article *ngFor="let testimonial of testimonials" class="testimonial-card">
+            <div class="testimonial-header">
+              <img class="testimonial-avatar" alt="User avatar" src="./public/i10.svg">
+              <p class="testimonial-text">{{ testimonial.quote }}</p>
+            </div>
+            <div class="testimonial-footer">
+              <div class="testimonial-initials">{{ testimonial.initials }}</div>
+              <div class="testimonial-author">
+                <div class="author-name">{{ testimonial.name }}</div>
+                <div class="author-role">{{ testimonial.role }}</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section">
+      <div class="section-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+
+        <div class="faq-list">
+          <article *ngFor="let item of faqItems" class="faq-item">
+            <button 
+              class="faq-question"
+              (click)="toggleFaqItem(item.id)"
+              [attr.aria-expanded]="expandedFaqItems[item.id]"
+              [attr.aria-controls]="'faq-answer-' + item.id">
+              <span class="faq-question-text">{{ item.question }}</span>
+              <img class="faq-toggle-icon" 
+                   loading="lazy" 
+                   alt="Toggle" 
+                   src="./public/i11.svg"
+                   [class.expanded]="expandedFaqItems[item.id]">
+            </button>
+            <div 
+              *ngIf="expandedFaqItems[item.id]"
+              [id]="'faq-answer-' + item.id"
+              class="faq-answer">
+              <p class="faq-answer-text">{{ item.answer }}</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <div class="cta-container">
+        <div class="cta-content">
+          <h2 class="cta-title">Keep projects moving without the busywork</h2>
+          <p class="cta-subtitle">List, Kanban, assignments, priorities, comments. That's it.</p>
+        </div>
+        <div class="cta-actions">
+          <button class="cta-button primary" (click)="navigateToGetStarted()" aria-label="Get started with PlanClock free">
+            Get started free
+          </button>
+          <button class="cta-button secondary" (click)="navigateToSignIn()" aria-label="Sign in to PlanClock">
+            Sign in
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer-container">
+        <div class="footer-content">
+          <p class="footer-copyright">© 2024 PlanClock. All rights reserved.</p>
+          <nav class="footer-links" role="navigation">
+            <a href="#" class="footer-link">Terms</a>
+            <a href="#" class="footer-link">Privacy</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
