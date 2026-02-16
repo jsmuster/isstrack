@@ -42,3 +42,7 @@ logging:
     org.springframework.web: WARN
     org.springframework.security: WARN
     org.springframework.data: WARN
+
+app:
+  frontend:
+    base-url: "https://app.planclock.com"

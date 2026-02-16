@@ -2,6 +2,9 @@ import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/
 import { Router } from '@angular/router';
 import { Subject, interval, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AuthApiService } from '../../core/auth/auth-api.service';
+import { ForgotPasswordStateService } from '../forgot-your-password/forgot-password-state.service';
+import { findProviderLoginUrl } from './email-provider.util';
 
 /**
  * CheckYourEmail Component
@@ -25,7 +28,12 @@ export class CheckYourEmailComponent implements OnInit, OnDestroy {
   /**
    * Masked email address to display to user
    */
-  maskedEmail: string = 'j***@g***.com';
+  maskedEmail: string = '';
+
+  /**
+   * Raw email address used for resend and provider lookup
+   */
+  private email: string | null = null;
 
   /**
    * Countdown timer for resend button
@@ -52,12 +60,18 @@ export class CheckYourEmailComponent implements OnInit, OnDestroy {
    */
   private countdownSubscription: Subscription | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authApi: AuthApiService,
+    private forgotPasswordState: ForgotPasswordStateService
+  ) {}
 
   /**
    * Initialize component - start resend countdown
    */
   ngOnInit(): void {
+    this.email = this.forgotPasswordState.getEmailSnapshot();
+    this.maskedEmail = this.email ? this.maskEmail(this.email) : 'your email';
     this.startResendCountdown();
   }
 
@@ -102,10 +116,14 @@ export class CheckYourEmailComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // TODO: Call backend service to resend reset email
-    // this.authService.resendPasswordReset(this.maskedEmail).subscribe(...)
+    if (!this.email) {
+      return;
+    }
 
-    this.startResendCountdown();
+    this.authApi.resendPasswordReset(this.email).subscribe({
+      next: () => this.startResendCountdown(),
+      error: () => this.startResendCountdown()
+    });
   }
 
   /**
@@ -114,15 +132,9 @@ export class CheckYourEmailComponent implements OnInit, OnDestroy {
    * or redirect to email service in browser
    */
   openEmailApp(): void {
-    // TODO: Implement platform-specific email app opening
-    // Option 1: Use window.open with email client schemes
-    // window.open('mailto:', '_blank');
-
-    // Option 2: Deep link to common email apps on mobile
-    // const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    // const isAndroid = /Android/.test(navigator.userAgent);
-    // if (isIOS) window.open('googlegmail://');
-    // if (isAndroid) window.open('intent://');
+    const fallbackUrl = 'https://mail.google.com/';
+    const url = this.email ? findProviderLoginUrl(this.email) ?? fallbackUrl : fallbackUrl;
+    window.open(url, '_blank', 'noopener');
   }
 
   /**
@@ -146,8 +158,23 @@ export class CheckYourEmailComponent implements OnInit, OnDestroy {
    */
   getResendButtonText(): string {
     if (this.canResend) {
-      return 'Resend link';
+      return 'Resend';
     }
     return `Resend in ${this.resendCountdown}s`;
+  }
+
+  private maskEmail(email: string): string {
+    const [localPart, domain] = email.split('@');
+    if (!domain) {
+      return email;
+    }
+    const maskedLocal = localPart.length > 1
+      ? `${localPart.charAt(0)}***`
+      : `${localPart.charAt(0)}*`;
+    const domainParts = domain.split('.');
+    const maskedDomain = domainParts.length > 1
+      ? `${domainParts[0].charAt(0)}***.${domainParts.slice(1).join('.')}`
+      : `${domain.charAt(0)}***`;
+    return `${maskedLocal}@${maskedDomain}`;
   }
 }

@@ -10,8 +10,10 @@ import com.isstrack.issue_tracker.config.AppConfigLoader;
 import java.util.Map;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class IssueTrackerApplication {
   public static void main(String[] args) {
     System.out.println("[Lifecycle:Startup] Application main() entered");
@@ -104,4 +106,3 @@ public class IssueTrackerApplication {
     return value == null ? "" : value;
   }
 }
-

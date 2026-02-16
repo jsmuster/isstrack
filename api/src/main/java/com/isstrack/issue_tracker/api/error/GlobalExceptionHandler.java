@@ -42,6 +42,11 @@ public class GlobalExceptionHandler {
     return buildError(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
   }
 
+  @ExceptionHandler(ResetTokenInvalidOrExpiredException.class)
+  public ResponseEntity<ApiError> handleResetToken(ResetTokenInvalidOrExpiredException ex, HttpServletRequest request) {
+    return buildError(HttpStatus.GONE, ex.getMessage(), request);
+  }
+
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ApiError> handleValidation(MethodArgumentNotValidException ex, HttpServletRequest request) {
     var message = ex.getBindingResult().getAllErrors().stream()
@@ -73,4 +78,3 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(status).body(error);
   }
 }
-

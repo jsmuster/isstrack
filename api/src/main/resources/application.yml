@@ -39,6 +39,8 @@ app:
     secret: "c8f9e3a1b5d74c2e9f3a8b6d1e4f7c9a2b5d6e8f1c3a7b9d4e6f2a1c8b3d5e7"
     issuer: "issue-tracker"
     expirationMinutes: 60
+  frontend:
+    base-url: "http://localhost:4200"
 
 websocket:
   allowed-origins: "http://localhost:4200"

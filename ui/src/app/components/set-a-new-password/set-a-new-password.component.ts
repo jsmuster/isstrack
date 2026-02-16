@@ -1,7 +1,10 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthApiService } from '../../core/auth/auth-api.service';
+import { passwordPolicyValidator } from '../../shared/validators/password-policy.validator';
+import { passwordMatchValidator } from '../../shared/validators/password-match.validator';
 
 /**
  * SetANewPassword Component
@@ -26,6 +29,8 @@ export class SetANewPasswordComponent {
    * Password reset form
    */
   passwordForm: FormGroup;
+
+  private resetToken: string | null = null;
 
   /**
    * Track password visibility toggle
@@ -54,11 +59,35 @@ export class SetANewPasswordComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private authApi: AuthApiService
   ) {
-    this.passwordForm = this.formBuilder.group({
-      newPassword: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]]
+    this.passwordForm = this.formBuilder.group(
+      {
+        newPassword: ['', [Validators.required, passwordPolicyValidator()]],
+        confirmPassword: ['', [Validators.required]]
+      },
+      {
+        validators: [passwordMatchValidator('newPassword', 'confirmPassword')]
+      }
+    );
+  }
+
+  ngOnInit(): void {
+    this.resetToken = this.route.snapshot.queryParamMap.get('token');
+    if (!this.resetToken) {
+      this.router.navigate(['/reset-link-expired']);
+      return;
+    }
+
+    this.authApi.validateResetToken(this.resetToken).subscribe({
+      next: () => {},
+      error: (error) => {
+        if (error?.status === 410) {
+          this.router.navigate(['/reset-link-expired']);
+        }
+      }
     });
   }
 
@@ -111,17 +140,22 @@ export class SetANewPasswordComponent {
       return;
     }
 
-    // TODO: Call backend service to update password
-    // this.authService.resetPassword(this.passwordForm.get('newPassword')?.value).subscribe(
-    //   (response) => {
-    //     this.router.navigate(['/login']);
-    //   },
-    //   (error) => {
-    //     // Handle error
-    //   }
-    // );
+    if (!this.resetToken) {
+      this.router.navigate(['/reset-link-expired']);
+      return;
+    }
 
-    this.router.navigate(['/login']);
+    const newPassword = this.passwordForm.get('newPassword')?.value as string;
+    this.authApi.resetPassword(this.resetToken, newPassword).subscribe({
+      next: () => {
+        this.router.navigate(['/password-updated']);
+      },
+      error: (error) => {
+        if (error?.status === 410) {
+          this.router.navigate(['/reset-link-expired']);
+        }
+      }
+    });
   }
 
   /**

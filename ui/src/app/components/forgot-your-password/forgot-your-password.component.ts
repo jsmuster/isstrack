@@ -1,5 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { AuthApiService } from '../../core/auth/auth-api.service';
+import { ForgotPasswordStateService } from './forgot-password-state.service';
 
 /**
  * ForgotYourPassword Component
@@ -13,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgot-your-password.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: []
+  imports: [FormsModule]
 })
 export class ForgotYourPasswordComponent {
   /**
@@ -31,7 +34,11 @@ export class ForgotYourPasswordComponent {
    */
   resetLinkSent: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authApi: AuthApiService,
+    private forgotPasswordState: ForgotPasswordStateService
+  ) {}
 
   /**
    * Handle password reset request submission
@@ -44,10 +51,19 @@ export class ForgotYourPasswordComponent {
       return;
     }
 
-    // TODO: Call backend service to send reset email
-    // this.authService.requestPasswordReset(this.emailOrUsername).subscribe(...)
-    
-    this.resetLinkSent = true;
+    const email = this.emailOrUsername.trim();
+    this.authApi.requestPasswordReset(email).subscribe({
+      next: () => {
+        this.resetLinkSent = true;
+        this.forgotPasswordState.setEmail(email);
+        this.router.navigate(['/check-your-email']);
+      },
+      error: () => {
+        this.resetLinkSent = true;
+        this.forgotPasswordState.setEmail(email);
+        this.router.navigate(['/check-your-email']);
+      }
+    });
   }
 
   /**
