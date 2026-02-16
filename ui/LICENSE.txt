@@ -1,0 +1,38 @@
+Copyright © Arseniy Tomkevich. All rights reserved.
+
+PROPRIETARY SOFTWARE LICENSE
+
+This software and all associated source code, files, and documentation
+(the "Software") are the exclusive property of Arseniy Tomkevich.
+
+Permission is NOT granted to any person or organization to:
+
+- copy
+- reproduce
+- distribute
+- sublicense
+- publish
+- modify
+- merge
+- adapt
+- remix
+- transform
+- build upon
+- reverse engineer
+- commercially use
+- sell
+- lease
+- provide as a service
+- create derivative works
+
+of this Software, in whole or in part, without explicit prior written
+permission from Arseniy Tomkevich.
+
+This Software is provided for viewing and evaluation purposes only.
+
+Any unauthorized use, copying, or distribution is strictly prohibited.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+© Arseniy Tomkevich. All rights reserved.
+

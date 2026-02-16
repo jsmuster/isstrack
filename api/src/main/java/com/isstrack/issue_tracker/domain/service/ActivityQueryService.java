@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.domain.service;
 
 import com.isstrack.issue_tracker.api.dto.ActivityDto;
@@ -8,6 +13,7 @@ import com.isstrack.issue_tracker.persistence.repo.IssueActivityRepository;
 import com.isstrack.issue_tracker.persistence.repo.IssueRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ActivityQueryService {
@@ -25,6 +31,7 @@ public class ActivityQueryService {
     this.accessService = accessService;
   }
 
+  @Transactional(readOnly = true)
   public PageResponse<ActivityDto> listActivity(long userId, long issueId, Pageable pageable) {
     var issue = issueRepository.findById(issueId)
         .orElseThrow(() -> new NotFoundException("Issue not found"));
@@ -34,3 +41,4 @@ public class ActivityQueryService {
     return new PageResponse<>(items, page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
   }
 }
+

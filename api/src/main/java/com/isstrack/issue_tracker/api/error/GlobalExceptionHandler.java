@@ -1,7 +1,15 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.api.error;
 
+import com.isstrack.issue_tracker.config.LifecycleLogger;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.Instant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +20,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+  private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
   @ExceptionHandler(NotFoundException.class)
   public ResponseEntity<ApiError> handleNotFound(NotFoundException ex, HttpServletRequest request) {
     return buildError(HttpStatus.NOT_FOUND, ex.getMessage(), request);
@@ -59,6 +69,8 @@ public class GlobalExceptionHandler {
         message,
         request.getRequestURI()
     );
+    LifecycleLogger.request(log, "Error response: {} {} -> {} {}", request.getMethod(), request.getRequestURI(), status.value(), message);
     return ResponseEntity.status(status).body(error);
   }
 }
+

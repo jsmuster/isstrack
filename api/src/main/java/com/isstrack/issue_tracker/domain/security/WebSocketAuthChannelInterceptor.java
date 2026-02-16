@@ -1,7 +1,15 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.domain.security;
 
+import com.isstrack.issue_tracker.config.LifecycleLogger;
 import java.security.Principal;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -10,6 +18,7 @@ import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 
 public class WebSocketAuthChannelInterceptor implements ChannelInterceptor {
+  private static final Logger log = LoggerFactory.getLogger(WebSocketAuthChannelInterceptor.class);
   private final JwtService jwtService;
   private final boolean allowQueryToken;
 
@@ -22,15 +31,19 @@ public class WebSocketAuthChannelInterceptor implements ChannelInterceptor {
   public Message<?> preSend(Message<?> message, MessageChannel channel) {
     StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
     if (accessor != null && StompCommand.CONNECT.equals(accessor.getCommand())) {
+      LifecycleLogger.websocket(log, "STOMP CONNECT received, resolving token...");
       String token = resolveToken(accessor);
       if (token == null || token.isBlank()) {
+        LifecycleLogger.websocket(log, "STOMP CONNECT rejected: missing token");
         throw new IllegalArgumentException("Missing Authorization token");
       }
       if (!jwtService.validateToken(token)) {
+        LifecycleLogger.websocket(log, "STOMP CONNECT rejected: invalid token");
         throw new IllegalArgumentException("Invalid token");
       }
       var userId = String.valueOf(jwtService.extractUserId(token));
       accessor.setUser(new StompPrincipal(userId));
+      LifecycleLogger.websocket(log, "STOMP CONNECT authenticated, userId={}", userId);
     }
     return message;
   }
@@ -66,3 +79,4 @@ public class WebSocketAuthChannelInterceptor implements ChannelInterceptor {
     }
   }
 }
+

@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.domain.event;
 
 import com.isstrack.issue_tracker.api.dto.ActivityDto;
@@ -18,7 +23,19 @@ class WebSocketBroadcasterTest {
     SimpMessagingTemplate template = Mockito.mock(SimpMessagingTemplate.class);
     WebSocketBroadcaster broadcaster = new WebSocketBroadcaster(template);
 
-    IssueDto issueDto = new IssueDto(1L, 10L, "Title", "OPEN", "HIGH", 2L, null, List.of(), Instant.now());
+    IssueDto issueDto = new IssueDto(
+        1L,
+        10L,
+        42,
+        "PROJ-42",
+        "Title",
+        "OPEN",
+        "HIGH",
+        2L,
+        null,
+        List.of(),
+        Instant.now()
+    );
     broadcaster.onEvent(new IssueCreatedEvent(10L, 1L, issueDto, Instant.now()));
     Mockito.verify(template).convertAndSend("/topic/projects.10", issueDto);
 
@@ -39,3 +56,4 @@ class WebSocketBroadcasterTest {
     Mockito.verify(template).convertAndSendToUser("99", "/queue/notifications", notificationDto);
   }
 }
+

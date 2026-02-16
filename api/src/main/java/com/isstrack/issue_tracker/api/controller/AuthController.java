@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.api.controller;
 
 import com.isstrack.issue_tracker.api.dto.AuthResponse;
@@ -13,6 +18,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +47,7 @@ public class AuthController {
   }
 
   @PostMapping("/register")
+  @Transactional
   public AuthResponse register(@Valid @RequestBody RegisterRequest request) {
     var user = userService.createUser(request);
     var token = jwtService.generateToken(user);
@@ -48,6 +55,7 @@ public class AuthController {
   }
 
   @PostMapping("/login")
+  @Transactional(readOnly = true)
   public AuthResponse login(@Valid @RequestBody LoginRequest request) {
     var user = userRepository.findByEmailIgnoreCaseOrUsernameIgnoreCase(
             request.usernameOrEmail(),
@@ -68,3 +76,4 @@ public class AuthController {
     return EntityMapper.toUserDto(userService.findById(userId));
   }
 }
+

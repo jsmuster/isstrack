@@ -1,8 +1,44 @@
+server:
+  port: ${PORT:8080}
+  tomcat:
+    threads:
+      max: 8
+      min-spare: 1
+    max-connections: 50
+  shutdown: graceful
+  compression:
+    enabled: true
+    min-response-size: 1024
+
 spring:
+  threads:
+    virtual:
+      enabled: false
   jpa:
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 10
+          fetch_size: 10
+        order_inserts: true
+        order_updates: true
+        generate_statistics: false
+        format_sql: false
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 10000
+      idle-timeout: 30000
+      max-lifetime: 600000
 
-websocket:
-  auth:
-    allow-query-token: false
+logging:
+  level:
+    root: WARN
+    com.isstrack: INFO
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+    org.springframework.data: WARN

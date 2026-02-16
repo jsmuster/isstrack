@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.util;
 
 import java.util.Set;
@@ -26,3 +31,4 @@ public final class SortValidator {
     return Sort.by(direction, field);
   }
 }
+

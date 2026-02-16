@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.persistence.repo;
 
 import com.isstrack.issue_tracker.persistence.entity.IssueTagEntity;
@@ -17,3 +22,4 @@ public interface IssueTagRepository extends JpaRepository<IssueTagEntity, IssueT
 
   void deleteByIssue_Id(Long issueId);
 }
+

@@ -1,3 +1,8 @@
+/**
+ * © Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core'
 
 export type ViewType = 'table' | 'kanban'

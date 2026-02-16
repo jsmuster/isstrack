@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.domain.service;
 
 import com.isstrack.issue_tracker.api.dto.ActivityDto;
@@ -16,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class IssueDetailService {
@@ -39,6 +45,7 @@ public class IssueDetailService {
     this.accessService = accessService;
   }
 
+  @Transactional(readOnly = true)
   public IssueDetailDto getIssueDetail(
       long userId,
       long issueId,
@@ -76,3 +83,4 @@ public class IssueDetailService {
     return new IssueDetailDto(issueDto, issue.getDescription(), comments, activity);
   }
 }
+

@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.domain.service;
 
 import com.isstrack.issue_tracker.api.dto.CommentDto;
@@ -60,6 +65,7 @@ public class CommentService {
     return dto;
   }
 
+  @Transactional(readOnly = true)
   public PageResponse<CommentDto> listComments(long userId, long issueId, Pageable pageable) {
     var issue = issueRepository.findById(issueId)
         .orElseThrow(() -> new NotFoundException("Issue not found"));
@@ -117,3 +123,4 @@ public class CommentService {
     return issue.getOwner().getId().equals(userId);
   }
 }
+

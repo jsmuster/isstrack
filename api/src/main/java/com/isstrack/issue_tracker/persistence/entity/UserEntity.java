@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.persistence.entity;
 
 import jakarta.persistence.Column;
@@ -38,7 +43,7 @@ public class UserEntity {
   @Column(name = "is_active", nullable = false)
   private boolean isActive = true;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "role_id", nullable = false)
   private RoleEntity role;
 
@@ -140,3 +145,4 @@ public class UserEntity {
     this.updatedAt = updatedAt;
   }
 }
+

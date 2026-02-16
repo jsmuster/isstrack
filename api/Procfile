@@ -1,0 +1,1 @@
+web: java -Xmx180m -Xms180m -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:InitiatingHeapOccupancyPercent=35 -XX:+UseStringDeduplication -XX:CompactStrings=true -XX:TieredStopAtLevel=3 -Dspring.profiles.active=prod -Dserver.port=${PORT} -jar target/*/issue-tracker-api-*.jar

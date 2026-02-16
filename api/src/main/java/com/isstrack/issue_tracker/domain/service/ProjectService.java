@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.domain.service;
 
 import com.isstrack.issue_tracker.api.dto.MembershipDto;
@@ -70,6 +75,7 @@ public class ProjectService {
     return EntityMapper.toProjectDto(saved);
   }
 
+  @Transactional(readOnly = true)
   public PageResponse<ProjectDto> listMyProjects(long userId, Pageable pageable) {
     var page = membershipRepository.findByUserIdAndStatus(userId, MembershipStatus.ACTIVE.name(), pageable);
     var items = page.stream()
@@ -79,6 +85,7 @@ public class ProjectService {
     return new PageResponse<>(items, page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
   }
 
+  @Transactional(readOnly = true)
   public ProjectDto getProject(long userId, long projectId) {
     accessService.requireActiveMember(userId, projectId);
     var project = projectRepository.findById(projectId)
@@ -86,6 +93,7 @@ public class ProjectService {
     return EntityMapper.toProjectDto(project);
   }
 
+  @Transactional(readOnly = true)
   public PageResponse<MembershipDto> listMembers(long userId, long projectId, Pageable pageable) {
     accessService.requireActiveMember(userId, projectId);
     var page = membershipRepository.findByProjectIdAndStatus(projectId, MembershipStatus.ACTIVE.name(), pageable);
@@ -169,3 +177,4 @@ public class ProjectService {
     return dto;
   }
 }
+

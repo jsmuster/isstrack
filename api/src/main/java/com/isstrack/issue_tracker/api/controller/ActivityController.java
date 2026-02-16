@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.api.controller;
 
 import com.isstrack.issue_tracker.api.dto.ActivityDto;
@@ -31,3 +36,4 @@ public class ActivityController {
     return activityQueryService.listActivity(userId, issueId, pageable);
   }
 }
+

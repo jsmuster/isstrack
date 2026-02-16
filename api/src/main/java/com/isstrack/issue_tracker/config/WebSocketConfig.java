@@ -1,6 +1,13 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.config;
 
 import com.isstrack.issue_tracker.domain.security.JwtService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.isstrack.issue_tracker.domain.security.WebSocketAuthChannelInterceptor;
 import com.isstrack.issue_tracker.domain.security.WebSocketHandshakeInterceptor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +21,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+  private static final Logger log = LoggerFactory.getLogger(WebSocketConfig.class);
+
   private final JwtService jwtService;
   private final boolean allowQueryToken;
   private final String allowedOrigins;
@@ -26,6 +35,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     this.jwtService = jwtService;
     this.allowQueryToken = allowQueryToken;
     this.allowedOrigins = allowedOrigins;
+    LifecycleLogger.startup(log, "WebSocketConfig initialized: allowQueryToken={}, allowedOrigins={}", allowQueryToken, allowedOrigins);
   }
 
   @Override
@@ -33,6 +43,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     registry.enableSimpleBroker("/topic", "/queue");
     registry.setApplicationDestinationPrefixes("/app");
     registry.setUserDestinationPrefix("/user");
+    LifecycleLogger.startup(log, "Message broker configured: topics=[/topic, /queue], appPrefix=/app, userPrefix=/user");
   }
 
   @Override
@@ -40,6 +51,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     registry.addEndpoint("/ws")
         .setAllowedOriginPatterns(allowedOrigins.split(","))
         .addInterceptors(new WebSocketHandshakeInterceptor(allowQueryToken));
+    LifecycleLogger.startup(log, "STOMP endpoint registered: /ws, origins={}", allowedOrigins);
   }
 
   @Override
@@ -47,3 +59,4 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     registration.interceptors(new WebSocketAuthChannelInterceptor(jwtService, allowQueryToken));
   }
 }
+

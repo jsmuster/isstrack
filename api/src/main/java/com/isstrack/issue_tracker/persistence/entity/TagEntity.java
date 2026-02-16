@@ -1,3 +1,8 @@
+/*
+ * Â© Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 package com.isstrack.issue_tracker.persistence.entity;
 
 import jakarta.persistence.Column;
@@ -33,3 +38,4 @@ public class TagEntity {
     this.name = name;
   }
 }
+
