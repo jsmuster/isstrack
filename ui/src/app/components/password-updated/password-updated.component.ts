@@ -1,5 +1,11 @@
+/**
+ * c Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 /**
  * PasswordUpdated Component
@@ -13,7 +19,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./password-updated.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: []
+  imports: [CommonModule]
 })
 export class PasswordUpdatedComponent {
   constructor(private router: Router) {}

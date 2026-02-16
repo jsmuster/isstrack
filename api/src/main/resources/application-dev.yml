@@ -1,6 +1,8 @@
 app:
   jwt:
     secret: "DEV_CHANGE_ME"
+  frontend:
+    base-url: "http://localhost:4200"
 
 websocket:
   allowed-origins: "http://localhost:4200"

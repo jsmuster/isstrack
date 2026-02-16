@@ -60,20 +60,30 @@
 .div3 {
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: var(--padding-0) var(--padding-0) var(--padding-1);
   box-sizing: border-box;
   max-width: var(--max-w-345);
 }
 
-/* Icon Image */
-.div-icon {
+/* Email Icon Badge - Circular Blue Background */
+.email-icon-badge {
+  width: 80px;
   height: 80px;
-  flex: 1;
-  position: relative;
-  max-width: 100%;
-  overflow: hidden;
-  object-fit: cover;
+  border-radius: 50%;
+  background-color: var(--color-royalblue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 12px rgba(37, 99, 235, 0.3);
+  flex-shrink: 0;
+}
+
+/* Email Icon SVG */
+.email-icon {
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
 }
 
@@ -232,9 +242,10 @@
 /* Email Icon in Button */
 .i-icon {
   height: 20px;
-  width: 16px;
+  width: 20px;
   position: relative;
   flex-shrink: 0;
+  color: white;
 }
 
 /* Button Label Text */
@@ -260,75 +271,40 @@
 .div9 {
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: var(--padding-0) var(--padding-0) var(--padding-5);
   box-sizing: border-box;
   max-width: var(--max-w-345);
-  text-align: left;
-  color: var(--color-royalblue);
-}
-
-/* Back Link Wrapper */
-.div10 {
-  flex: 1;
-  background-color: var(--color-gray-300);
-  display: flex;
-  align-items: flex-start;
-  flex-shrink: 0;
-}
-
-/* Back Link Container */
-.div11 {
-  width: 350px;
-  background-color: var(--color-gray-300);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-1) var(--padding-20) var(--padding-2);
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
-
-/* Back Link Content */
-.div12 {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 13.4px;
-  max-width: 290px;
-  flex-shrink: 0;
-}
-
-/* Back Arrow Icon */
-.i-icon2 {
-  height: 17px;
-  width: 12.3px;
-  position: relative;
-  flex-shrink: 0;
 }
 
 /* Back to Sign In Button */
 .back-to-sign-button {
-  flex: 1;
-  position: relative;
-  letter-spacing: var(--ls--0_5);
-  line-height: 17px;
-  font-weight: 500;
-  display: inline-block;
-  max-width: 180.9px;
-  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: none;
   border: none;
   color: var(--color-royalblue);
   cursor: pointer;
   font-family: var(--font-inter);
+  font-size: var(--fs-16);
+  font-weight: 500;
+  letter-spacing: var(--ls--0_5);
   padding: 0;
   transition: opacity 0.2s ease;
 }
 
 .back-to-sign-button:hover {
   opacity: 0.8;
+}
+
+/* Back Arrow Icon */
+.back-arrow-icon {
+  height: 20px;
+  width: 20px;
+  flex-shrink: 0;
+  color: var(--color-royalblue);
 }
 
 /* Help Information Section */

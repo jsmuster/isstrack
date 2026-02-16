@@ -1,7 +1,13 @@
+/**
+ * c Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, interval, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 import { AuthApiService } from '../../core/auth/auth-api.service';
 import { ForgotPasswordStateService } from '../forgot-your-password/forgot-password-state.service';
 import { findProviderLoginUrl } from './email-provider.util';
@@ -22,7 +28,7 @@ import { findProviderLoginUrl } from './email-provider.util';
   styleUrls: ['./check-your-email.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: []
+  imports: [CommonModule]
 })
 export class CheckYourEmailComponent implements OnInit, OnDestroy {
   /**
@@ -99,7 +105,7 @@ export class CheckYourEmailComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.resendCountdown--;
         if (this.resendCountdown <= 0) {
-          this.canResend = true;
+          this.canResend = this.email !== null;
           if (this.countdownSubscription) {
             this.countdownSubscription.unsubscribe();
           }

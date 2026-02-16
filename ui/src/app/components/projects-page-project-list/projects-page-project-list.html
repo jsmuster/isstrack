@@ -73,7 +73,7 @@
             </div>
 
             <!-- View Controls -->
-            <div class="view-controls">
+            <div class="view-controls" *ngIf="allProjects().length > 0">
               <!-- Grid/Table toggle hidden for now -->
               <div class="view-mode-toggle" style="display: none">
                 <button
@@ -154,8 +154,33 @@
               ></app-project-card>
             </div>
             <ng-template #emptyState>
-              <div class="projects-grid empty">
-                <div class="empty-message">No projects yet.</div>
+              <div class="empty-state">
+                <img
+                  class="illustration-image"
+                  loading="lazy"
+                  alt="No projects illustration"
+                  src="assets/images/no-issues-doodle.png"
+                />
+                <section class="content-section">
+                  <h2 class="heading-title">No projects yet</h2>
+                  <p class="description-text">
+                    Get started by creating your first project. Organize your
+                    work, collaborate with your team, and track progress all in
+                    one place.
+                  </p>
+                </section>
+                <button
+                  class="create-project-button"
+                  type="button"
+                  (click)="onNewProject()"
+                >
+                  <img class="button-icon" alt="" src="/assets/images/i8.svg" />
+                  <span>Create Your First Project</span>
+                </button>
+                <div class="help-section">
+                  <span class="help-text">Need help?</span>
+                  <a class="help-link" href="javascript:void(0)">View our getting started guide</a>
+                </div>
               </div>
             </ng-template>
 

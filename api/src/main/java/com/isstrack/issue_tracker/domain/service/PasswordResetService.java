@@ -54,10 +54,12 @@ public class PasswordResetService {
     this.frontendBaseUrl = frontendBaseUrl;
   }
 
+  @Transactional
   public void requestReset(String email, String ip, String userAgent) {
     createTokenIfEligible(email, ip, userAgent, false);
   }
 
+  @Transactional
   public void resendReset(String email, String ip, String userAgent) {
     createTokenIfEligible(email, ip, userAgent, true);
   }

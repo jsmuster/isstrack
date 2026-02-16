@@ -5,13 +5,19 @@
       <div class="div2">
         <!-- Header Icon -->
         <div class="div3">
-          <img 
-            class="div-icon" 
-            loading="lazy" 
-            alt="Email confirmation icon" 
-            src="/assets/images/div@2x.png" 
-            role="presentation"
-          />
+          <div class="email-icon-badge">
+            <svg 
+              class="email-icon" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg"
+              role="presentation"
+              alt="Email confirmation icon"
+            >
+              <path d="M4 5C4 3.89543 4.89543 3 6 3H18C19.1046 3 20 3.89543 20 5V5.5L12 10.5L4 5.5V5Z" fill="white"/>
+              <path d="M4 6.5V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V6.5L12 11.5L4 6.5Z" fill="white"/>
+            </svg>
+          </div>
         </div>
 
         <!-- Page Title -->
@@ -42,12 +48,18 @@
               aria-label="Open email app to access password reset link"
             >
               <div class="button2">
-                <img 
+                <svg 
                   class="i-icon" 
-                  alt="Email icon" 
-                  src="/assets/images/i.svg" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
                   role="presentation"
-                />
+                  alt="External link icon"
+                >
+                  <path d="M18 13V19C18 20.1046 17.1046 21 16 21H5C3.89543 21 3 20.1046 3 19V8C3 6.89543 3.89543 6 5 6H11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15 3H21V9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M10 14L21 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
                 <div class="open-email-app">Open email app</div>
               </div>
             </button>
@@ -66,26 +78,24 @@
 
         <!-- Back to Sign In Link -->
         <div class="div9">
-          <div class="div10">
-            <div class="div11">
-              <div class="div12">
-                <img 
-                  class="i-icon2" 
-                  loading="lazy" 
-                  alt="Back arrow" 
-                  src="/assets/images/i1.svg" 
-                  role="presentation"
-                />
-                <button 
-                  class="back-to-sign-button"
-                  (click)="backToSignIn()"
-                  aria-label="Return to sign in page"
-                >
-                  Back to Sign In
-                </button>
-              </div>
-            </div>
-          </div>
+          <button 
+            class="back-to-sign-button"
+            (click)="backToSignIn()"
+            aria-label="Return to sign in page"
+          >
+            <svg 
+              class="back-arrow-icon" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg"
+              role="presentation"
+              alt="Back arrow"
+            >
+              <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Sign In
+          </button>
         </div>
 
         <!-- Helpful Information Section -->
@@ -103,7 +113,7 @@
             <!-- Help Item 2: Link Expiration -->
             <div class="info-row-full">
               <div class="info-bullet"></div>
-              <span class="info-expiration">Reset link expires in 30 minutes.</span>
+              <span class="info-expiration">Reset link expires in 15 minutes.</span>
             </div>
 
             <!-- Help Item 3: Support -->

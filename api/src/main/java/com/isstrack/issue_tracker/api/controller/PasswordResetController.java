@@ -38,7 +38,7 @@ public class PasswordResetController {
         httpServletRequest.getRemoteAddr(),
         httpServletRequest.getHeader("User-Agent")
     );
-    return GenericOkResponse.ok();
+    return GenericOkResponse.success();
   }
 
   @PostMapping("/forgot-password/resend")
@@ -51,18 +51,18 @@ public class PasswordResetController {
         httpServletRequest.getRemoteAddr(),
         httpServletRequest.getHeader("User-Agent")
     );
-    return GenericOkResponse.ok();
+    return GenericOkResponse.success();
   }
 
   @GetMapping("/reset-password/validate")
   public GenericOkResponse validate(@RequestParam("token") String token) {
     passwordResetService.validateTokenOrThrow(token);
-    return GenericOkResponse.ok();
+    return GenericOkResponse.success();
   }
 
   @PostMapping("/reset-password")
   public GenericOkResponse resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
     passwordResetService.resetPassword(request.token(), request.newPassword());
-    return GenericOkResponse.ok();
+    return GenericOkResponse.success();
   }
 }

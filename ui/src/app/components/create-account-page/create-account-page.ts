@@ -24,7 +24,7 @@ export class CreateAccountPage {
   lastName = ''
   password = ''
   termsAgreed = false
-  errorMessage = ''
+  errorMessage = signal('')
   isSubmitting = false
 
   passwordRequirements = signal({
@@ -61,21 +61,21 @@ export class CreateAccountPage {
     }
 
     if (!this.email || !this.username || !this.firstName || !this.lastName || !this.password) {
-      this.errorMessage = 'All fields are required.'
+      this.errorMessage.set('All fields are required.')
       return
     }
 
     if (!this.isPasswordValid()) {
-      this.errorMessage = 'Password does not meet requirements.'
+      this.errorMessage.set('Password does not meet requirements.')
       return
     }
 
     if (!this.termsAgreed) {
-      this.errorMessage = 'You must agree to the Terms of Service and Privacy Policy.'
+      this.errorMessage.set('You must agree to the Terms of Service and Privacy Policy.')
       return
     }
 
-    this.errorMessage = ''
+    this.errorMessage.set('')
     this.isSubmitting = true
     this.authService.register({
       email: this.email,
@@ -89,8 +89,12 @@ export class CreateAccountPage {
         this.isSubmitting = false
         this.router.navigate(['/app/projects'])
       },
-      error: () => {
-        this.errorMessage = 'Unable to create account. Please try again.'
+      error: (error) => {
+        if (error.error?.message) {
+          this.errorMessage.set(error.error.message)
+        } else {
+          this.errorMessage.set('Unable to create account. Please try again.')
+        }
         this.isSubmitting = false
       }
     })

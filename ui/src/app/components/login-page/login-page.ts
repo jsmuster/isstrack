@@ -61,4 +61,8 @@ export class LoginPage {
   onCreateAccount() {
     this.router.navigate(['/register'])
   }
+
+  onForgotPassword() {
+    this.router.navigate(['/forgot-password'])
+  }
 }

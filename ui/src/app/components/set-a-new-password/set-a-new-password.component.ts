@@ -1,3 +1,8 @@
+/**
+ * c Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,7 +29,7 @@ import { passwordMatchValidator } from '../../shared/validators/password-match.v
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule]
 })
-export class SetANewPasswordComponent {
+export class SetANewPasswordComponent implements OnInit {
   /**
    * Password reset form
    */

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class PasswordResetCleanupJob {
@@ -26,6 +27,7 @@ public class PasswordResetCleanupJob {
   }
 
   @Scheduled(fixedDelayString = "PT1H")
+  @Transactional
   public void cleanupExpiredTokens() {
     Instant expiresBefore = Instant.now().minus(RETENTION);
     int deleted = tokenRepository.deleteExpired(expiresBefore);

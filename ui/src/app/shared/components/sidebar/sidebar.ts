@@ -3,7 +3,7 @@
  * Proprietary software. Unauthorized copying, modification,
  * distribution, or commercial use is strictly prohibited.
  */
-import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { AuthStore } from '../../../core/state/auth.store'
@@ -31,6 +31,12 @@ interface RecentProject {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
+  showUserMenu = false
+  menuPopupBottom = 0
+  menuPopupLeft = 0
+
+  @ViewChild('menuButton') menuButton!: ElementRef<HTMLButtonElement>
+
   navItems: NavItem[] = [
     { label: 'Projects', icon: 'assets/i1.svg', route: '/app/projects' },
   ]
@@ -63,7 +69,18 @@ export class SidebarComponent {
     this.router.navigate([route])
   }
 
+  toggleUserMenu(event: Event): void {
+    event.stopPropagation()
+    if (!this.showUserMenu && this.menuButton) {
+      const rect = this.menuButton.nativeElement.getBoundingClientRect()
+      this.menuPopupBottom = window.innerHeight - rect.top + 8
+      this.menuPopupLeft = rect.left - 60
+    }
+    this.showUserMenu = !this.showUserMenu
+  }
+
   onLogout(): void {
+    this.showUserMenu = false
     this.authService.logout()
     this.router.navigate(['/login'])
   }

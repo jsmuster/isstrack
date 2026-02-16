@@ -1,3 +1,8 @@
+/**
+ * c Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms'
 
 export function passwordPolicyValidator(): ValidatorFn {

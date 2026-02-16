@@ -58,31 +58,71 @@
               </button>
             </div>
 
+            <!-- Filters Section -->
+            <section class="filters-section">
+              <div class="search-filter">
+                <img class="filter-icon" alt="Search" src="assets/i6.svg" />
+                <input
+                  class="filter-input"
+                  type="text"
+                  placeholder="Search projects..."
+                  [(ngModel)]="searchQuery"
+                  (input)="onSearch(searchQuery)"
+                />
+              </div>
+              <div class="filter-dropdown">
+                <span class="filter-label">All Projects</span>
+                <img class="dropdown-icon" alt="Dropdown" src="assets/dropdown-icon.svg" />
+              </div>
+              <div class="filter-dropdown">
+                <span class="filter-label">Recently Updated</span>
+                <img class="dropdown-icon" alt="Dropdown" src="assets/dropdown-icon.svg" />
+              </div>
+            </section>
+
             <!-- Empty State -->
             <section class="empty-state">
-              <div class="empty-state-image">
-                <img alt="No projects illustration" src="assets/div2@2x.png" />
-              </div>
-              <h3 class="empty-state-title">No projects yet</h3>
-              <div class="empty-state-description">
-                <p class="description-text">
-                  Get started by creating your first project. Organize your
-                  <br />
-                  work, collaborate with your team, and track progress all in
-                  <br />
-                  one place.
-                </p>
-              </div>
-              <button class="create-button" type="button" (click)="onCreateFirstProject()">
-                <div class="create-button-content">
-                  <img class="create-button-icon" alt="Add" src="assets/i8.svg" />
-                  <span class="create-button-text">Create Your First Project</span>
+              <img 
+                class="illustration-image" 
+                loading="lazy" 
+                alt="No projects illustration - empty folder"
+                src="assets/images/div@2x.png" 
+              />
+
+              <section class="content-section" role="region" aria-label="Empty state content">
+                <div class="heading-wrapper">
+                  <h2 class="heading-title">No projects yet</h2>
                 </div>
+                <div class="description-wrapper">
+                  <p class="description-text">
+                    Get started by creating your first project. Organize your 
+                    <br/>work, collaborate with your team, and track progress all in 
+                    <br/>one place.
+                  </p>
+                </div>
+              </section>
+
+              <button 
+                class="create-project-button"
+                (click)="onCreateFirstProject()"
+                aria-label="Create your first project"
+              >
+                <img 
+                  class="button-icon" 
+                  alt="Plus icon"
+                  src="assets/i7.svg" 
+                />
+                <span class="button-text">Create Your First Project</span>
               </button>
+
               <div class="help-section">
-                <p class="help-text">Need help?</p>
-                <button class="help-link" type="button" (click)="onViewGettingStarted()">
-                  View our getting started guide
+                <div class="help-text">Need help?</div>
+                <button 
+                  class="help-link"
+                  (click)="onViewGettingStarted()"
+                  aria-label="View our getting started guide"
+                >
+                  <span>View our getting started guide</span>
                 </button>
               </div>
             </section>

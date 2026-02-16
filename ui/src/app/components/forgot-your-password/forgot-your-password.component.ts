@@ -1,13 +1,19 @@
+/**
+ * c Arseniy Tomkevich. All rights reserved.
+ * Proprietary software. Unauthorized copying, modification,
+ * distribution, or commercial use is strictly prohibited.
+ */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { AuthApiService } from '../../core/auth/auth-api.service';
 import { ForgotPasswordStateService } from './forgot-password-state.service';
 
 /**
  * ForgotYourPassword Component
  * 
- * Handles the password reset flow by allowing users to enter their email or username
+ * Handles the password reset flow by allowing users to enter their email
  * and request a password reset link.
  */
 @Component({
@@ -16,13 +22,13 @@ import { ForgotPasswordStateService } from './forgot-password-state.service';
   styleUrls: ['./forgot-your-password.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FormsModule]
+  imports: [CommonModule, FormsModule]
 })
 export class ForgotYourPasswordComponent {
   /**
-   * Form state for email/username input
+   * Form state for email input
    */
-  emailOrUsername: string = '';
+  email: string = '';
 
   /**
    * Track if form has been submitted
@@ -33,6 +39,8 @@ export class ForgotYourPasswordComponent {
    * Track if reset link was sent successfully
    */
   resetLinkSent: boolean = false;
+
+  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   constructor(
     private router: Router,
@@ -47,22 +55,14 @@ export class ForgotYourPasswordComponent {
   onSubmitResetRequest(): void {
     this.isSubmitted = true;
 
-    if (!this.emailOrUsername.trim()) {
+    if (!this.email.trim()) {
       return;
     }
 
-    const email = this.emailOrUsername.trim();
+    const email = this.email.trim();
     this.authApi.requestPasswordReset(email).subscribe({
-      next: () => {
-        this.resetLinkSent = true;
-        this.forgotPasswordState.setEmail(email);
-        this.router.navigate(['/check-your-email']);
-      },
-      error: () => {
-        this.resetLinkSent = true;
-        this.forgotPasswordState.setEmail(email);
-        this.router.navigate(['/check-your-email']);
-      }
+      next: () => this.handleResetRequested(email),
+      error: () => this.handleResetRequested(email)
     });
   }
 
@@ -71,5 +71,15 @@ export class ForgotYourPasswordComponent {
    */
   backToSignIn(): void {
     this.router.navigate(['/login']);
+  }
+
+  isEmailValid(): boolean {
+    return this.emailRegex.test(this.email.trim());
+  }
+
+  private handleResetRequested(email: string): void {
+    this.resetLinkSent = true;
+    this.forgotPasswordState.setEmail(email);
+    this.router.navigate(['/check-your-email']);
   }
 }

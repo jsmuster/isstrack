@@ -69,20 +69,28 @@
     max-width: 382px;
 
     .logo-container {
-      display: flex;
-      align-items: flex-start;
-      padding: var(--padding-0) var(--padding-0) 6px;
-      flex-shrink: 0;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       padding: var(--padding-0) var(--padding-0) 6px;
+       flex-shrink: 0;
 
-      .logo-icon {
-        height: 64px;
-        width: 64px;
-        position: relative;
-        border-radius: 12px;
-        object-fit: cover;
-        flex-shrink: 0;
-      }
-    }
+       .lock-icon {
+         height: 64px;
+         width: 64px;
+         border-radius: 12px;
+         background: linear-gradient(135deg, var(--color-royalblue), #9333ea);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         flex-shrink: 0;
+
+         svg {
+           width: 36px;
+           height: 36px;
+         }
+       }
+     }
 
     .title-section {
       align-self: stretch;
@@ -116,16 +124,30 @@
   }
 
   .login-form {
-    margin: 0;
-    width: 100%;
-    background-color: var(--color-gray-300);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 23px;
-    max-width: 382px;
+     margin: 0;
+     width: 100%;
+     background-color: var(--color-gray-300);
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 23px;
+     max-width: 382px;
 
-    .form-group {
+     .form-error {
+       align-self: stretch;
+       font-size: 12px;
+       color: #dc2626;
+       text-align: center;
+       font-family: var(--font-inter);
+       letter-spacing: var(--ls--0_5);
+       line-height: 16px;
+       background-color: #fee2e2;
+       padding: 8px 12px;
+       border-radius: 6px;
+       border: 1px solid #fecaca;
+     }
+
+     .form-group {
       align-self: stretch;
       background-color: var(--color-gray-300);
       display: flex;
@@ -188,31 +210,35 @@
     }
 
     .forgot-section {
-      align-self: stretch;
-      background-color: var(--color-gray-300);
-      display: flex;
-      align-items: flex-start;
+       align-self: stretch;
+       background-color: var(--color-gray-300);
+       display: flex;
+       align-items: flex-start;
+       justify-content: flex-end;
 
-      .forgot-link {
-        flex: 1;
-        background-color: var(--color-gray-300);
-        display: flex;
-        align-items: flex-start;
-        padding: var(--padding-1) var(--padding-0) var(--padding-2);
+       .forgot-link {
+         background-color: var(--color-gray-300);
+         display: flex;
+         align-items: flex-start;
+         padding: var(--padding-1) var(--padding-0) var(--padding-2);
 
-        .forgot-text {
-          flex: 1;
-          position: relative;
-          font-size: var(--fs-14);
-          letter-spacing: var(--ls--0_5);
-          line-height: 17px;
-          font-weight: 500;
-          font-family: var(--font-inter);
-          color: var(--color-royalblue);
-          text-align: left;
-        }
-      }
-    }
+         .forgot-text {
+           background: none;
+           border: none;
+           padding: 0;
+           cursor: pointer;
+           position: relative;
+           font-size: var(--fs-14);
+           letter-spacing: var(--ls--0_5);
+           line-height: 17px;
+           font-weight: 500;
+           font-family: var(--font-inter);
+           color: var(--color-royalblue);
+           text-align: right;
+           white-space: nowrap;
+         }
+       }
+     }
 
     .submit-button {
       cursor: pointer;
@@ -307,15 +333,19 @@
           flex-shrink: 0;
 
           .social-icon {
-            height: var(--height-24);
-            width: 15.3px;
-            position: relative;
-            flex-shrink: 0;
+             position: relative;
+             flex-shrink: 0;
 
-            &.github {
-              width: 15.5px;
-            }
-          }
+             &.google {
+               width: 16.25px;
+               height: 16.5px;
+             }
+
+             &.github {
+               width: 16.5px;
+               height: 16.11px;
+             }
+           }
 
           .social-label {
             flex: 1;
@@ -424,10 +454,11 @@
     align-items: center;
 
     &::placeholder {
-      color: var(--color-gray-200);
-      font-size: var(--fs-16) !important;
-      line-height: var(--lh-24) !important;
-    }
+       color: #999999;
+       opacity: 1;
+       font-size: var(--fs-16) !important;
+       line-height: var(--lh-24) !important;
+     }
 
     &:focus {
       background-color: #ffffff;

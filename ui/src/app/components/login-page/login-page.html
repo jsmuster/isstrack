@@ -4,14 +4,20 @@
       <div class="div2">
         <section class="login-card">
           <div class="card-header">
-            <div class="logo-container">
-              <img class="logo-icon" loading="lazy" alt="" src="assets/div@2x.png" />
-            </div>
-            <div class="title-section">
-              <h1 class="welcome-heading">Plan Clock</h1>
-            </div>
-            <div class="subtitle">Sign in to your account to continue</div>
-          </div>
+             <div class="logo-container">
+               <div class="lock-icon">
+                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                   <path d="M12 1C6.48 1 2 5.48 2 11V21C2 22.1046 2.89543 23 4 23H20C21.1046 23 22 22.1046 22 21V11C22 5.48 17.52 1 12 1Z" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M7 11C7 8.24 9.24 6 12 6C14.76 6 17 8.24 17 11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                   <circle cx="12" cy="15" r="1.5" fill="white"/>
+                 </svg>
+               </div>
+             </div>
+             <div class="title-section">
+               <h1 class="welcome-heading">Plan Clock</h1>
+             </div>
+             <div class="subtitle">Sign in to your account to continue</div>
+           </div>
           <form class="login-form" (ngSubmit)="onSubmit()">
             <div class="form-error" *ngIf="errorMessage">{{ errorMessage }}</div>
             <div class="form-group">
@@ -55,7 +61,7 @@
             </div>
             <div class="forgot-section">
               <div class="forgot-link">
-                <div class="forgot-text">Forgot password?</div>
+                <button class="forgot-text" type="button" (click)="onForgotPassword()">Forgot password?</button>
               </div>
             </div>
             <button class="submit-button" type="submit" [disabled]="isSubmitting">
@@ -78,13 +84,13 @@
             <div class="social-buttons">
               <button class="social-button google-button" type="button" (click)="onGoogleSignIn()">
                 <div class="social-button-content">
-                  <img class="social-icon" alt="" src="assets/i.svg" />
+                  <img class="social-icon google" alt="Google icon" src="assets/google-icon.svg" />
                   <div class="social-label">Google</div>
                 </div>
               </button>
               <button class="social-button github-button" type="button" (click)="onGithubSignIn()">
                 <div class="social-button-content">
-                  <img class="social-icon" alt="" src="assets/i1.svg" />
+                  <img class="social-icon github" alt="GitHub icon" src="assets/github-icon.svg" />
                   <div class="social-label">GitHub</div>
                 </div>
               </button>

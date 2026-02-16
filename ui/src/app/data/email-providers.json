@@ -1,0 +1,820 @@
+[
+  {
+    "provider_name": "Gmail",
+    "primary_country_or_region": "Global",
+    "primary_webmail_login_urls": [
+      "https://mail.google.com/",
+      "https://accounts.google.com/ServiceLogin?service=mail"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://gmail.com/",
+      "https://googlemail.com/",
+      "https://accounts.google.com/"
+    ],
+    "special_login_flow_notes": "Google Account sign-in, then redirects into Gmail webmail; Workspace tenants can enforce SSO and MFA policies.",
+    "source_urls": [
+      "https://mail.google.com/",
+      "https://accounts.google.com/ServiceLogin?service=mail",
+      "https://support.google.com/a/answer/53340?hl=en"
+    ]
+  },
+  {
+    "provider_name": "Outlook.com",
+    "primary_country_or_region": "Global",
+    "primary_webmail_login_urls": [
+      "https://outlook.live.com/mail/",
+      "https://login.live.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://outlook.com/",
+      "https://hotmail.com/",
+      "https://live.com/",
+      "https://msn.com/"
+    ],
+    "special_login_flow_notes": "Microsoft Account sign-in, may route through risk or MFA challenges before loading Outlook webmail.",
+    "source_urls": [
+      "https://outlook.live.com/mail/",
+      "https://support.microsoft.com/en-us/office/how-to-sign-in-to-outlook-com-e08eb8ac-ac27-49f4-a400-a47311e1ee7e"
+    ]
+  },
+  {
+    "provider_name": "Yahoo Mail",
+    "primary_country_or_region": "Global",
+    "primary_webmail_login_urls": [
+      "https://mail.yahoo.com/",
+      "https://login.yahoo.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://in.mail.yahoo.com/",
+      "https://overview.mail.yahoo.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Yahoo identity sign-in; may require extra verification such as SMS or CAPTCHA depending on risk signals.",
+    "source_urls": [
+      "https://mail.yahoo.com/",
+      "https://login.yahoo.com/"
+    ]
+  },
+  {
+    "provider_name": "iCloud Mail",
+    "primary_country_or_region": "Global",
+    "primary_webmail_login_urls": [
+      "https://www.icloud.com/mail",
+      "https://www.icloud.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://appleid.apple.com/",
+      "https://account.apple.com/"
+    ],
+    "special_login_flow_notes": "Apple Account sign-in, commonly with two-factor authentication, then access iCloud Mail in iCloud.com.",
+    "source_urls": [
+      "https://www.icloud.com/mail",
+      "https://support.apple.com/guide/icloud/sign-in-and-use-icloudcom-mm281e3e7d/icloud"
+    ]
+  },
+  {
+    "provider_name": "AOL Mail",
+    "primary_country_or_region": "United States",
+    "primary_webmail_login_urls": [
+      "https://mail.aol.com/",
+      "https://login.aol.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.aol.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Centralized AOL sign-in (shared infrastructure with Yahoo in many flows), sometimes rate-limited for automated traffic.",
+    "source_urls": [
+      "https://mail.aol.com/",
+      "https://login.aol.com/"
+    ]
+  },
+  {
+    "provider_name": "Proton Mail",
+    "primary_country_or_region": "Switzerland",
+    "primary_webmail_login_urls": [
+      "https://mail.proton.me/",
+      "https://account.proton.me/login"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://account.proton.me/",
+      "https://proton.me/mail",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Central Proton account login for Mail; optional 2FA and other account security settings apply.",
+    "source_urls": [
+      "https://mail.proton.me/",
+      "https://account.proton.me/login"
+    ]
+  },
+  {
+    "provider_name": "Zoho Mail",
+    "primary_country_or_region": "India, global",
+    "primary_webmail_login_urls": [
+      "https://mail.zoho.com/",
+      "https://www.zoho.com/mail/login.html"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://accounts.zoho.com/signin",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Zoho Accounts sign-in; enterprise tenants may enforce SSO and MFA, then redirect into webmail.",
+    "source_urls": [
+      "https://mail.zoho.com/",
+      "https://www.zoho.com/mail/login.html"
+    ]
+  },
+  {
+    "provider_name": "GMX Mail",
+    "primary_country_or_region": "Germany, global",
+    "primary_webmail_login_urls": [
+      "https://www.gmx.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.gmx.net/",
+      "https://www.gmx.de/",
+      "https://www.gmx.at/",
+      "https://www.gmx.ch/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Login typically begins on a regional GMX portal and then transitions into webmail.",
+    "source_urls": [
+      "https://www.gmx.com/"
+    ]
+  },
+  {
+    "provider_name": "Mail.com",
+    "primary_country_or_region": "Germany, global",
+    "primary_webmail_login_urls": [
+      "https://www.mail.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.mail.com/int/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Portal login that supports many Mail.com address domains and redirects into the webmail app after authentication.",
+    "source_urls": [
+      "https://www.mail.com/"
+    ]
+  },
+  {
+    "provider_name": "Fastmail",
+    "primary_country_or_region": "Australia, global",
+    "primary_webmail_login_urls": [
+      "https://app.fastmail.com/login/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.fastmail.com/login/",
+      "https://www.fastmail.com/"
+    ],
+    "special_login_flow_notes": "Dedicated web app login host; some automated checks may fail even when browsers can load the page.",
+    "source_urls": [
+      "https://app.fastmail.com/login/"
+    ]
+  },
+  {
+    "provider_name": "Tuta Mail",
+    "primary_country_or_region": "Germany, global",
+    "primary_webmail_login_urls": [
+      "https://app.tuta.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mail.tutanota.com/",
+      "https://tuta.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Single-page web app login; legacy tutanota.com domains may redirect to the current app host.",
+    "source_urls": [
+      "https://app.tuta.com/"
+    ]
+  },
+  {
+    "provider_name": "Yandex Mail",
+    "primary_country_or_region": "Russia, global",
+    "primary_webmail_login_urls": [
+      "https://mail.yandex.com/",
+      "https://passport.yandex.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mail.yandex.ru/",
+      "https://360.yandex.com/mail/",
+      "https://id.yandex.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Yandex ID login via Passport, then webmail; enterprise tenants can add additional controls.",
+    "source_urls": [
+      "https://360.yandex.com/mail/",
+      "https://yandex.com/support/yandex-360/customers/mail/en/auth"
+    ]
+  },
+  {
+    "provider_name": "Mail.ru",
+    "primary_country_or_region": "Russia",
+    "primary_webmail_login_urls": [
+      "https://mail.ru/",
+      "https://account.mail.ru/login/?lang=en_US"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://e.mail.ru/",
+      "https://id.vk.ru/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Mail.ru login often routes through VK ID, then returns to the Mail.ru mailbox host.",
+    "source_urls": [
+      "https://mail.ru/",
+      "https://account.mail.ru/login/?lang=en_US"
+    ]
+  },
+  {
+    "provider_name": "Rambler Mail",
+    "primary_country_or_region": "Russia",
+    "primary_webmail_login_urls": [
+      "https://mail.rambler.ru/",
+      "https://id.rambler.ru/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Rambler ID sign-in, then webmail; login method can vary by account settings.",
+    "source_urls": [
+      "https://mail.rambler.ru/",
+      "https://id.rambler.ru/"
+    ]
+  },
+  {
+    "provider_name": "QQ Mail",
+    "primary_country_or_region": "China",
+    "primary_webmail_login_urls": [
+      "https://mail.qq.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://w.mail.qq.com/cgi-bin/loginpage?f=xhtml",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "QQ credential login, with optional QR-based login depending on device and account settings.",
+    "source_urls": [
+      "https://mail.qq.com/"
+    ]
+  },
+  {
+    "provider_name": "NetEase 163 Mail",
+    "primary_country_or_region": "China",
+    "primary_webmail_login_urls": [
+      "https://www.126.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mail.163.com/",
+      "https://hw.mail.163.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "NetEase portal login (often via 126.com) supports @163.com and uses iframe or JS-driven UI components.",
+    "source_urls": [
+      "https://www.126.com/",
+      "https://hw.mail.163.com/"
+    ]
+  },
+  {
+    "provider_name": "NetEase 126 Mail",
+    "primary_country_or_region": "China",
+    "primary_webmail_login_urls": [
+      "https://smart.mail.126.com/login.htm",
+      "https://www.126.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mail.126.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "NetEase webmail app, commonly JavaScript-driven; some endpoints are session-based.",
+    "source_urls": [
+      "https://smart.mail.126.com/login.htm",
+      "https://www.126.com/"
+    ]
+  },
+  {
+    "provider_name": "Sina Mail",
+    "primary_country_or_region": "China",
+    "primary_webmail_login_urls": [
+      "https://mail.sina.com.cn/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://vip.sina.com.cn/",
+      "https://mail.sina.net/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Sina login supports account or alternative methods (for example Weibo), with optional verification codes.",
+    "source_urls": [
+      "https://mail.sina.com.cn/"
+    ]
+  },
+  {
+    "provider_name": "Sohu Mail",
+    "primary_country_or_region": "China",
+    "primary_webmail_login_urls": [
+      "https://mail.sohu.com/fe/",
+      "https://mail.sohu.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Webmail redirects to a web-app endpoint; JavaScript is typically required for the login UI.",
+    "source_urls": [
+      "https://mail.sohu.com/"
+    ]
+  },
+  {
+    "provider_name": "China Mobile 139 Mail",
+    "primary_country_or_region": "China",
+    "primary_webmail_login_urls": [
+      "https://mail.10086.cn/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mail.139.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Operator webmail that commonly redirects to an HTML5 webmail app and can require subscriber-linked verification.",
+    "source_urls": [
+      "https://mail.10086.cn/"
+    ]
+  },
+  {
+    "provider_name": "China Telecom 189 Mail",
+    "primary_country_or_region": "China",
+    "primary_webmail_login_urls": [
+      "https://mail.189.cn/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://wap.189.cn/wap2/pwa/index.html",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Webmail redirects to a dedicated mailbox host; JavaScript is required for the full interface.",
+    "source_urls": [
+      "https://mail.189.cn/",
+      "https://wap.189.cn/wap2/pwa/index.html"
+    ]
+  },
+  {
+    "provider_name": "Naver Mail",
+    "primary_country_or_region": "South Korea",
+    "primary_webmail_login_urls": [
+      "https://mail.naver.com/",
+      "https://nid.naver.com/nidlogin.login"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Direct mail entry redirects to Naver ID sign-in; supports multiple methods such as QR and passkeys.",
+    "source_urls": [
+      "https://mail.naver.com/",
+      "https://nid.naver.com/nidlogin.login"
+    ]
+  },
+  {
+    "provider_name": "Daum Mail",
+    "primary_country_or_region": "South Korea",
+    "primary_webmail_login_urls": [
+      "https://m.mail.daum.net/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://accounts.kakao.com/",
+      "https://mail.daum.net/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Daum Mail runs as a JavaScript web app and can route sign-in through Kakao Account identity.",
+    "source_urls": [
+      "https://m.mail.daum.net/",
+      "https://accounts.kakao.com/"
+    ]
+  },
+  {
+    "provider_name": "Yahoo! Mail Japan",
+    "primary_country_or_region": "Japan",
+    "primary_webmail_login_urls": [
+      "https://mail.yahoo.co.jp/promo"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://id.yahoo.co.jp/",
+      "https://login.yahoo.co.jp/ar/top",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Requires Yahoo! JAPAN ID and may require JavaScript for full functionality; security options vary by account.",
+    "source_urls": [
+      "https://mail.yahoo.co.jp/promo",
+      "https://id.yahoo.co.jp/"
+    ]
+  },
+  {
+    "provider_name": "Seznam Email",
+    "primary_country_or_region": "Czech Republic",
+    "primary_webmail_login_urls": [
+      "https://email.seznam.cz/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://login.szn.cz/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Seznam webmail redirects to Seznam login and can offer multiple identity providers.",
+    "source_urls": [
+      "https://email.seznam.cz/"
+    ]
+  },
+  {
+    "provider_name": "Libero Mail",
+    "primary_country_or_region": "Italy",
+    "primary_webmail_login_urls": [
+      "https://login.libero.it/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.libero.it/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Portal-centric login flow starting with email address input, then password to reach webmail.",
+    "source_urls": [
+      "https://login.libero.it/"
+    ]
+  },
+  {
+    "provider_name": "Virgilio Mail",
+    "primary_country_or_region": "Italy",
+    "primary_webmail_login_urls": [
+      "https://login.virgilio.it/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.virgilio.it/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Portal-centric login flow similar to Libero, then redirects into webmail.",
+    "source_urls": [
+      "https://login.virgilio.it/"
+    ]
+  },
+  {
+    "provider_name": "TIM Mail",
+    "primary_country_or_region": "Italy",
+    "primary_webmail_login_urls": [
+      "https://mail.tim.it/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://webmail.tim.it/mail/index-rui.jsp?v=TIMUX_1.1.5",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Service entry links into webmail; browsers may show cookie or JavaScript-gated flows before full login UI.",
+    "source_urls": [
+      "https://mail.tim.it/",
+      "https://www.tim.it/fisso-e-mobile/servizi/tim-mail"
+    ]
+  },
+  {
+    "provider_name": "Orange Mail",
+    "primary_country_or_region": "France",
+    "primary_webmail_login_urls": [
+      "https://rms.orange.fr/mail/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://login.orange.fr",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Webmail service redirects to a centralized Orange login endpoint with a return URL back to webmail.",
+    "source_urls": [
+      "https://rms.orange.fr/mail/",
+      "https://login.orange.fr"
+    ]
+  },
+  {
+    "provider_name": "Free.fr Mail",
+    "primary_country_or_region": "France",
+    "primary_webmail_login_urls": [
+      "https://zimbra.free.fr/",
+      "https://webmail.free.fr/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Zimbra-based webmail interface; login may be tied to ISP account context.",
+    "source_urls": [
+      "https://zimbra.free.fr/"
+    ]
+  },
+  {
+    "provider_name": "SFR Mail",
+    "primary_country_or_region": "France",
+    "primary_webmail_login_urls": [
+      "https://webmail.sfr.fr/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.sfr.fr/cas/login",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Redirects to SFR centralized authentication (CAS) before entering the mailbox.",
+    "source_urls": [
+      "https://webmail.sfr.fr/"
+    ]
+  },
+  {
+    "provider_name": "Laposte.net",
+    "primary_country_or_region": "France",
+    "primary_webmail_login_urls": [
+      "https://www.laposte.net/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.laposte.fr/webmail",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Portal sign-in can redirect to an accueil entry point and then load a webmail UI that may be JavaScript-driven.",
+    "source_urls": [
+      "https://www.laposte.net/",
+      "https://www.laposte.fr/webmail"
+    ]
+  },
+  {
+    "provider_name": "Outlook on the web (Microsoft 365)",
+    "primary_country_or_region": "Global",
+    "primary_webmail_login_urls": [
+      "https://outlook.office.com/mail/",
+      "https://www.microsoft.com/en-us/microsoft-365/outlook/log-in"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://microsoft365.com/",
+      "https://login.microsoftonline.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Microsoft Entra ID work or school sign-in; tenant policies can enforce SSO, conditional access, and MFA.",
+    "source_urls": [
+      "https://outlook.office.com/mail/",
+      "https://support.microsoft.com/en-us/office/how-to-sign-in-to-outlook-on-the-web-763fab4d-0138-4814-b450-37fc286bcb79"
+    ]
+  },
+  {
+    "provider_name": "Google Workspace Gmail",
+    "primary_country_or_region": "Global",
+    "primary_webmail_login_urls": [
+      "https://mail.google.com/",
+      "https://workspace.google.com/dashboard"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mail.google.com/a/yourdomain.tld",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Workspace uses Google account infrastructure; admins can configure custom service URLs and SSO policies.",
+    "source_urls": [
+      "https://mail.google.com/",
+      "https://workspace.google.com/dashboard",
+      "https://support.google.com/a/answer/53340?hl=en"
+    ]
+  },
+  {
+    "provider_name": "Tencent Exmail",
+    "primary_country_or_region": "China, global",
+    "primary_webmail_login_urls": [
+      "https://exmail.qq.com/cgi-bin/loginpage"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://en.exmail.qq.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Enterprise login can accept full address or admin/domain credentials; some flows support secure QR login via WeChat/WeCom.",
+    "source_urls": [
+      "https://exmail.qq.com/cgi-bin/loginpage",
+      "https://en.exmail.qq.com/cgi-bin/readtemplate?t=new_index%2Fmail_function"
+    ]
+  },
+  {
+    "provider_name": "Rackspace Webmail",
+    "primary_country_or_region": "United States, global",
+    "primary_webmail_login_urls": [
+      "https://apps.rackspace.com/wmidentity/account/login"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://app.rackspace.com/login.php",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Hosted email webmail login; some tenants may use federated or organization credential flows.",
+    "source_urls": [
+      "https://apps.rackspace.com/wmidentity/account/login"
+    ]
+  },
+  {
+    "provider_name": "GoDaddy Webmail",
+    "primary_country_or_region": "United States, global",
+    "primary_webmail_login_urls": [
+      "https://sso.secureserver.net/?app=email&realm=pass"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://email.secureserver.net/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Central secureserver.net SSO entry for GoDaddy hosted webmail; GoDaddy-resold Microsoft 365 uses Microsoft webmail endpoints.",
+    "source_urls": [
+      "https://sso.secureserver.net/?app=email&realm=pass",
+      "https://www.godaddy.com/help/sign-in-to-webmail-32291"
+    ]
+  },
+  {
+    "provider_name": "IONOS Webmail",
+    "primary_country_or_region": "Germany, global",
+    "primary_webmail_login_urls": [
+      "https://mail.ionos.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://login.ionos.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Direct webmail host for IONOS email addresses, with cookie and JavaScript requirements in some browsers.",
+    "source_urls": [
+      "https://mail.ionos.com/",
+      "https://www.ionos.com/help/email/using-webmail/easy-webmail-login/"
+    ]
+  },
+  {
+    "provider_name": "OVHcloud Webmail (Roundcube)",
+    "primary_country_or_region": "France, global",
+    "primary_webmail_login_urls": [
+      "https://mail.ovh.net/roundcube/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.ovhcloud.com/en/mail/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Roundcube webmail login that requires JavaScript; customers may also manage mail via the OVHcloud control panel.",
+    "source_urls": [
+      "https://mail.ovh.net/roundcube/",
+      "https://help.ovhcloud.com/csm/en-mx-plan-roundcube?id=kb_article_view&sysparm_article=KB0070134"
+    ]
+  },
+  {
+    "provider_name": "Xfinity Email (Comcast.net)",
+    "primary_country_or_region": "United States",
+    "primary_webmail_login_urls": [
+      "https://xfinityconnect.email.comcast.net/",
+      "https://login.xfinity.com/login"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.xfinity.com/email",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Xfinity login can redirect through OAuth-style flows to reach webmail, and Comcast indicates an upgrade path to Yahoo Mail for comcast.net.",
+    "source_urls": [
+      "https://xfinityconnect.email.comcast.net/",
+      "https://login.xfinity.com/login",
+      "https://www.xfinity.com/email"
+    ]
+  },
+  {
+    "provider_name": "AT&T Mail (AT&T Yahoo)",
+    "primary_country_or_region": "United States",
+    "primary_webmail_login_urls": [
+      "https://currently.att.yahoo.com/",
+      "https://more.att.com/email/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://att.net/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "AT&T Mail is presented through AT&T and Yahoo properties and can redirect between portals during sign-in.",
+    "source_urls": [
+      "https://more.att.com/email/",
+      "https://currently.att.yahoo.com/"
+    ]
+  },
+  {
+    "provider_name": "Spectrum Webmail",
+    "primary_country_or_region": "United States",
+    "primary_webmail_login_urls": [
+      "https://webmail.spectrum.net/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mail.twcbc.com/",
+      "https://mail3.spectrum.net/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Spectrum webmail entry point that may redirect to Spectrum account authentication; legacy hosts exist for some customers.",
+    "source_urls": [
+      "https://webmail.spectrum.net/",
+      "https://www.spectrum.net/support/internet/spectrum-webmail"
+    ]
+  },
+  {
+    "provider_name": "WEB.DE Mail",
+    "primary_country_or_region": "Germany",
+    "primary_webmail_login_urls": [
+      "https://web.de/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://anmelden.web.de/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Login is available from the WEB.DE portal and is documented by WEB.DE as a direct path from the homepage.",
+    "source_urls": [
+      "https://web.de/",
+      "https://anmelden.web.de/"
+    ]
+  },
+  {
+    "provider_name": "T-Online Mail (Telekom Mail)",
+    "primary_country_or_region": "Germany",
+    "primary_webmail_login_urls": [
+      "https://email.t-online.de/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.t-online.de/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Browser login is often initiated from the t-online portal or Telekom guidance and may redirect based on region or account status.",
+    "source_urls": [
+      "https://email.t-online.de/",
+      "https://www.telekom.de/hilfe/apps-dienste/e-mail/e-mail-center-abrufen"
+    ]
+  },
+  {
+    "provider_name": "Rogers Webmail (Rogers Yahoo Mail)",
+    "primary_country_or_region": "Canada",
+    "primary_webmail_login_urls": [
+      "https://mail.rogers.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Rogers email is accessed via the Rogers webmail entry and can involve Yahoo identity components.",
+    "source_urls": [
+      "https://mail.rogers.com/",
+      "https://www.rogers.com/support/internet/accessing-your-rogers-yahoo-mail"
+    ]
+  },
+  {
+    "provider_name": "BT Mail",
+    "primary_country_or_region": "United Kingdom",
+    "primary_webmail_login_urls": [
+      "https://signin1.bt.com/login/emailloginform"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "unspecified"
+    ],
+    "special_login_flow_notes": "BT Mail web sign-in uses a BT-hosted login form and may route through My BT depending on account flows.",
+    "source_urls": [
+      "https://signin1.bt.com/login/emailloginform"
+    ]
+  },
+  {
+    "provider_name": "Virgin Media Mail",
+    "primary_country_or_region": "United Kingdom",
+    "primary_webmail_login_urls": [
+      "https://www.virginmedia.com/myvmo2"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://www.virginmedia.com/my-virgin-media/login",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Email access is commonly initiated through the My Virgin Media portal, and some accounts use separate app passwords for client access.",
+    "source_urls": [
+      "https://www.virginmedia.com/myvmo2",
+      "https://www.virginmedia.com/help/broadband/manage-email-account"
+    ]
+  },
+  {
+    "provider_name": "Telstra Mail",
+    "primary_country_or_region": "Australia",
+    "primary_webmail_login_urls": [
+      "https://email.telstra.com/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Access via Telstra webmail entry, with possible variations for legacy accounts and migrations.",
+    "source_urls": [
+      "https://email.telstra.com/",
+      "https://www.telstra.com.au/help/sign-in-webmail"
+    ]
+  },
+  {
+    "provider_name": "Rediffmail",
+    "primary_country_or_region": "India",
+    "primary_webmail_login_urls": [
+      "https://mail.rediff.com/cgi-bin/login.cgi"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mail.rediff.com/mobile/",
+      "https://www.rediffmailpro.com/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Classic web login form; some flows can trigger CAPTCHA or additional verification.",
+    "source_urls": [
+      "https://mail.rediff.com/cgi-bin/login.cgi"
+    ]
+  },
+  {
+    "provider_name": "UOL Mail",
+    "primary_country_or_region": "Brazil",
+    "primary_webmail_login_urls": [
+      "https://email.uol.com.br/"
+    ],
+    "alternate_login_domains_or_regional_variants": [
+      "https://mailpro.uol.com.br/",
+      "https://email.bol.uol.com.br/",
+      "unspecified"
+    ],
+    "special_login_flow_notes": "Consumer and business webmail are JavaScript-driven, and business mail often requires domain or tenant context.",
+    "source_urls": [
+      "https://email.uol.com.br/",
+      "https://faq.uol.com.br/uolpd/como-acessar-meu-e-mail-uol/"
+    ]
+  }
+]

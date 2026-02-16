@@ -371,20 +371,57 @@
       }
     }
 
-    .user-menu-icon {
-      height: 20px;
-      width: 3.5px;
-      flex-shrink: 0;
-      color: var(--color-slategray-light);
-    }
-
-    .logout-button {
+    .user-menu-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
       border: none;
-      background-color: transparent;
-      color: var(--color-blue-600);
-      font-size: 12px;
       cursor: pointer;
-      display: none;
+      padding: 4px;
+      color: #94a3b8;
+      flex-shrink: 0;
+      border-radius: 4px;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--color-navy);
+      }
+    }
+  }
+
+}
+
+.user-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.user-menu-popup {
+  position: fixed;
+  background-color: var(--color-white);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  min-width: 130px;
+  overflow: hidden;
+
+  .user-menu-item {
+    width: 100%;
+    display: block;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: var(--font-inter);
+    color: var(--color-gray-100);
+    text-align: left;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: var(--color-slate-100);
     }
   }
 }

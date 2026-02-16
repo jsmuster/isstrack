@@ -3,10 +3,10 @@
     <div class="page-container">
       <div class="card-wrapper">
         <!-- Header Section -->
-        <div class="card-header">
-          <div class="logo-container">
-            <img class="logo-icon" loading="lazy" alt="Company logo" src="assets/div@2x.png" />
-          </div>
+         <div class="card-header">
+           <div class="logo-container">
+             <img src="/assets/create-account-icon.svg" alt="Create account icon" class="create-account-icon" />
+           </div>
           <h1 class="page-title">Create Account</h1>
           <p class="page-subtitle">Join us today and get started</p>
         </div>
@@ -14,7 +14,7 @@
         <!-- Form Section -->
         <section class="form-section">
           <form class="signup-form" (ngSubmit)="onSubmit()">
-            <div class="form-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+            <div class="form-error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
             <!-- Email Field -->
             <div class="form-group">
               <label class="form-label">
@@ -127,19 +127,27 @@
                 <p class="requirements-title">Password must contain:</p>
                 <ul class="requirements-list">
                   <li class="requirement-item" [class.met]="passwordRequirements().minLength">
-                    <img class="requirement-icon" alt="Requirement met" src="assets/i.svg" />
+                    <svg class="requirement-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                     <span class="requirement-text">At least 8 characters</span>
                   </li>
                   <li class="requirement-item" [class.met]="passwordRequirements().hasUppercase">
-                    <img class="requirement-icon" alt="Requirement met" src="assets/i.svg" />
+                    <svg class="requirement-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                     <span class="requirement-text">One uppercase letter</span>
                   </li>
                   <li class="requirement-item" [class.met]="passwordRequirements().hasLowercase">
-                    <img class="requirement-icon" alt="Requirement met" src="assets/i.svg" />
+                    <svg class="requirement-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                     <span class="requirement-text">One lowercase letter</span>
                   </li>
                   <li class="requirement-item" [class.met]="passwordRequirements().hasNumber">
-                    <img class="requirement-icon" alt="Requirement met" src="assets/i.svg" />
+                    <svg class="requirement-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                     <span class="requirement-text">One number</span>
                   </li>
                 </ul>
@@ -183,11 +191,11 @@
           <!-- Social Sign Up -->
           <div class="social-buttons">
             <button class="social-button google" type="button" (click)="onGoogleSignUp()">
-              <img class="social-icon" alt="Google" src="assets/i1.svg" />
+              <img class="social-icon google" alt="Google" src="/assets/google-icon.svg" />
               <span class="social-text">Continue with Google</span>
             </button>
             <button class="social-button github" type="button" (click)="onGithubSignUp()">
-              <img class="social-icon" alt="GitHub" src="assets/i2.svg" />
+              <img class="social-icon github" alt="GitHub" src="/assets/github-icon.svg" />
               <span class="social-text">Continue with GitHub</span>
             </button>
           </div>

@@ -15,11 +15,21 @@ import { IssueDetails } from './components/issue-details/issue-details'
 import { InviteMembers } from './components/invite-members/invite-members'
 import { InvitationPage } from './components/invitation-page/invitation-page'
 import { ProjectsProjectMembers } from './components/projects-project-members/projects-project-members'
+import { ForgotYourPasswordComponent } from './components/forgot-your-password/forgot-your-password.component'
+import { CheckYourEmailComponent } from './components/check-your-email/check-your-email.component'
+import { ResetLinkExpiredComponent } from './components/reset-link-expired/reset-link-expired.component'
+import { SetANewPasswordComponent } from './components/set-a-new-password/set-a-new-password.component'
+import { PasswordUpdatedComponent } from './components/password-updated/password-updated.component'
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginPage },
   { path: 'register', component: CreateAccountPage },
+  { path: 'forgot-password', component: ForgotYourPasswordComponent },
+  { path: 'check-your-email', component: CheckYourEmailComponent },
+  { path: 'reset-link-expired', component: ResetLinkExpiredComponent },
+  { path: 'set-a-new-password', component: SetANewPasswordComponent },
+  { path: 'password-updated', component: PasswordUpdatedComponent },
   { path: 'invites/accept', component: InvitationPage },
   {
     path: 'app',

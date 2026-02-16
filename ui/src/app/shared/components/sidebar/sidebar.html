@@ -55,7 +55,19 @@
           <div class="user-name">{{ userInfo.name }}</div>
           <div class="user-email">{{ userInfo.email }}</div>
         </div>
-        <button class="logout-button" type="button" (click)="onLogout()">Logout</button>
+        <button class="user-menu-button" type="button" #menuButton (click)="toggleUserMenu($event)" aria-label="User menu">
+          <svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="2" cy="2" r="1.5" fill="currentColor"/>
+            <circle cx="2" cy="8" r="1.5" fill="currentColor"/>
+            <circle cx="2" cy="14" r="1.5" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="user-menu-overlay" *ngIf="showUserMenu" (click)="showUserMenu = false">
+      <div class="user-menu-popup" [style.bottom.px]="menuPopupBottom" [style.left.px]="menuPopupLeft" (click)="$event.stopPropagation()">
+        <button class="user-menu-item" type="button" (click)="onLogout()">Log out</button>
       </div>
     </div>
   </div>
